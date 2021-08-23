@@ -4,11 +4,5 @@ RUN pip3 install pandas
 # Set the working directory
 WORKDIR /work
 
-# Add the data
-#COPY . /work
-#RUN chmod +x /work/run.sh
-
-# Add python-script
-
-#RUN ls 
+# Add shell-script
 ENTRYPOINT ["/work/run.sh" , "/work"]
