@@ -1,4 +1,4 @@
-#Case study
+# Case study
 
 
 This case study is about traffic sign classification in video stream applications.
