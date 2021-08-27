@@ -27,7 +27,7 @@ spec:
       containers:
         - env:
             - name: STEP_NAME
-              value: 3infer
+              value: 2infer
           image: sina88/ubuntu-inference:rpi4
           name: 2inference
           resources: {}
