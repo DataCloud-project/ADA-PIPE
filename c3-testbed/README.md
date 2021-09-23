@@ -5,7 +5,7 @@ The Carinthian Computing Continuum (C3) infrastructure as a research laboratory 
 https://c3.itec.aau.at/index.php/infrastructure/
 
 
-# Resources:
+# Devices/instances:
 
 The resources are as follows:
 
