@@ -5,4 +5,4 @@ This case study is about traffic sign classification in video analytics applicat
 
 The Docker images are prepared for the RPiv4 device because the testbed located at https://c3.itec.aau.at/ consists of ARM32v7 devices.
 
-![alt text](https://raw.githubusercontent.com/DataCloud-project/ADA-PIPE/main/DataPipelineWorkflow/casestudy.png)
+![alt text](https://raw.githubusercontent.com/DataCloud-project/ADA-PIPE/main/DataPipelineWorkflow/Case-study.png)
