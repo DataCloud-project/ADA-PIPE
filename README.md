@@ -1,7 +1,13 @@
+<p align="center"><img width=50% src="https://raw.githubusercontent.com/DataCloud-project/toolbox/master/docs/img/datacloud_logo.png"></p>&nbsp;
+
+[![GitHub Issues](https://img.shields.io/github/issues/DataCloud-project/ADA-PIPE.svg)](https://github.com/DataCloud-project/ADA-PIPE/issues)
+
 # ADA-PIPE
-Adaptive resource provisioning for the Cloud-Fog-Edge computing environments
+
+Adaptive resource provisioning for the Cloud-Fog-Edge computing environments. 
+
+ADA-PIPE, addressing run-time aspects, provides a data-aware algorithm for smart and adaptable provisioning of resources and services across the Computing Continuum with an infrastructure drift adaptation capability. The tool allows intelligent resource reconfiguration for improved computational performance and interoperability by monitoring and analysis of diverse resources.
 
 We plan to explore novel methods for resources scheduling and adaptation for Big Data Pipeline execution.
-
 
 ![alt text](https://raw.githubusercontent.com/DataCloud-project/ADA-PIPE/main/figure/arch.png)
