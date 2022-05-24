@@ -27,5 +27,5 @@ Transmitting data between pipeline steps through an asynchronous message queue p
 
 Matching library by package installer for Python 3.9 (pip3.9);
 
-Docker Engine on [Ubuntu]\footnote(https://docs.docker.com/engine/install/ubuntu/), [Kubernetes on Ubuntu](https://phoenixnap.com/kb/install-kubernetes-on-ubuntu), and [Kubernetes on (vanilla) Raspbian Lite](https://github.com/alexellis/k8s-on-raspbian/blob/master/GUIDE.md);
+Docker Engine on [Ubuntu](https://docs.docker.com/engine/install/ubuntu/), [Kubernetes on Ubuntu](https://phoenixnap.com/kb/install-kubernetes-on-ubuntu), and [Kubernetes on (vanilla) Raspbian Lite](https://github.com/alexellis/k8s-on-raspbian/blob/master/GUIDE.md);
 [NVIDIA Jetson Linux](https://developer.nvidia.com/embedded/linux-tegra) and [Raspberry Pi OS](https://www.raspberrypi.com/software/).
