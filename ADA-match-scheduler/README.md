@@ -7,7 +7,7 @@
 
 Provides a capacity-aware macthing-based scheduler for data pipeline processing across the computing continuum.
 
-# How_to
+# Tool info
 
 The base model of the matching-based scheduler requires Python libraries such as networkx, operator, numpy, yaml, json.
 
