@@ -1,0 +1,92 @@
+{
+    "pipelineName": "Heathcare_pipeline",
+    "pipelineType": "simulation|production",
+    "stepName": "readMedicValues",
+    "terminationCheck": {
+        "httpURL": "localhost/api/v1/success"
+    },
+    "jobList": [
+        {
+            "name": "readMedicValues",
+            "resource": "workder1",
+            "provider": "R-MARKET",
+            "architecture": "amd64",
+            "elasticityControllerMode": "HORIZONTAL",
+            "dockerImage": "sina88/readmedicvalues:1.0",
+            "dockerCredentialsUsing": "true",
+            "dockerUsername": "",
+            "dockerPassword": "",
+            "dockerCustomRegistry": "true",
+            "dockerRegistry": "",
+            "requirement": {
+                "vCPUs": 4,
+                "ram": 4,
+                "storage": 20
+            },
+            "healthCheck": {
+                "httpURL": "localhost/api/v1/healthCheck",
+                "args": "ps -e | grep java",
+                "interval": 20
+            },
+            "terminationCheck": {
+                "httpURL": "localhost/api/v1/success",
+                "args": "ps -e | grep java"
+            },
+            "command": "-->Container Excecution<--",
+            "environmentalVariables": [
+                {
+                    "key": "",
+                    "value": ""
+                }
+            ],
+            "numWorkers": 1,
+            "exposedInterfaces": [
+                {
+                    "name": "sparkMasterRest",
+                    "port": "8000",
+                    "interfaceType": "Core",
+                    "transmissionProtocol": "TCP"
+                }
+            ],
+            "requiredInterfaces": [
+                {
+                    "friendlyName": "sparkMasterRest"
+                }
+            ],
+            "plugin": [
+                {
+                    "name": ""
+                }
+            ],
+            "devices": [
+                {
+                    "key": "/dev/gpu0",
+                    "value": "/dev/gpu0"
+                }
+            ],
+            "volumes": "!!!pending!!!",
+            "labels": [
+                {
+                    "name": ""
+                }
+            ],
+            "hostname": "-->Advanced Options<--",
+            "capabilityDrops": [
+                {
+                    "name": ""
+                }
+            ],
+            "capabilityAdds": [
+                {
+                    "name": ""
+                }
+            ],
+            "ulimitMemlockSoft": "",
+            "ulimitMemlockHard": "",
+            "networkModeHost": "true",
+            "privilege": "false",
+            "dockerExecutionUser": "",
+            "sharedMemorySize": ""
+        }
+    ]
+}
