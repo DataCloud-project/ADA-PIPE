@@ -7,6 +7,11 @@
 
 The web interface to provision resources for data pipeline's steps on the Computing Continuum.
 
+
+[Swagger_UI](http://194.182.187.139:5000/swagger/) is  created to provide the API for connecting to other DataCloud tools.
+
+
+## How_to_run
 The main script is ``demo.py``.
 
 Requirements are ``python3.9, matching, numpy, scipy, pyyaml, pandas, flask, waitress python-keycloak, flask-oidc`` as follows:
