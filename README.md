@@ -11,4 +11,4 @@ ADA-PIPE, addressing run-time aspects, provides a data-aware algorithm for smart
 
 We plan to explore novel methods for resources scheduling and adaptation for Big Data Pipeline execution.
 
-![alt text](https://raw.githubusercontent.com/DataCloud-project/ADA-PIPE/main/figure/arch.png)
+![alt text](https://raw.githubusercontent.com/DataCloud-project/ADA-PIPE/main/figure/arch%20(2).png)
