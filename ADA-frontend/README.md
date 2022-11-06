@@ -34,7 +34,7 @@ Requirements are ``python3.9, matching, numpy, scipy, pyyaml, pandas, flask, wai
 
 ``python3.9 -m pip matching``
 
-``pip install -U scipy numpy PyYaml flask pandas``
+``pip3.9 install -U scipy numpy PyYaml flask pandas``
 
 ``flask run -h 194.182.187.139``
 
@@ -46,9 +46,9 @@ Requirements are ``python3.9, matching, numpy, scipy, pyyaml, pandas, flask, wai
 
 ``conda install -c anaconda waitress``
 
-``pip install requests==2.25.1 urllib3==1.26.5``
+``pip3.9 install requests==2.25.1 urllib3==1.26.5``
 
-``pip install python-keycloak flask-oidc``
+``pip3.9 install python-keycloak flask-oidc``
 
 
 
