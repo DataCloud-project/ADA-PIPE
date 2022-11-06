@@ -39,7 +39,7 @@ Requirements are ``python3.9, matching, numpy, scipy, pyyaml, pandas, flask, wai
 
 ``python3.9 -m pip matching``
 
-``pip3.9 install -U scipy numpy PyYaml flask pandas``
+``pip3.9 install -U scipy numpy PyYaml flask pandas Werkzeug``
 
 ``flask run -h 194.182.187.139``
 
