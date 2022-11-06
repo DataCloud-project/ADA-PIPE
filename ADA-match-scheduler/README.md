@@ -9,9 +9,9 @@ Provides a capacity-aware macthing-based scheduler for data pipeline processing 
 
 # Tool info
 
-The base model of the matching-based scheduler requires Python libraries such as networkx, operator, numpy, yaml, json.
+The base model of the matching-based scheduler requires Python libraries such as ``networkx, operator, numpy, yaml, json``.
 
-Integrating ada-matach-scheduler to Kubernetes scheduler:
+Integrating ada-match-scheduler to Kubernetes scheduler:
 
 [Docker v20.10.12](https://www.docker.com/) on all devices and instances;
 
