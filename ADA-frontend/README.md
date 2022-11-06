@@ -10,6 +10,16 @@ Requirements are ``python3.9, matching, numpy, scipy, pyyaml, pandas, flask, wai
 
 ``sudo apt install software-properties-common``
 
+``sudo wget -c https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh``
+
+``sudo chmod +x Miniconda3-latest-Linux-x86_64.sh``
+
+``./Miniconda3-latest-Linux-x86_64.sh``
+
+``source ./.bashrc``
+
+``python3 --version``
+
 ``sudo add-apt-repository ppa:deadsnakes/ppa``
 
 ``sudo apt install python3-pip``
@@ -23,8 +33,6 @@ Requirements are ``python3.9, matching, numpy, scipy, pyyaml, pandas, flask, wai
 ``python3.9 -m pip install numpy``
 
 ``python3.9 -m pip matching``
-
-``conda install scipy numpy``
 
 ``pip install -U scipy numpy PyYaml flask pandas``
 
@@ -40,4 +48,9 @@ Requirements are ``python3.9, matching, numpy, scipy, pyyaml, pandas, flask, wai
 
 ``pip install requests==2.25.1 urllib3==1.26.5``
 
-``pip install flask-oidc``
+``pip install python-keycloak flask-oidc``
+
+
+To test the KeyCloak:
+
+``python3 test_keycloak.py``
