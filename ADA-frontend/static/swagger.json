@@ -1,0 +1,306 @@
+openapi: 3.0.1
+info:
+  title: ADA-PIPE
+  description: For the protected end points, you need to genereate an access token (e.g. using postman) and provide it by opening "Authorize"
+  version: v1
+paths:
+  /adaptExecution/{pipelineID}/{runtime_metrics}:
+    post:
+      tags:
+        - Export
+      summary: Compute the adapted schedule based on runtime parameters for the pipeline with the ID
+      parameters:
+        - name: runtime_metrics
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: pipelineID
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json-patch+json:
+            schema:
+              $ref: '#/components/schemas/Canvas'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Canvas'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/Canvas'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/Canvas'
+      responses:
+        '200':
+          description: Schedules in JSON format
+          content:
+            text/plain:
+              schema:
+                type: string
+            application/json:
+              schema:
+                type: string
+            text/json:
+              schema:
+                type: string
+  /importWorkerPools/{workerPools}:
+    get:
+      tags:
+        - Repo
+      summary: Import WorkerPools
+      parameters:
+        - name: workerPools
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: List of workers of Cloud and Edge
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/PublicRepoListApiResult'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicRepoListApiResult'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/PublicRepoListApiResult'
+        '401':
+          description: Unauthorized
+      security:
+        - Bearer: []
+  /importSimData/{pipelineID}:
+    get:
+      tags:
+        - Repo
+      summary: Import simulation data
+      parameters:
+        - name: pipelineID
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: List of simulation data matching the query
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/PublicRepoListApiResult'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicRepoListApiResult'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/PublicRepoListApiResult'
+        '401':
+          description: Unauthorized
+      security:
+        - Bearer: []
+  /importPipeline/{pipelineID}:
+    get:
+      tags:
+        - Repo
+      summary: Import pipeline in JSON
+      parameters:
+        - name: pipelineID
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Lists of pipelines and steps
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/StringApiResult'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StringApiResult'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/StringApiResult'
+        '401':
+          description: Unauthorized
+      security:
+        - Bearer: []
+components:
+  schemas:
+    BooleanApiResult:
+      type: object
+      properties:
+        success:
+          type: boolean
+        errorMessage:
+          type: string
+          nullable: true
+      additionalProperties: false
+    Canvas:
+      type: object
+      properties:
+        name:
+          type: string
+          nullable: true
+        elements:
+          type: array
+          items:
+            $ref: '#/components/schemas/CanvasElement'
+          nullable: true
+        resourceProviders:
+          type: array
+          items:
+            $ref: '#/components/schemas/CanvasProvider'
+          nullable: true
+      additionalProperties: false
+    CanvasElement:
+      type: object
+      properties:
+        additionalProperties:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/JToken'
+          nullable: true
+        type:
+          $ref: '#/components/schemas/CanvasElementType'
+        id:
+          type: string
+          nullable: true
+      additionalProperties: false
+    CanvasElementType:
+      enum:
+        - 0
+        - 1
+      type: integer
+      format: int32
+    CanvasProvider:
+      type: object
+      properties:
+        provider:
+          type: string
+          nullable: true
+        name:
+          type: string
+          nullable: true
+        providerLocation:
+          type: string
+          nullable: true
+        mappingLocation:
+          type: string
+          nullable: true
+      additionalProperties: false
+    JToken:
+      type: array
+      items:
+        $ref: '#/components/schemas/JToken'
+    ObjectId:
+      type: object
+      properties:
+        timestamp:
+          type: integer
+          format: int32
+          readOnly: true
+        machine:
+          type: integer
+          format: int32
+          readOnly: true
+          deprecated: true
+        pid:
+          type: integer
+          format: int32
+          readOnly: true
+          deprecated: true
+        increment:
+          type: integer
+          format: int32
+          readOnly: true
+          deprecated: true
+        creationTime:
+          type: string
+          format: date-time
+          readOnly: true
+      additionalProperties: false
+    PublicRepoListApiResult:
+      type: object
+      properties:
+        success:
+          type: boolean
+        errorMessage:
+          type: string
+          nullable: true
+      additionalProperties: false
+    StringApiResult:
+      type: object
+      properties:
+        success:
+          type: boolean
+        errorMessage:
+          type: string
+          nullable: true
+      additionalProperties: false
+    Template:
+      type: object
+      properties:
+        _id:
+          $ref: '#/components/schemas/ObjectId'
+        id:
+          type: string
+          nullable: true
+        name:
+          type: string
+          nullable: true
+        description:
+          type: string
+          nullable: true
+        category:
+          type: string
+          nullable: true
+        createdAt:
+          type: string
+          format: date-time
+        modifiedAt:
+          type: string
+          format: date-time
+        sourceTemplateId:
+          type: string
+          nullable: true
+        canvasTemplate:
+          nullable: true
+        resourceProviders:
+          nullable: true
+        public:
+          type: boolean
+      additionalProperties: false
+    TemplateApiResult:
+      type: object
+      properties:
+        success:
+          type: boolean
+        errorMessage:
+          type: string
+          nullable: true
+      additionalProperties: false
+    TemplateListApiResult:
+      type: object
+      properties:
+        success:
+          type: boolean
+        errorMessage:
+          type: string
+          nullable: true
+      additionalProperties: false
+  securitySchemes:
+    Bearer:
+      type: apiKey
+      description: |-
+        Enter you your Keyclaok bearer token in the format bellow (don't forget the "Bearer")
+
+         Bearer YOUR_ACCESS_TOKEN
+      name: Authorization
+      in: header
