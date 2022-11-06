@@ -5,7 +5,7 @@
 
 # ADA-PIPE
 
-Adaptive resource provisioning for the Cloud-Fog-Edge computing environments. 
+Adaptive resource provisioning of the Cloud, Fog, and Edge continuum. 
 
 ADA-PIPE, addressing run-time aspects, provides a data-aware algorithm for smart and adaptable provisioning of resources and services across the Computing Continuum with an infrastructure drift adaptation capability. The tool allows intelligent resource reconfiguration for improved computational performance and interoperability by monitoring and analysis of diverse resources.
 
