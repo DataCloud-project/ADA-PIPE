@@ -55,4 +55,4 @@ Requirements are ``python3.9, matching, numpy, scipy, pyyaml, pandas, flask, wai
 ## KeyCloak
 To test the KeyCloak:
 
-``python3 test_keycloak.py``
+``python3.9 test_keycloak.py``
