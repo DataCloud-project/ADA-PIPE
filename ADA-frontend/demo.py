@@ -7,6 +7,7 @@ import yaml
 import socket
 from waitress import serve
 import keycloak_utils
+from flask_swagger_ui import get_swaggerui_blueprint
 
 DEBUG_MODE: bool = True
 HOST_NUMBER: str = '0.0.0.0'
@@ -30,6 +31,16 @@ data = json.dumps(json_object)
 with open('3ApplicationLogic.json', 'r') as openfile:
     json_object = json.load(openfile)
 data = json.dumps(json_object)
+
+# flask swagger configs
+SWAGGER_URL = '/swagger'
+API_URL = '/static/swagger.json'
+SWAGGERUI_BLUEPRINT = get_swaggerui_blueprint(
+    SWAGGER_URL,
+    API_URL
+)
+app.register_blueprint(SWAGGERUI_BLUEPRINT, url_prefix=SWAGGER_URL)
+
 
 @app.route('/', methods=['GET', 'POST'])
 def get_homepage():
