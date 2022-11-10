@@ -173,6 +173,36 @@ components:
           type: string
           nullable: true
       additionalProperties: false
+    TaskElement:
+      type: object
+      properties:
+        additionalProperties:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/JToken'
+          nullable: true
+        type:
+          $ref: '#/components/schemas/TaskElementType'
+        id:
+          type: string
+          nullable: true
+      additionalProperties: false
+    TaskElementType:
+      enum:
+        - 0
+        - 1
+      type: integer
+      format: int32
+      properties:
+        cpu_cores:
+          type: int
+          nullable: false
+        memory_mb:
+          type: int
+          nullable: false
+        gpu_mb:
+          type: int
+          nullable: true    
     CanvasElementType:
       enum:
         - 0
