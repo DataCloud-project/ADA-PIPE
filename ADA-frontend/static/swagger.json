@@ -195,13 +195,13 @@ components:
       format: int32
       properties:
         cpu_cores:
-          type: int
+          type: string
           nullable: false
         memory_mb:
-          type: int
+          type: string
           nullable: false
         gpu_mb:
-          type: int
+          type: string
           nullable: true    
     CanvasElementType:
       enum:
