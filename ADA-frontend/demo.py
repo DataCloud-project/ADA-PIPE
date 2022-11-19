@@ -40,6 +40,31 @@ SWAGGERUI_BLUEPRINT = get_swaggerui_blueprint(
     API_URL
 )
 app.register_blueprint(SWAGGERUI_BLUEPRINT, url_prefix=SWAGGER_URL)
+# error handeling
+
+
+@app.errorhandler(400)
+def handle_400_error(_error):
+    """Return a http 400 error to client"""
+    return make_response(jsonify({'error': 'Misunderstood'}), 400)
+
+
+@app.errorhandler(401)
+def handle_401_error(_error):
+    """Return a http 401 error to client"""
+    return make_response(jsonify({'error': 'Unauthorised'}), 401)
+
+
+@app.errorhandler(404)
+def handle_404_error(_error):
+    """Return a http 404 error to client"""
+    return make_response(jsonify({'error': 'Not found'}), 404)
+
+
+@app.errorhandler(500)
+def handle_500_error(_error):
+    """Return a http 500 error to client"""
+    return make_response(jsonify({'error': 'Server error'}), 500)
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -103,6 +128,53 @@ def index0():
     if request.method == "POST":
         return Response(file_file, mimetype='application/html' )
 '''
+@app.route("/adaptExecution/<int:pipelineID>/<int:runtime_metrics>", methods=['POST'])
+def index0(pipelineID,runtime_metrics):
+    if request.method == "POST":
+            try:
+                # pipelineID = data[pipelineID]
+                # runtime_metrics = data[runtime_metrics]
+                # data = {
+                #         "pipelineID": pipelineID,
+                #         "runtime_metrics": runtime_metrics,
+                #         "timestamp": get_timestamp(),
+                #     }
+                return Response(data, mimetype='application/json' )
+
+            except FileNotFoundError:
+                return
+
+@app.route("/importPipeline/<int:pipelineID>", methods=['GET'])
+def importPipeline(pipelineID):
+    if request.method == "GET":
+            try:
+                # pipelineID = data[pipelineID]
+                # runtime_metrics = data[runtime_metrics]
+                # data = {
+                #         "pipelineID": pipelineID,
+                #         "runtime_metrics": runtime_metrics,
+                #         "timestamp": get_timestamp(),
+                #     }
+                return ('Loaded successfully' and redirect("/requirements", code=302))
+
+            except FileNotFoundError:
+                return
+@app.route("/importWorkerPools/<int:workerPools>", methods=['GET'])
+def importWorkerPools(workerPools):
+    if request.method == "GET":
+            try:
+                # pipelineID = data[pipelineID]
+                # runtime_metrics = data[runtime_metrics]
+                # data = {
+                #         "pipelineID": pipelineID,
+                #         "runtime_metrics": runtime_metrics,
+                #         "timestamp": get_timestamp(),
+                #     }
+                return ('Loaded successfully' and redirect("/resources", code=302))
+
+            except FileNotFoundError:
+                return
+
 @app.route("/requirements", methods=['GET'])
 def index1():
     if request.method == 'GET':
