@@ -7,30 +7,34 @@
 
 Provides a capacity-aware macthing-based scheduler for data pipeline processing across the computing continuum.
 
+# Installation
+
+* Operating systems:
+** [NVIDIA Jetson Linux](https://developer.nvidia.com/embedded/linux-tegra) for NVIDIA devices;
+
+** [Raspberry Pi OS](https://www.raspberrypi.com/software/) for RPi devices.
+
+* Docker and Kubenetes:
+
+** [Docker Engine on Ubuntu](https://docs.docker.com/engine/install/ubuntu/);
+
+** [Kubernetes on Ubuntu](https://phoenixnap.com/kb/install-kubernetes-on-ubuntu) for x86_64 Cloud or Fog instances, and [Kubernetes on (vanilla) Raspbian Lite (https://github.com/alexellis/k8s-on-raspbian/blob/master/GUIDE.md) for the Edge devices;
+
+
 # Tool info
 
 The base model of the matching-based scheduler requires Python libraries such as ``networkx, operator, numpy, yaml, json``.
 
 Integrating ada-match-scheduler to Kubernetes scheduler:
 
-[Docker v20.10.12](https://www.docker.com/) on all devices and instances;
+* [Docker v20.10.12](https://www.docker.com/) on all devices and instances;
 
-Measuring bandwidth and latency between the devices by: [kube-latency](https://github.com/simonswine/kube-latency);
+* Measuring bandwidth and latency between the devices by: [kube-latency](https://github.com/simonswine/kube-latency);
 
-Monitoring the cluster by the [Prometheus operator v0.45.0](https://github.com/prometheus-operator/prometheus-operator); 
+* Monitoring the cluster by the [Prometheus operator v0.45.0](https://github.com/prometheus-operator/prometheus-operator); 
 
-Python script "scheduling.py" collects the monitoring information by [Prometheus Python API](https://pypi.org/project/prometheus-api-client/) from the local {Kubernetes} Edge cluster, and then utilizes the [Python client library v17.17 for Kubernetes](https://github.com/kubernetes-client/python) to execute the customized ada-match scheduler and deploy the application pods on the appropriate devices;
+* Transmitting data between pipeline steps through an asynchronous message queue platform [KubeMQ v2.2.10](https://github.com/kubemq-io/kubemq-community/releases/tag/v2.2.10);
 
-Transmitting data between pipeline steps through an asynchronous message queue platform [KubeMQ v2.2.10](https://github.com/kubemq-io/kubemq-community/releases/tag/v2.2.10)
+* Matching library by package installer for Python 3.9 (pip3.9).
 
-# Installation
-
-Matching library by package installer for Python 3.9 (pip3.9);
-
-[Docker Engine on Ubuntu](https://docs.docker.com/engine/install/ubuntu/);
-
-[Kubernetes on Ubuntu](https://phoenixnap.com/kb/install-kubernetes-on-ubuntu) for x86_64 Cloud or Fog instances, and [Kubernetes on (vanilla) Raspbian Lite](https://github.com/alexellis/k8s-on-raspbian/blob/master/GUIDE.md) for the Edge devices;
-
-[NVIDIA Jetson Linux](https://developer.nvidia.com/embedded/linux-tegra) for NVIDIA devices;
-
-[Raspberry Pi OS](https://www.raspberrypi.com/software/) for RPi devices.
+At the end, Python script "scheduling.py" collects the monitoring information by [Prometheus Python API](https://pypi.org/project/prometheus-api-client/) from the local {Kubernetes} Edge cluster, and then utilizes the [Python client library v17.17 for Kubernetes](https://github.com/kubernetes-client/python) to execute the customized ada-match scheduler and deploy the application pods on the appropriate devices.
