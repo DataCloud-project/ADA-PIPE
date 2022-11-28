@@ -27,12 +27,12 @@ The base model of the matching-based scheduler requires Python libraries such as
 
 Integrating ada-match-scheduler to Kubernetes scheduler:
 
+* Matching library by package installer for Python 3.9 (pip3.9).
+
 * Measuring bandwidth and latency between the devices by: [kube-latency](https://github.com/simonswine/kube-latency);
 
 * Monitoring the cluster by the [Prometheus operator v0.45.0](https://github.com/prometheus-operator/prometheus-operator); 
 
 * Transmitting data between pipeline steps through an asynchronous message queue platform [KubeMQ v2.2.10](https://github.com/kubemq-io/kubemq-community/releases/tag/v2.2.10);
-
-* Matching library by package installer for Python 3.9 (pip3.9).
 
 At the end, Python script "scheduling.py" collects the monitoring information by [Prometheus Python API](https://pypi.org/project/prometheus-api-client/) from the local {Kubernetes} Edge cluster, and then utilizes the [Python client library v17.17 for Kubernetes](https://github.com/kubernetes-client/python) to execute the customized ada-match scheduler and deploy the application pods on the appropriate devices.
