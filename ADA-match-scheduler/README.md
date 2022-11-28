@@ -27,8 +27,6 @@ The base model of the matching-based scheduler requires Python libraries such as
 
 Integrating ada-match-scheduler to Kubernetes scheduler:
 
-* [Docker v20.10.12](https://www.docker.com/) on all devices and instances;
-
 * Measuring bandwidth and latency between the devices by: [kube-latency](https://github.com/simonswine/kube-latency);
 
 * Monitoring the cluster by the [Prometheus operator v0.45.0](https://github.com/prometheus-operator/prometheus-operator); 
