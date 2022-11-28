@@ -10,15 +10,15 @@ Provides a capacity-aware macthing-based scheduler for data pipeline processing 
 # Installation
 
 * Operating systems:
-** [NVIDIA Jetson Linux](https://developer.nvidia.com/embedded/linux-tegra) for NVIDIA devices;
+  * [NVIDIA Jetson Linux](https://developer.nvidia.com/embedded/linux-tegra) for NVIDIA devices;
 
-** [Raspberry Pi OS](https://www.raspberrypi.com/software/) for RPi devices.
+  * [Raspberry Pi OS](https://www.raspberrypi.com/software/) for RPi devices.
 
 * Docker and Kubenetes:
 
-** [Docker Engine on Ubuntu](https://docs.docker.com/engine/install/ubuntu/);
+  * [Docker Engine on Ubuntu](https://docs.docker.com/engine/install/ubuntu/);
 
-** [Kubernetes on Ubuntu](https://phoenixnap.com/kb/install-kubernetes-on-ubuntu) for x86_64 Cloud or Fog instances, and [Kubernetes on (vanilla) Raspbian Lite (https://github.com/alexellis/k8s-on-raspbian/blob/master/GUIDE.md) for the Edge devices;
+  * [Kubernetes on Ubuntu](https://phoenixnap.com/kb/install-kubernetes-on-ubuntu) for x86_64 Cloud or Fog instances, and [Kubernetes on (vanilla) Raspbian Lite (https://github.com/alexellis/k8s-on-raspbian/blob/master/GUIDE.md) for the Edge devices;
 
 
 # Tool info
