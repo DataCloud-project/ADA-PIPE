@@ -5,7 +5,7 @@
 
 # ADA-PIPE Match Scheduler
 
-Provides a capacity-aware macthing-based scheduler for data pipeline processing across the computing continuum.
+Provides a capacity-aware matching-based scheduler for data pipeline processing across the computing continuum.
 
 # Installation
 
