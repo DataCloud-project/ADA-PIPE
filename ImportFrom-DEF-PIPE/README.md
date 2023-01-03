@@ -1,6 +1,6 @@
 
 
-1) In Windows OS and Linux OS, there are respectively these options to download the file:
+1) In Windows OS and Linux OS, there are respectively these options to download the DSL file defined by [DEF-PIPE](https://github.com/DataCloud-project/DEF-PIPE-DSL/):
 
 * ```Invoke-WebRequest -URI https://raw.githubusercontent.com/DataCloud-project/DEF-PIPE-DSL/master/XText/se.kth.datacloud.dsl/src/se/kth/datacloud/dsl/tellu.dsl -OutFile tellu.dsl```
 
