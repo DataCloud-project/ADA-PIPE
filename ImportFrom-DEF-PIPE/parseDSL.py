@@ -11,7 +11,7 @@ inFile = "D:\\00Research\\matching\\scheduler\\Demo3\\dsl2json\\tellu.dsl"
 
 with open('D:\\00Research\\matching\\scheduler\\Demo3\\dsl2json\\3ApplicationLogic.json', 'r') as openfile:
 			requirement_settings = json.load(openfile)
-			openfile.close
+			openfile.close()
 
 count = 0
 with open(inFile, "r") as fp:
@@ -46,7 +46,7 @@ with open(inFile, "r") as fp:
         #print(count)
 with open("D:\\00Research\\matching\\scheduler\\Demo3\\dsl2json\\3ApplicationLogic.json", "w") as outfile:
 			json.dump(requirement_settings,outfile)
-			outfile.close
+			outfile.close()
 #with open('D:\\00Research\\matching\\scheduler\\Demo3\\dsl2json\\requirements.yaml', 'r') as file_read:
 #	requirement_list = yaml.load(file_read, Loader=yaml.FullLoader)#json.dumps(yaml.load(file_read, Loader=yaml.FullLoader))
 #print((requirement_list))
