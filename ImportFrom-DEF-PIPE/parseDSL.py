@@ -23,7 +23,7 @@ count = 0
 # In general, I'd move the parsing to a method, that uses multiple helper functions depending on the nesting level
 # that have a narrow scope of responsibility
 with open(inFile, "r") as fp:
-    # in my opinion, while True is not advisable in this case.
+    # in my opinion, while True is not advisable in this case (for parsing a file).
     # you could do something like `while line := fp.readline()`
     # this would omit the conditional check if not line, and remove some lines
     # this works since the ':=' operator creates the line variable and assigns it the value of fp.readline() 
