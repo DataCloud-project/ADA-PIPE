@@ -128,9 +128,9 @@ def index0():
     if request.method == "POST":
         return Response(file_file, mimetype='application/html' )
 '''
-@app.route("/adaptExecution/<int:pipelineID>/<int:runtime_metrics>", methods=['POST'])
+@app.route("/adaptExecution/<int:pipelineID>/<int:runtime_metrics>", methods=['GET'])
 def index0(pipelineID,runtime_metrics):
-    if request.method == "POST":
+    #if request.method == "POST":
             try:
                 # pipelineID = data[pipelineID]
                 # runtime_metrics = data[runtime_metrics]
@@ -139,14 +139,14 @@ def index0(pipelineID,runtime_metrics):
                 #         "runtime_metrics": runtime_metrics,
                 #         "timestamp": get_timestamp(),
                 #     }
-                return Response(data, mimetype='application/json' )
+                return Response(data, mimetype='application/json')
 
             except FileNotFoundError:
                 return
 
-@app.route("/importPipeline/<int:pipelineID>", methods=['GET'])
+@app.route("/importPipeline/<string:pipelineID>", methods=['POST'])
 def importPipeline(pipelineID):
-    if request.method == "GET":
+    #if request.method == "GET":
             try:
                 # pipelineID = data[pipelineID]
                 # runtime_metrics = data[runtime_metrics]
@@ -155,13 +155,13 @@ def importPipeline(pipelineID):
                 #         "runtime_metrics": runtime_metrics,
                 #         "timestamp": get_timestamp(),
                 #     }
-                return ('Loaded successfully' and redirect("/requirements", code=302))
+                return ('Received successfully' and redirect("/requirements", code=302))
 
             except FileNotFoundError:
                 return
-@app.route("/importWorkerPools/<int:workerPools>", methods=['GET'])
+@app.route("/importWorkerPools/<string:workerPools>", methods=['POST'])
 def importWorkerPools(workerPools):
-    if request.method == "GET":
+    #if request.method == "GET":
             try:
                 # pipelineID = data[pipelineID]
                 # runtime_metrics = data[runtime_metrics]
@@ -170,7 +170,7 @@ def importWorkerPools(workerPools):
                 #         "runtime_metrics": runtime_metrics,
                 #         "timestamp": get_timestamp(),
                 #     }
-                return ('Loaded successfully' and redirect("/resources", code=302))
+                return ('Received successfully') # and redirect("/resources", code=302))
 
             except FileNotFoundError:
                 return
