@@ -5,10 +5,14 @@ info:
   version: v1
 paths:
   /adaptExecution/{pipelineID}/{runtime_metrics}:
-    post:
+    get:
       tags:
         - Export
       summary: Compute the adapted schedule based on runtime parameters for the pipeline with the ID
+      consumes:
+        - multipart/form-data; charset=UTF-8
+        - text/plain; charset=utf-8
+        - application/json; charset=UTF-8
       parameters:
         - name: runtime_metrics
           in: path
@@ -36,7 +40,7 @@ paths:
               schema:
                 type: integer
   /importWorkerPools/{workerPools}:
-    get:
+    post:
       tags:
         - Import
       summary: Import WorkerPools
@@ -45,7 +49,7 @@ paths:
           in: path
           required: true
           schema:
-            type: integer
+            type: string
       responses:
         '200':
           description: List of workers of Cloud and Edge
@@ -61,7 +65,7 @@ paths:
       security:
         - Bearer: []
   /importSimData/{pipelineID}:
-    get:
+    post:
       tags:
         - Import
       summary: Import simulation data
@@ -70,7 +74,7 @@ paths:
           in: path
           required: true
           schema:
-            type: integer
+            type: string
       responses:
         '200':
           description: List of simulation data matching the query
@@ -86,16 +90,20 @@ paths:
       security:
         - Bearer: []
   /importPipeline/{pipelineID}:
-    get:
+    post:
       tags:
         - Import
-      summary: Import pipeline in JSON
+      summary: Import pipeline in DSL
+      consumes:
+        - multipart/form-data; charset=utf-8
+        - text/plain; charset=utf-8
+        - application/json; charset=UTF-8
       parameters:
         - name: pipelineID
           in: path
           required: true
           schema:
-            type: integer
+            type: string
       responses:
         '200':
           description: Lists of pipelines and steps
@@ -116,10 +124,10 @@ components:
       type: object
       properties:
         pipelineID:
-          type: integer
+          type: string
           nullable: true
         runtime_metrics:
-          type: integer
+          type: string
           nullable: true
       additionalProperties:
           $ref: '#/components/schemas/JToken'
@@ -127,16 +135,16 @@ components:
       type: object
       properties:
         PipelineID:
-          type: integer
+          type: string
           nullable: true
       additionalProperties: false
     WorkerPool:
       type: object
       properties:
         workerPools:
-          type: integer
+          type: string
         errorMessage:
-          type: integer
+          type: string
           nullable: true
       additionalProperties: false
     JToken:
