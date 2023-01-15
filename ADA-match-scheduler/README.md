@@ -5,7 +5,7 @@
 
 # ADA-PIPE Match Scheduler
 
-Provides a capacity-aware matching-based scheduler for data pipeline processing across the computing continuum.
+Provides a [capacity-aware matching-based scheduler](https://github.com/SiNa88/C3-Match) for data pipeline processing across the computing continuum.
 
 # Installation
 
