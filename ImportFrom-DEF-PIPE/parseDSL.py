@@ -40,13 +40,12 @@ def parseDSL (in_file) -> None:
                 json.dump(requirement_settings,outfile)
 
 
-###Loading the DSL from GitHub###
 #from subprocess import call
 #call(["Invoke-WebRequest","-URI","https://raw.githubusercontent.com/DataCloud-project/DEF-PIPE-DSL/master/XText/se.kth.datacloud.dsl/src/se/kth/datacloud/dsl/tellu.dsl","-OutFile","tellu.dsl"])
 #in_file = "D:\\00Research\\matching\\scheduler\\Demo3\\dsl2json\\tellu.dsl"
 #parseDSL (in_file)
 
-###Getting the pipeline definition with the help of the access token### 
+
 #import os
 #cmd = "curl -X \'GET\' \'https://crowdserv.sys.kth.se/api/repo/export/testuser/pipeline\' -H \'accept: text/plain\'  -H \'Authorization: Bearer TTOOKKEENN'"
 #command = str.encode(os.popen(cmd).read())
