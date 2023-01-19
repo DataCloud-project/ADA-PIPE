@@ -13,6 +13,12 @@ def __get_secret_key() -> str:
 
 
 def _get_keycloak_open_id() -> KeycloakOpenID:
+    """Creates a KeyCloak ID instance that is required to authenticate our own service to other services 
+    and also to authenticate other services.
+
+    Returns:
+        KeycloakOpenID: Instance of a KeyCloak ID
+    """
     return KeycloakOpenID(
         server_url='https://datacloud-auth.euprojects.net/auth/',
         client_id='testclient',
@@ -29,6 +35,10 @@ def _get_keycloak_token(username: str, password: str) -> dict:
     Returns:
         dict: the keycloak token for ADA-PIPE
     """
+    if username is None or len(username) == 0:
+        raise KeycloakAuthenticationError('The provided username is either None or empty')
+    if password is None or len(password) == 0:
+        raise KeycloakAuthenticationError('The provided password is either None or empty')
     token = __keycloak_open_id.token(
         username,
         password)
