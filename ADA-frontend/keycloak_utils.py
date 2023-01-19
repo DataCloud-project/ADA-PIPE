@@ -1,22 +1,29 @@
 from keycloak import KeycloakOpenID
 from keycloak.exceptions import KeycloakAuthenticationError
 
+import yaml
+
 #import api_config
+
+
+def __get_secret_key() -> str:
+    with open('credentials.yml', 'r') as file:
+        yaml_file = yaml.safe_load(file)
+        return yaml_file['keycloak']['client_sk']
 
 
 def _get_keycloak_open_id() -> KeycloakOpenID:
     return KeycloakOpenID(
-		server_url='https://datacloud-auth.euprojects.net/auth/',
-		client_id='testclient',
-		realm_name='user-authentication',
-		client_secret_key='***REMOVED***'
+        server_url='https://datacloud-auth.euprojects.net/auth/',
+        client_id='testclient',
+        realm_name='user-authentication',
+        client_secret_key=__get_secret_key()
     )
-
 
 __keycloak_open_id = _get_keycloak_open_id()
 
 
-def _get_keycloak_token(username,password) -> dict:
+def _get_keycloak_token(username: str, password: str) -> dict:
     """Get the assigned KeyCloak token for the ADA-PIPE backend to be able to send requests to other DataCloud services.
 
     Returns:
