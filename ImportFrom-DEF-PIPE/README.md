@@ -6,5 +6,6 @@
 
 * ```wget https://raw.githubusercontent.com/DataCloud-project/DEF-PIPE-DSL/master/XText/se.kth.datacloud.dsl/src/se/kth/datacloud/dsl/tellu.dsl```
 
+* Or just through the [swagger ui](https://github.com/DataCloud-project/ADA-PIPE/blob/main/ImportFrom-DEF-PIPE/importing-from-def-pipe.PNG)
 
 2) In the next step, run the ```parseDSL.py``` file for parsing the already-downloaded dsl, which extract the required features from the description.
