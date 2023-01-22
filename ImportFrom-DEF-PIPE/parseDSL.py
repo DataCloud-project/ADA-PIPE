@@ -16,7 +16,12 @@ def parseDSL (in_file) -> None:
             words = line.split(' ')
             
             if  len(words) != 1:
-                if (words[0] == STEPS_REQ_MAXCPU):
+                #print()
+                if (PIPELINE_NAME in words[0]):
+                    print(requirement_settings["pipelineName"])
+                    requirement_settings["pipelineName"]= words[1]+"_pipeline"
+                elif (words[0] == STEPS_REQ_MAXCPU):
+                    print()
                     requirement_settings["stepsList"][0]["requirement"]["vCPUs"]=((float(words[1]))/1024.0)
                     
                 elif (words[0] == STEPS_REQ_MINMEM):
@@ -24,6 +29,9 @@ def parseDSL (in_file) -> None:
                     
                 elif (words[0] == STEPS_IMPLEMENTATION):
                     requirement_settings["stepsList"][0]["dockerImage"] = words[3].lower()
+                
+                elif (words[0] == STEPS_REQ_MAXINS):
+                    requirement_settings  = requirement_settings  #If it is supported in deployment phase
                     
     
             if (count == 0):
@@ -35,10 +43,13 @@ def parseDSL (in_file) -> None:
                 
             if "data-processing step" in line or "data-source step" in line:
                 count += 1
+                if "data-processing step" in line:
+                    requirement_settings["stepsList"][0]["name"] = words[3].lower()
+                    #print(STEPS_NAME)
 
-    with open("D:\\00Research\\matching\\scheduler\\Demo3\\dsl2json\\3ApplicationLogic.json", "w") as outfile:
+    with open("D:\\00Research\\matching\\scheduler\\Demo3\\dsl2json\\"+STEPS_NAME+".json", "w") as outfile:
                 json.dump(requirement_settings,outfile)
-
+    #print()
 
 #from subprocess import call
 #call(["Invoke-WebRequest","-URI","https://raw.githubusercontent.com/DataCloud-project/DEF-PIPE-DSL/master/XText/se.kth.datacloud.dsl/src/se/kth/datacloud/dsl/tellu.dsl","-OutFile","tellu.dsl"])
@@ -54,4 +65,5 @@ output = "{\"data\":\"Pipeline pipeline {\n\tcommunicationMedium: medium \n\tste
 
 output=output.replace("\\n","")
 output=output.replace("\\t","")
+#print(output)
 parseDSL (output)
