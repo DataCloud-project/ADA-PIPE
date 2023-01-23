@@ -70,17 +70,20 @@ def handle_500_error(_error):
 @app.route('/', methods=['GET', 'POST'])
 def get_homepage():
     if request.method == 'POST':
-        if request.form.get('action1') == 'INPUT1 - requirements (template)':
-            return redirect("/requirements", code=302) #Response(requirement_list, mimetype='text/yaml')
-        elif request.form.get('action2') == 'INPUT1 - requirements (from BC)':
+        if request.form.get('action1') == 'Requirements (template)':
+            return redirect("/requirements", code=302)
+        elif request.form.get('action2') == 'Requirements':
             return redirect("/upload", code=302)
-        elif  request.form.get('action3') == 'INPUT2 - resources':
-            return redirect("/resources", code=302) #Response(resource_list, mimetype='application/json')
+        elif  request.form.get('action3') == 'WorkerPools':
+            return redirect("/resources", code=302) 
+        elif request.form.get('action4') == 'Schedules':
+            return redirect("/schedules", code=302) 
         else:
-            return redirect("/schedules", code=302) #Response(data, mimetype='application/json')
+            return redirect("/swagger", code=302) 
     elif request.method == 'GET':
         return render_template("index.html", form=request.form)
     return render_template("index.html")
+
 
 @app.route("/pipelines", methods=['GET', 'POST'])
 def index():
@@ -103,13 +106,13 @@ def index():
                 return redirect("/upload", code=302)
             elif request.form.get('action3') == 'INPUT2 - resources':
                 return redirect("/resources", code=302) #Response(resource_list, mimetype='application/json')
+            elif request.form.get('action4') == 'Schedules':
+                return redirect("/schedules", code=302) 
             else:
-                return redirect("/schedules", code=302) #Response(data, mimetype='application/json')
+                return redirect("/swagger", code=302) 
     elif request.method == 'GET':
-        #print(":D")
-        return render_template("./index.html", form=request.form)
-    #print(":D:D")
-    return render_template("./index.html")
+        return render_template("index.html", form=request.form)
+    return render_template("index.html")
 
 @app.route('/upload')
 def upload_page():
@@ -128,8 +131,8 @@ def index0():
     if request.method == "POST":
         return Response(file_file, mimetype='application/html' )
 '''
-@app.route("/adaptExecution/<int:pipelineID>/<int:runtime_metrics>", methods=['GET'])
-def index0(pipelineID,runtime_metrics):
+@app.route("/adaptExecution/<string:pipelineID>/<string:chunkID>", methods=['GET'])
+def index0(pipelineID,chunkID):
     #if request.method == "POST":
             try:
                 # pipelineID = data[pipelineID]
