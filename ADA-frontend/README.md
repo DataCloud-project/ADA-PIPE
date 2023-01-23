@@ -12,6 +12,8 @@ The web interface to provision resources for data pipeline's steps on the Comput
 
 We utilized a [video tutorial](https://www.youtube.com/watch?v=AyyX9yM_OZk) and a [document on realpython website](https://realpython.com/flask-connexion-rest-api/).
 
+Moreover, we used the Bootsrap features by following [video tutorial](https://www.youtube.com/watch?v=kMsKm53XtyA) and a [document](https://www.blog.duomly.com/how-to-crate-simple-web-page-using-bootstrap-5/).
+
 
 ## Installation
 The main script is ``demo.py``.
