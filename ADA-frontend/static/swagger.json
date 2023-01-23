@@ -4,7 +4,7 @@ info:
   description: For the protected end points, you need to genereate an access token (e.g. using postman) and provide it by opening "Authorize"
   version: v1
 paths:
-  /adaptExecution/{pipelineID}/{runtime_metrics}:
+  /adaptExecution/{pipelineID}/{chunkID}:
     get:
       tags:
         - Export
@@ -14,16 +14,16 @@ paths:
         - text/plain; charset=utf-8
         - application/json; charset=UTF-8
       parameters:
-        - name: runtime_metrics
+        - name: chunkID
           in: path
           required: true
           schema:
-            type: integer
+            type: string
         - name: pipelineID
           in: path
           required: true
           schema:
-            type: integer
+            type: string
       requestBody:
         content:
           text/plain:
@@ -126,7 +126,7 @@ components:
         pipelineID:
           type: string
           nullable: true
-        runtime_metrics:
+        chunkID:
           type: string
           nullable: true
       additionalProperties:
