@@ -4,22 +4,18 @@ info:
   description: For the protected end points, you need to genereate an access token (e.g. using postman) and provide it by opening "Authorize"
   version: v1
 paths:
-  /adaptExecution/{pipelineID}/{chunkID}:
+  /adaptExecution/{pipeline}/{chunk}:
     get:
       tags:
         - Export
       summary: Compute the adapted schedule based on runtime parameters for the pipeline with the ID
-      consumes:
-        - multipart/form-data; charset=UTF-8
-        - text/plain; charset=utf-8
-        - application/json; charset=UTF-8
       parameters:
-        - name: chunkID
+        - name: chunk
           in: path
           required: true
           schema:
             type: string
-        - name: pipelineID
+        - name: pipeline
           in: path
           required: true
           schema:
@@ -64,13 +60,18 @@ paths:
           description: Unauthorized
       security:
         - Bearer: []
-  /importSimData/{pipelineID}:
+  /importSimData/{user}/{pipeline}:
     post:
       tags:
         - Import
       summary: Import simulation data
       parameters:
-        - name: pipelineID
+        - name: user
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: pipeline
           in: path
           required: true
           schema:
@@ -89,17 +90,22 @@ paths:
           description: Unauthorized
       security:
         - Bearer: []
-  /importPipeline/{pipelineID}:
+  /importPipeline/{user}/{pipeline}:
     post:
       tags:
         - Import
       summary: Import pipeline in DSL
       consumes:
-        - multipart/form-data; charset=utf-8
+        - multipart/form-data
         - text/plain; charset=utf-8
-        - application/json; charset=UTF-8
+        - application/json
       parameters:
-        - name: pipelineID
+        - name: user
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: pipeline
           in: path
           required: true
           schema:
@@ -123,10 +129,10 @@ components:
     Pipeline:
       type: object
       properties:
-        pipelineID:
+        pipeline:
           type: string
           nullable: true
-        chunkID:
+        chunk:
           type: string
           nullable: true
       additionalProperties:
@@ -134,7 +140,10 @@ components:
     PipelineProvider:
       type: object
       properties:
-        PipelineID:
+        user:
+          type: string
+          nullable: true
+        pipeline:
           type: string
           nullable: true
       additionalProperties: false
