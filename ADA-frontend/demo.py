@@ -1,5 +1,5 @@
 from interface_json import PipelineDataContainer
-from flask import Flask, render_template, Response, request, jsonify, make_response, redirect
+from flask import Flask, render_template, Response, request, jsonify, make_response, redirect, send_file
 from werkzeug.utils import secure_filename
 import os
 import json
@@ -9,6 +9,7 @@ from waitress import serve
 import keycloak_utils
 from flask_swagger_ui import get_swaggerui_blueprint
 
+
 DEBUG_MODE: bool = True
 HOST_NUMBER: str = '0.0.0.0'
 PORT_NUMBER: int = 5000
@@ -16,17 +17,13 @@ PORT_NUMBER: int = 5000
 # Create a new Flask application
 app = Flask(__name__)
 
+
 with open('requirements.yaml', 'r') as file_read:
-	requirement_list = json.dumps(yaml.load(file_read, Loader=yaml.FullLoader))
+        requirement_list = json.dumps(yaml.load(file_read, Loader=yaml.FullLoader))
 
 with open('resources.json', 'r') as file_read:
-	resource_list0 = json.load(file_read)
+        resource_list0 = json.load(file_read)
 resource_list = json.dumps(resource_list0)
-
-'''with open('D:\\00Research\\matching\\scheduler\\ADA-PIPE-Frontend-new\\3ApplicationLogic.json', 'r') as openfile:
-    json_object = json.load(openfile)
-data = json.dumps(json_object)
-#pdc = PipelineDataContainer(FILE_PATH)'''
 
 with open('3ApplicationLogic.json', 'r') as openfile:
     json_object = json.load(openfile)
@@ -40,9 +37,8 @@ SWAGGERUI_BLUEPRINT = get_swaggerui_blueprint(
     API_URL
 )
 app.register_blueprint(SWAGGERUI_BLUEPRINT, url_prefix=SWAGGER_URL)
+
 # error handeling
-
-
 @app.errorhandler(400)
 def handle_400_error(_error):
     """Return a http 400 error to client"""
@@ -66,7 +62,6 @@ def handle_500_error(_error):
     """Return a http 500 error to client"""
     return make_response(jsonify({'error': 'Server error'}), 500)
 
-
 @app.route('/', methods=['GET', 'POST'])
 def get_homepage():
     if request.method == 'POST':
@@ -75,15 +70,14 @@ def get_homepage():
         elif request.form.get('action2') == 'Requirements':
             return redirect("/upload", code=302)
         elif  request.form.get('action3') == 'WorkerPools':
-            return redirect("/resources", code=302) 
+            return redirect("/resources", code=302)
         elif request.form.get('action4') == 'Schedules':
-            return redirect("/schedules", code=302) 
+            return redirect("/schedules", code=302)
         else:
-            return redirect("/swagger", code=302) 
+            return redirect("/swagger", code=302)
     elif request.method == 'GET':
         return render_template("index.html", form=request.form)
     return render_template("index.html")
-
 
 @app.route("/pipelines", methods=['GET', 'POST'])
 def index():
@@ -107,32 +101,55 @@ def index():
             elif request.form.get('action3') == 'INPUT2 - resources':
                 return redirect("/resources", code=302) #Response(resource_list, mimetype='application/json')
             elif request.form.get('action4') == 'Schedules':
-                return redirect("/schedules", code=302) 
+                return redirect("/schedules", code=302)
             else:
-                return redirect("/swagger", code=302) 
+                return redirect("/swagger", code=302)
     elif request.method == 'GET':
-        return render_template("index.html", form=request.form)
-    return render_template("index.html")
+        #print(":D")
+        return render_template("./index.html", form=request.form)
+    #print(":D:D")
+    return render_template("./index.html")
 
 @app.route('/upload')
 def upload_page():
-   return render_template('./upload.html')
+    '''if request.form.get('Download') == 'Download - requirements (template)':
+            return redirect("/download", code=302) #Response(requirement_list, mimetype='text/yaml')
+    else:'''
+    return render_template('./upload.html')
+
+@app.route('/download', methods=['GET'])
+def downloadFile ():
+    path = "requirements-temp.json"
+    return (send_file(path,  mimetype='application/json' ,as_attachment=True) and redirect("/upload", code=302))
 
 @app.route('/uploader', methods = ['GET', 'POST'])
 def upload_file():
-   if request.method == 'POST':
+    if request.method == 'GET':
+        downloadFile ()
+    elif request.method == 'POST':
       f = request.files['file']
       filename = secure_filename(f.filename)
-      f.save(os.path.join('./uploaded/', filename))
+      f.save(os.path.join('uploaded', filename))
       return ('file uploaded successfully' and redirect("/", code=302))
 
-'''@app.route("/features", methods=['GET', 'POST'])
-def index0():
-    if request.method == "POST":
-        return Response(file_file, mimetype='application/html' )
-'''
-@app.route("/adaptExecution/<string:pipelineID>/<string:chunkID>", methods=['GET'])
-def index0(pipelineID,chunkID):
+@app.route("/adaptExecution/<string:pipeline>/<string:chunk>", methods=['GET'])
+def index0(pipeline,chunk):
+    #if request.method == "GET":
+            try:
+                # pipelineID = data[pipelineID]
+                # runtime_metrics = data[runtime_metrics]
+                # data = {
+                #         "pipelineID": pipelineID,
+                #         "runtime_metrics": runtime_metrics,
+                #         "timestamp": get_timestamp(),
+                #     }
+                return ('Successfully loaded' and Response(data, mimetype='application/json' ))
+
+            except FileNotFoundError:
+                return
+
+@app.route("/importPipeline/<string:user>/<string:pipeline>", methods=['POST'])
+def importPipeline(user,pipeline):
     #if request.method == "POST":
             try:
                 # pipelineID = data[pipelineID]
@@ -142,29 +159,15 @@ def index0(pipelineID,chunkID):
                 #         "runtime_metrics": runtime_metrics,
                 #         "timestamp": get_timestamp(),
                 #     }
-                return Response(data, mimetype='application/json')
+                #print(pipelineID)
+                return ('Successfully received' and redirect("/requirements", code=302))
 
             except FileNotFoundError:
-                return
-
-@app.route("/importPipeline/<string:pipelineID>", methods=['POST'])
-def importPipeline(pipelineID):
-    #if request.method == "GET":
-            try:
-                # pipelineID = data[pipelineID]
-                # runtime_metrics = data[runtime_metrics]
-                # data = {
-                #         "pipelineID": pipelineID,
-                #         "runtime_metrics": runtime_metrics,
-                #         "timestamp": get_timestamp(),
-                #     }
-                return ('Received successfully' and redirect("/requirements", code=302))
-
-            except FileNotFoundError:
+                print(":D")
                 return
 @app.route("/importWorkerPools/<string:workerPools>", methods=['POST'])
 def importWorkerPools(workerPools):
-    #if request.method == "GET":
+    #if request.method == "POST":
             try:
                 # pipelineID = data[pipelineID]
                 # runtime_metrics = data[runtime_metrics]
@@ -173,11 +176,10 @@ def importWorkerPools(workerPools):
                 #         "runtime_metrics": runtime_metrics,
                 #         "timestamp": get_timestamp(),
                 #     }
-                return ('Received successfully') # and redirect("/resources", code=302))
+                return ('Loaded successfully' and redirect("/resources", code=302))
 
             except FileNotFoundError:
                 return
-
 @app.route("/requirements", methods=['GET'])
 def index1():
     if request.method == 'GET':
@@ -205,4 +207,3 @@ if __name__ == '__main__':
         IP_address = socket.gethostbyname(host_name)
         print(f'Running on http://{IP_address}/{PORT_NUMBER}/ (Press CTRL+C to quit)')
         serve(app, host=HOST_NUMBER, port=PORT_NUMBER)
-
