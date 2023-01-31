@@ -73,11 +73,17 @@ To test the KeyCloak:
 
 ## Redirect traffic
 * To redirect the traffic from the default flask port number (5000) to the http port number (80), the following command were applied:
+* 
 ``firewall-cmd --add-service=http --permanent``
+
 ``firewall-cmd --add-service=https --permanent``
+
 ``firewall-cmd --add-masquerade --permanent``
+
 ``firewall-cmd --add-forward-port=port=80:proto=tcp:toport=5000 --permanent``
 
-* Create the port forwarding on localhost
+* Create the port forwarding on localhost:
+* 
 ``iptables -t nat -I OUTPUT --source 127.0.0.1 --destination 127.0.0.1 -p tcp --dport 80 -j REDIRECT --to-ports 5000``
+
 ``firewall-cmd --reload``
