@@ -1,4 +1,4 @@
-PIPELINE_NAME: str = 'pipelineName'
+PIPELINE_NAME: str = 'Pipeline'
 
 
 STEPS_NAME: str = 'name'
