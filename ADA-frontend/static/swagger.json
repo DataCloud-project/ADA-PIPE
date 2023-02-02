@@ -160,7 +160,7 @@ components:
     Bearer:
       type: apiKey
       description: |-
-        Enter you your Keyclaok bearer token in the format bellow (don't forget the "Bearer")
+        Enter you your Keycloak bearer token in the format below (please do not forget the "Bearer")
 
          Bearer YOUR_ACCESS_TOKEN
       name: Authorization
