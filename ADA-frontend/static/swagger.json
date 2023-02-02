@@ -8,33 +8,32 @@ paths:
     get:
       tags:
         - Export
-      summary: Compute the adapted schedule based on runtime parameters for the pipeline with the ID
+      summary: Compute the adapted schedule based on the pipeline with the ID and the chunk (step) name
       parameters:
-        - name: chunk
-          in: path
-          required: true
-          schema:
-            type: string
         - name: pipeline
           in: path
           required: true
           schema:
             type: string
-      requestBody:
-        content:
-          text/plain:
-            schema:
-              $ref: '#/components/schemas/Pipeline'
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Pipeline'
+        - name: chunk
+          in: path
+          required: true
+          schema:
+            type: string
       responses:
         '200':
-          description: Schedules in JSON format
+          description: Lists of pipelines and steps
           content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/DepProvider'
             application/json:
               schema:
-                type: integer
+                $ref: '#/components/schemas/DepProvider'
+        '401':
+          description: Unauthorized
+      security:
+        - Bearer: []
   /importWorkerPools/{workerPools}:
     post:
       tags:
@@ -95,10 +94,6 @@ paths:
       tags:
         - Import
       summary: Import pipeline in DSL
-      consumes:
-        - multipart/form-data
-        - text/plain; charset=utf-8
-        - application/json
       parameters:
         - name: user
           in: path
@@ -126,24 +121,25 @@ paths:
         - Bearer: []
 components:
   schemas:
-    Pipeline:
+    DepProvider:
       type: object
       properties:
-        pipeline:
-          type: string
-          nullable: true
         chunk:
           type: string
+        pipeline:
+          type: string
+        errorMessage:
+          type: string
           nullable: true
-      additionalProperties:
-          $ref: '#/components/schemas/JToken'
+      additionalProperties: false
     PipelineProvider:
       type: object
       properties:
         user:
           type: string
-          nullable: true
         pipeline:
+          type: string
+        errorMessage:
           type: string
           nullable: true
       additionalProperties: false
@@ -164,7 +160,7 @@ components:
     Bearer:
       type: apiKey
       description: |-
-        Enter your Keycloak bearer token in the format below (plz do not forget the "Bearer")
+        Enter you your Keyclaok bearer token in the format bellow (don't forget the "Bearer")
 
          Bearer YOUR_ACCESS_TOKEN
       name: Authorization
