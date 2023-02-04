@@ -13,18 +13,18 @@
     <!-- Navbar -->
     <nav class="py-3 navbar navbar-expand-lg fixed-top auto-hiding-navbar">
         <div class="container">
-        <!-- <a class="navbar-brand"" href="https://github.com/DataCloud-project/ADA-PIPE/">
-            <img class="logo" src="./fig/ADAPIPE_Logo_TransparentBackground_White.png"> ADA-PIPE
-        </a> -->
+        <a class="navbar-brand"" href="https://github.com/DataCloud-project/ADA-PIPE/">
+            <img class="logo" src="fig/ADAPIPE_Logo_TransparentBackground_White.png"> ADA-PIPE
+        </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ml-auto">
             <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="{{url_for('index1')}}">Requirements - template</a>
+                <a class="nav-link active" aria-current="page" href="{{url_for('upload_page')}}">Requirements</a>
             </li>
-            <li class="nav-item">
+            <!--<li class="nav-item">
                 <a class="nav-link" href="{{url_for('upload_page')}}">Requirements</a>
             </li>
             <li class="nav-item">
@@ -32,9 +32,9 @@
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="{{url_for('index3')}}">Schedules</a>
-            </li>
+            </li>-->
             <li class="nav-item">
-                <a class="nav-link" href="http://194.182.187.139:5000/swagger/">Swagger UI</a>
+                <a class="nav-link" href="http://194.182.187.139/swagger/">Swagger UI</a>
             </li>
             </ul>
         </div>
@@ -42,6 +42,49 @@
     </nav>
     <!-- End Navbar -->
     <!-- Hero section -->
+        </br>
+        </br>
+        </br>
+    <ul>
+    <section id="hero">
+
+                  <!--<div class="row">
+                        <div class="col">
+                                        <button type="button" class="btn btn-dark" ><a href="http://194.182.187.139:5000/swagger/">ADA-PIPE Swagger UI</a></button>
+                        </div>
+              </div>-->
+         <div class="container">
+          <div class="row cards">
+                <div class="col-md-4 d-flex justify-content-center">
+                  <div class="card" style="width: 18rem;">
+                        <div class="card-body">
+                          <h5 class="card-title">Import user's token</h5>
+                          <p class="card-text"><a href="{{url_for('importUser',user='testuser')}}">User's access token</a></p>
+                        </div>
+                  </div>
+                </div>
+
+        <div class="col-md-4 d-flex justify-content-center">
+          <div class="card" style="width: 18rem;">
+            <div class="card-body">
+              <h5 class="card-title">Import pipeline definition</h5>
+              <p class="card-text"><a href="{{url_for('import_pipeline')}}">Pipeline definition</a></p>
+            </div>
+          </div>
+        </div>
+          <div class="col-md-4 d-flex justify-content-center">
+                          <div class="card" style="width: 18rem;">
+                                <div class="card-body">
+                                  <h5 class="card-title">Scraping data</h5>
+                                  <p class="card-text"><a href="http://localhost:9090/graph">Prometheus dashboard</a></p>
+                                  <p class="card-text"><a href="{{url_for('importData')}}">Continuum's monitoring</a></p>
+                                </div>
+                          </div>
+                  </div>
+           </div>
+        </div>
+  </section>
+  </ul>
 
     </br>
     </br>
@@ -56,20 +99,12 @@
                  </div>-->
                   <div class="container">
                   <div class="row cards">
-                        <div class="col-md-4 d-flex justify-content-center">
-                          <div class="card" style="width: 18rem;">
-                                <div class="card-body">
-                                  <h5 class="card-title">Resource Prediction</h5>
-                                  <!--<p class="card-text">Some text.</p>-->
-                                </div>
-                          </div>
-                        </div>
 
         <div class="col-md-4 d-flex justify-content-center">
           <div class="card" style="width: 18rem;">
             <div class="card-body">
               <h5 class="card-title">LSTM prediction model</h5>
-              <!--<p class="card-text">Some text.</p>-->
+              <p class="card-text"><a href="predict">Predict the resource</a></p>
             </div>
           </div>
         </div>
@@ -78,7 +113,7 @@
           <div class="card" style="width: 18rem;">
             <div class="card-body">
               <h5 class="card-title">Scheduling</h5>
-              <!--<p class="card-text">Some text.</p>-->
+              <p class="card-text"><a href="{{url_for('adaptExecution',pipeline='pipeline',chunk='chunk1')}}">Schedule to be deployed</a></p>
             </div>
           </div>
         </div>
