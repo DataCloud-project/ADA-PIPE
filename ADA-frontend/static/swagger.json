@@ -119,6 +119,31 @@ paths:
           description: Unauthorized
       security:
         - Bearer: []
+  /importUser/{user}:
+    post:
+      tags:
+        - Import
+      summary: Import user's token
+      parameters:
+        - name: user
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Lists of users
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/User'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '401':
+          description: Unauthorized
+      security:
+        - Bearer: []
 components:
   schemas:
     DepProvider:
@@ -143,6 +168,14 @@ components:
           type: string
           nullable: true
       additionalProperties: false
+    User:
+      type: object
+      properties:
+        user:
+          type: string
+        errorMessage:
+          type: string
+          nullable: true
     WorkerPool:
       type: object
       properties:
