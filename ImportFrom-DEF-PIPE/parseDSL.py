@@ -59,6 +59,7 @@ output=output.replace(output[:9], "")
 output=output.replace(output[len(output)-37:], "")
 print(output)
 parseDSL (output)'''
+
 token_call = ["curl", "--location", "--request", "POST", "https://datacloud-auth.euprojects.net/auth/realms/user-authentication/protocol/openid-connect/token", "--header", "Content-Type: application/x-www-form-urlencoded", "--data-urlencode", "username=testuser", "--data-urlencode", "password=cT2!3jB0H43sbl", "--data-urlencode", "realm=user-authentication", "--data-urlencode", "client_id=def_frontend", "--data-urlencode", "grant_type=password"]
 p = subprocess.Popen(token_call, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 output, err = p.communicate()
