@@ -2,6 +2,7 @@ import sys
 sys.path.append('./parser_constants')
 from parser_constants import *
 import json
+import subprocess
 
 def parseDSL (in_file) -> None:
     count = 0
