@@ -33,26 +33,26 @@ class JobDataContainer():
 
         return deepcopy(self._job_dict[STEPS_REQUIREMENTS])
 
-    def get_STEPS_HEALTH_CHECK(self) -> dict:
+    def get_steps_health_check(self) -> dict:
         if STEPS_HEALTH_CHECK not in self._job_dict:
             raise json_exceptions.KeyNotInJSON()
 
         return deepcopy(self._job_dict[STEPS_HEALTH_CHECK])
 
-    def get_STEPS_HEALTH_CHECK_(self) -> dict:
+    def get_steps_health_check_(self) -> dict:
         if STEPS_HEALTH_CHECK not in self._job_dict:
             raise json_exceptions.KeyNotInJSON()
 
         return self._job_dict[STEPS_HEALTH_CHECK]
 
-    def get_STEPS_TERMINATION_CHECK(self) -> dict:
+    def get_steps_termination_check(self) -> dict:
         if STEPS_TERMINATION_CHECK not in self._job_dict:
             raise json_exceptions.KeyNotInJSON(STEPS_TERMINATION_CHECK)
 
         return deepcopy(self._job_dict[TERMINATION_CHECK])
 
 
-    def get_STEPS_TERMINATION_CHECK_(self) -> dict:
+    def get_steps_termination_check_(self) -> dict:
         if STEPS_TERMINATION_CHECK not in self._job_dict:
             raise json_exceptions.KeyNotInJSON(STEPS_TERMINATION_CHECK)
 
