@@ -2,7 +2,7 @@ import json
 from typing import List
 from copy import copy, deepcopy
 import json_exceptions
-from flask import jsonify
+from flask import jsonify, Response
 
 from interface_constants import *
 
@@ -11,49 +11,50 @@ number_of_decimals: int = 5
 
 
 class JobDataContainer():
-
+    _job_dict: dict = dict()
+    
     def __init__(self, job_dict: dict) -> None:
         if not self._is_valid_job_dictionary(job_dict):
             raise json_exceptions.KeyNotInJSON()
         self._job_dict: dict = job_dict
 
-    def to_json(self) -> str:
+    def to_json(self) -> Response:
         return jsonify(self._job_dict)
 
     def get_resource(self) -> str:
-        if JOB_RESOURCE not in self._job_dict:
+        if STEPS_RESOURCE not in self._job_dict:
             raise json_exceptions.KeyNotInJSON()
 
-        return copy(self._job_dict[JOB_RESOURCE])
+        return copy(self._job_dict[STEPS_RESOURCE])
 
     def get_requirements(self) -> dict:
-        if JOB_REQUIREMENTS not in self._job_dict:
+        if STEPS_REQUIREMENTS not in self._job_dict:
             raise json_exceptions.KeyNotInJSON()
 
-        return deepcopy(self._job_dict[JOB_REQUIREMENTS])
+        return deepcopy(self._job_dict[STEPS_REQUIREMENTS])
 
-    def get_job_health_check(self) -> dict:
-        if JOB_HEALTH_CHECK not in self._job_dict:
+    def get_STEPS_HEALTH_CHECK(self) -> dict:
+        if STEPS_HEALTH_CHECK not in self._job_dict:
             raise json_exceptions.KeyNotInJSON()
 
-        return deepcopy(self._job_dict[JOB_HEALTH_CHECK])
+        return deepcopy(self._job_dict[STEPS_HEALTH_CHECK])
 
-    def get_job_health_check_(self) -> dict:
-        if JOB_HEALTH_CHECK not in self._job_dict:
+    def get_STEPS_HEALTH_CHECK_(self) -> dict:
+        if STEPS_HEALTH_CHECK not in self._job_dict:
             raise json_exceptions.KeyNotInJSON()
 
-        return self._job_dict[JOB_HEALTH_CHECK]
+        return self._job_dict[STEPS_HEALTH_CHECK]
 
-    def get_job_termination_check(self) -> dict:
-        if JOB_TERMINATION_CHECK not in self._job_dict:
-            raise json_exceptions.KeyNotInJSON(JOB_TERMINATION_CHECK)
+    def get_STEPS_TERMINATION_CHECK(self) -> dict:
+        if STEPS_TERMINATION_CHECK not in self._job_dict:
+            raise json_exceptions.KeyNotInJSON(STEPS_TERMINATION_CHECK)
 
         return deepcopy(self._job_dict[TERMINATION_CHECK])
 
 
-    def get_job_termination_check_(self) -> dict:
-        if JOB_TERMINATION_CHECK not in self._job_dict:
-            raise json_exceptions.KeyNotInJSON(JOB_TERMINATION_CHECK)
+    def get_STEPS_TERMINATION_CHECK_(self) -> dict:
+        if STEPS_TERMINATION_CHECK not in self._job_dict:
+            raise json_exceptions.KeyNotInJSON(STEPS_TERMINATION_CHECK)
 
         return self._job_dict[TERMINATION_CHECK]
 
@@ -112,12 +113,12 @@ class PipelineDataContainer():
         self.__json_template[PIPELINE_TYPE] = pipeline_type
 
     def get_step_name(self) -> str:
-        return copy(self.__json_template[STEP_NAME])
+        return copy(self.__json_template[STEPS_NAME])
 
     def set_step_name(self, step_name: str) -> None:
         if step_name is None or not type(step_name) == str:
             raise json_exceptions.InvalidParameter()
-        self.__json_template[STEP_NAME] = step_name
+        self.__json_template[STEPS_NAME] = step_name
 
     def get_termination_check(self) -> dict:
         termination_check = self.__json_template[TERMINATION_CHECK]
@@ -136,13 +137,13 @@ class PipelineDataContainer():
         time_elem[ESTIMATED_FINISH_TIME] = est_finish_time'''
 
     def get_jobs(self) -> List[JobDataContainer]:
-        job_list = self.__json_template[JOB]
+        job_list = self.__json_template[STEPS_LIST_KEY]
         job_list = [JobDataContainer(job) for job in job_list]
         return job_list
 
 
     def get_jobs_as_json(self) -> str:
-        jobs: List[JobDataContainer] = self.get_jobs()
+        jobs: list = self.get_jobs()
         jobs = [job._job_dict for job in jobs]
 
         return json.dumps({'jobList': jobs})
@@ -154,4 +155,4 @@ class PipelineDataContainer():
 # print(pt.get_jobs_as_json())
 
 # job = pt.get_jobs().pop()
-# print(job.get_job_health_check())
+# print(job.get_STEPS_HEALTH_CHECK())
