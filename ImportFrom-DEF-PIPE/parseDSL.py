@@ -11,9 +11,6 @@ def parseDSL (in_file) -> None:
                 requirement_settings = json.load(openfile)
             #print(line)
             words = line.split(' ')
-            for i in range(len(words)):
-                words[i] = words[i].replace("\\t","")
-                words[i] = words[i].replace("\\n","")
             #print(words)
             if  len(words) != 1:
                 #print(words[0])
@@ -51,14 +48,6 @@ def parseDSL (in_file) -> None:
                     json.dump(requirement_settings,outfile)
     #print()
 
-'''output = "{\"data\":\"Pipeline pipeline {\n\tcommunicationMedium: medium \n\tsteps:\n\t\t- data-processing step Data_Analysis\n\t\t\timplementation: container-implementation image: \'\'\n\t\t\tenvironmentParameters: {\n\n\t\t\t}\n\t\t\tresourceProvider: \n\t\t\texecutionRequirement:\n\t\t\t\thardRequirements:\t\t\t\t\t\n\n\n\t\t- data-processing step Scenarios_Generation\n\t\t\timplementation: container-implementation image: \'what-if docker\'\n\t\t\tenvironmentParameters: {\n\n\t\t\t}\n\t\t\tresourceProvider: \n\t\t\texecutionRequirement:\n\t\t\t\thardRequirements:\t\t\t\t\t\n\t\t\t\t\thorizontalScale:\n\t\t\t\t\t\tmin-instance: 1\n\t\t\t\t\t\tmax-instance: 1000\n\n\n\t\t- data-processing step Production_Workflow_Simulation\n\t\t\timplementation: container-implementation image: \'what-if docker'\n\t\t\tenvironmentParameters: {\n\n\t\t\t}\n\t\t\tresourceProvider: \n\t\t\texecutionRequirement:\n\t\t\t\thardRequirements:\t\t\t\t\t\n\t\t\t\t\thorizontalScale:\n\t\t\t\t\t\tmin-instance: 1\n\t\t\t\t\t\tmax-instance: 1000\n\n\n\t\t- data-processing step What-if_Analysis\n\t\t\timplementation: container-implementation image: 'what-if docker'\n\t\t\tenvironmentParameters: {\n\n\t\t\t}\n\t\t\tresourceProvider: \n\t\t\texecutionRequirement:\n\t\t\t\thardRequirements:\t\t\t\t\t\n\t\t\t\t\thorizontalScale:\n\t\t\t\t\t\tmin-instance: 1\n\t\t\t\t\t\tmax-instance: 1000\n\n}\n\nCloudProvider Cloud Service {\n\tproviderLocation: \'x\'\n\tmappingLocation: \'x\'\n}\n\nEdgeProvider 2nd {\n\tproviderLocation: 'aa'\n\tmappingLocation: \'aa\'\n}\",\"success\":true,\"errorMessage\":null}"
-
-output=output.replace("\\n","")
-output=output.replace("\\t","")
-output=output.replace(output[:9], "")
-output=output.replace(output[len(output)-37:], "")
-print(output)
-parseDSL (output)'''
 
 token_call = ["curl", "--location", "--request", "POST", "https://datacloud-auth.euprojects.net/auth/realms/user-authentication/protocol/openid-connect/token", "--header", "Content-Type: application/x-www-form-urlencoded", "--data-urlencode", "username=?????", "--data-urlencode", "password=??????", "--data-urlencode", "realm=user-authentication", "--data-urlencode", "client_id=def_frontend", "--data-urlencode", "grant_type=password"]
 p = subprocess.Popen(token_call, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
