@@ -4,10 +4,10 @@ from werkzeug.utils import secure_filename
 import os
 import json
 import yaml
-import socket
 from waitress import serve
 import keycloak_utils
 from flask_swagger_ui import get_swaggerui_blueprint
+import subprocess
 
 
 DEBUG_MODE: bool = True
@@ -16,7 +16,6 @@ PORT_NUMBER: int = 5000
 
 # Create a new Flask application
 app = Flask(__name__)
-
 
 with open('requirements.yaml', 'r') as file_read:
         requirement_list = json.dumps(yaml.load(file_read, Loader=yaml.FullLoader))
@@ -28,6 +27,7 @@ resource_list = json.dumps(resource_list0)
 with open('3ApplicationLogic.json', 'r') as openfile:
     json_object = json.load(openfile)
 data = json.dumps(json_object)
+user_token_ = 0
 
 # flask swagger configs
 SWAGGER_URL = '/swagger'
@@ -95,11 +95,11 @@ def index():
         #if(user_info == True):
         if request.method == 'POST':
             if request.form.get('action1') == 'INPUT1 - requirements (template)':
-                return redirect("/requirements", code=302) #Response(requirement_list, mimetype='text/yaml')
+                return redirect("/requirements", code=302)
             elif request.form.get('action2') == 'INPUT1 - requirements (from BC)':
                 return redirect("/upload", code=302)
             elif request.form.get('action3') == 'INPUT2 - resources':
-                return redirect("/resources", code=302) #Response(resource_list, mimetype='application/json')
+                return redirect("/resources", code=302)
             elif request.form.get('action4') == 'Schedules':
                 return redirect("/schedules", code=302)
             else:
@@ -132,50 +132,67 @@ def upload_file():
       f.save(os.path.join('uploaded', filename))
       return ('file uploaded successfully' and redirect("/", code=302))
 
+@app.route("/importData",  methods=['GET'])
+def importData():
+     data_call = ["curl","http://localhost:19999/api/v1/allmetrics?format=prometheus&help=yes"]
+     p = subprocess.Popen(data_call, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+     output, err = p.communicate()
+     return (output.decode())
+
 @app.route("/adaptExecution/<string:pipeline>/<string:chunk>", methods=['GET'])
-def index0(pipeline,chunk):
-    #if request.method == "GET":
+def adaptExecution(pipeline,chunk):
             try:
-                # pipelineID = data[pipelineID]
-                # runtime_metrics = data[runtime_metrics]
-                # data = {
-                #         "pipelineID": pipelineID,
-                #         "runtime_metrics": runtime_metrics,
-                #         "timestamp": get_timestamp(),
-                #     }
                 return ('Successfully loaded' and Response(data, mimetype='application/json' ))
 
             except FileNotFoundError:
                 return
+@app.route("/predict", methods=['GET'])
+def predict():
+     return "<p>DatacloudWP1</p>" #ml.predict()
 
-@app.route("/importPipeline/<string:user>/<string:pipeline>", methods=['POST'])
+@app.route("/import_pipeline", methods=['GET'])
+def import_pipeline():
+    #if request.method == "POST":
+            try:
+                return (redirect("/importPipeline/{}/{}".format("testuser","pipeline"), code=302))
+            except FileNotFoundError:
+                return
+@app.route("/importPipeline/<string:user>/<string:pipeline>", methods=['POST', 'GET'])
 def importPipeline(user,pipeline):
     #if request.method == "POST":
             try:
-                # pipelineID = data[pipelineID]
-                # runtime_metrics = data[runtime_metrics]
-                # data = {
-                #         "pipelineID": pipelineID,
-                #         "runtime_metrics": runtime_metrics,
-                #         "timestamp": get_timestamp(),
-                #     }
-                #print(pipelineID)
-                return ('Successfully received' and redirect("/requirements", code=302))
+                token_call = ["curl", "--location", "--request", "POST", "https://datacloud-auth.euprojects.net/auth/realms/user-authentication/protocol/openid-connect/token", "--header", "Content-Type: application/x-www-form-urlencoded", "--data-urlencode", "username=testuser", "--data-urlencode", "password=***REMOVED***", "--data-urlencode", "realm=user-authentication", "--data-urlencode", "client_id=def_frontend", "--data-urlencode", "grant_type=password"]
+                p = subprocess.Popen(token_call, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+                output, err = p.communicate()
+                dict = json.loads(output.decode())
+                user_token_ = dict["access_token"]
+                def_call = ["curl", "-X", "GET","https://crowdserv.sys.kth.se/api/repo/export/testuser/pipeline", "-H","accept: application/json","-H","Authorization: Bearer {}".format(user_token_)]
+                p = subprocess.Popen(def_call, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+                output_of_def, err = p.communicate()
+                dict = json.loads(output_of_def.decode())
+                return Response(dict["data"], mimetype='application/json' )
 
             except FileNotFoundError:
                 print(":D")
                 return
+
+@app.route("/importUser/<string:user>", methods=['POST','GET'])
+def importUser(user):
+    try:
+        token_call = ["curl", "--location", "--request", "POST", "https://datacloud-auth.euprojects.net/auth/realms/user-authentication/protocol/openid-connect/token", "--header", "Content-Type: application/x-www-form-urlencoded", "--data-urlencode", "username=testuser", "--data-urlencode", "password=***REMOVED***", "--data-urlencode", "realm=user-authentication", "--data-urlencode", "client_id=def_frontend", "--data-urlencode", "grant_type=password"]
+        p = subprocess.Popen(token_call, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        output, err = p.communicate()
+        dict = json.loads(output.decode())
+        user_token_ = dict["access_token"]
+        hash_of_token = hash(str(dict["access_token"]))
+        return str(hash_of_token)
+    except FileNotFoundError:
+        return
+
 @app.route("/importWorkerPools/<string:workerPools>", methods=['POST'])
 def importWorkerPools(workerPools):
     #if request.method == "POST":
             try:
-                # pipelineID = data[pipelineID]
-                # runtime_metrics = data[runtime_metrics]
-                # data = {
-                #         "pipelineID": pipelineID,
-                #         "runtime_metrics": runtime_metrics,
-                #         "timestamp": get_timestamp(),
-                #     }
                 return ('Loaded successfully' and redirect("/resources", code=302))
 
             except FileNotFoundError:
