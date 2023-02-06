@@ -1,6 +1,6 @@
 class KeyNotInJSON(Exception):
 
-    def __init__(self, key) -> None:
+    def __init__(self, key: str = '') -> None:
         self.key = key
         if self.key is None or len(self.key) == 0:
             self.message = 'Key is missing in dictionary'
