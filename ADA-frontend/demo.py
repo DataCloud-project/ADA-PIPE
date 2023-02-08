@@ -140,7 +140,8 @@ def importData():
      #p = subprocess.Popen(data_call, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
      #output, err = p.communicate()
      #return (output.decode())
-     return render_template("simple.html", tables=[collectMetrics.prepared_dataframe.to_html(classes='data')], titles=collectMetrics.prepared_dataframe.columns.values)
+     #return render_template("simple.html", tables=[collectMetrics.prepared_dataframe.to_html(classes='data')], titles=collectMetrics.prepared_dataframe.columns.values)
+     return collectMetrics.prepared_dataframe.to_html(header="true", table_id="table")
 
 @app.route("/adaptExecution/<string:pipeline>/<string:chunk>", methods=['GET'])
 def adaptExecution(pipeline,chunk):
@@ -199,7 +200,8 @@ def importRunTimeInfo(runtime_metrics):
             try:
                 #collectMetrics.prepared_dataframe
                 #return ('Loaded successfully' and redirect("/resources", code=302))
-                return render_template("simple.html",  tables=[collectMetrics.prepared_dataframe.to_html(classes='data')], titles=collectMetrics.prepared_dataframe.columns.values)
+                #return render_template("simple.html",  tables=[collectMetrics.prepared_dataframe.to_html(classes='data')], titles=collectMetrics.prepared_dataframe.columns.values)
+                return collectMetrics.prepared_dataframe.to_html(header="true", table_id="table")
             except FileNotFoundError:
                 return
 @app.route("/requirements", methods=['GET'])
