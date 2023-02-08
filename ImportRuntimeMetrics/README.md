@@ -5,3 +5,6 @@
 
 
 We received the monitoring information, the policies and other values from the computing continuum.
+
+Requirements are ``python3.9, numpy, scipy, pyyaml, pandas, prometheus_api_client`` as follows:
+
