@@ -8,6 +8,7 @@ from waitress import serve
 import keycloak_utils
 from flask_swagger_ui import get_swaggerui_blueprint
 import subprocess
+import hashlib
 
 
 DEBUG_MODE: bool = True
@@ -184,8 +185,9 @@ def importUser(user):
         output, err = p.communicate()
         dict = json.loads(output.decode())
         user_token_ = dict["access_token"]
-        hash_of_token = hash(str(dict["access_token"]))
-        return str(hash_of_token)
+        h = hashlib.sha256()
+        h.update(str(dict["access_token"]).encode(encoding='UTF-8'))
+        return h.hexdigest()
     except FileNotFoundError:
         return
 
