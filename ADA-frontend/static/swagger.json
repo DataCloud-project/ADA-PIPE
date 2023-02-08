@@ -8,7 +8,7 @@ paths:
     get:
       tags:
         - Export
-      summary: Compute the adapted schedule based on the pipeline with the ID and the chunk (step) name
+      summary: Compute the adapted schedule based on the pipeline with the ID and the chunk (steps)
       parameters:
         - name: pipeline
           in: path
@@ -34,27 +34,27 @@ paths:
           description: Unauthorized
       security:
         - Bearer: []
-  /importWorkerPools/{workerPools}:
+  /importRunTimeInfo/{runtime_metrics}:
     post:
       tags:
         - Import
-      summary: Import WorkerPools
+      summary: Import runtime metrics
       parameters:
-        - name: workerPools
+        - name: runtime_metrics
           in: path
           required: true
           schema:
             type: string
       responses:
         '200':
-          description: List of workers of Cloud and Edge
+          description: Import the runtime, monitoring and policy information of the continuum
           content:
             text/plain:
               schema:
-                $ref: '#/components/schemas/WorkerPool'
+                $ref: '#/components/schemas/RuntimeMetrics'
             application/json:
               schema:
-                $ref: '#/components/schemas/WorkerPool'
+                $ref: '#/components/schemas/RuntimeMetrics'
         '401':
           description: Unauthorized
       security:
@@ -176,10 +176,10 @@ components:
         errorMessage:
           type: string
           nullable: true
-    WorkerPool:
+    RuntimeMetrics:
       type: object
       properties:
-        workerPools:
+        runtime_metrics:
           type: string
         errorMessage:
           type: string
