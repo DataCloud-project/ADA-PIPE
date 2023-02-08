@@ -195,8 +195,8 @@ def importUser(user):
     except FileNotFoundError:
         return
 
-@app.route("/importRunTimeInfo/<string:runtime_metrics>", methods=['POST', 'GET'])
-def importRunTimeInfo(runtime_metrics):
+@app.route("/importRuntimeMetrics", methods=['POST', 'GET'])
+def importRuntimeMetrics():
             try:
                 #collectMetrics.prepared_dataframe
                 #return ('Loaded successfully' and redirect("/resources", code=302))
