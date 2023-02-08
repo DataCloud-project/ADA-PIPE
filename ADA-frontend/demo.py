@@ -5,11 +5,12 @@ import os
 import json
 import yaml
 from waitress import serve
-import keycloak_utils
+#import keycloak_utils
 from flask_swagger_ui import get_swaggerui_blueprint
 import subprocess
 import hashlib
-
+import collectMetrics
+import pandas as pd
 
 DEBUG_MODE: bool = True
 HOST_NUMBER: str = '0.0.0.0'
@@ -27,7 +28,7 @@ resource_list = json.dumps(resource_list0)
 
 with open('3ApplicationLogic.json', 'r') as openfile:
     json_object = json.load(openfile)
-data = json.dumps(json_object)
+data = json_object #json.dumps(json_object)
 user_token_ = 0
 
 # flask swagger configs
@@ -135,16 +136,18 @@ def upload_file():
 
 @app.route("/importData",  methods=['GET'])
 def importData():
-     data_call = ["curl","http://localhost:19999/api/v1/allmetrics?format=prometheus&help=yes"]
-     p = subprocess.Popen(data_call, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-     output, err = p.communicate()
-     return (output.decode())
+     #data_call = ["curl","http://localhost:19999/api/v1/allmetrics?format=prometheus&help=yes"]
+     #p = subprocess.Popen(data_call, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+     #output, err = p.communicate()
+     #return (output.decode())
+     return render_template("simple.html", tables=[collectMetrics.prepared_dataframe.to_html(classes='data')], titles=collectMetrics.prepared_dataframe.columns.values)
 
 @app.route("/adaptExecution/<string:pipeline>/<string:chunk>", methods=['GET'])
 def adaptExecution(pipeline,chunk):
             try:
-                return ('Successfully loaded' and Response(data, mimetype='application/json' ))
-
+                data["pipelineName"] = str(pipeline)
+                data["stepsList"][0]["name"] = chunk
+                return ('Successfully loaded' and Response(json.dumps(data), mimetype='application/json' ))
             except FileNotFoundError:
                 return
 @app.route("/predict", methods=['GET'])
@@ -162,7 +165,7 @@ def import_pipeline():
 def importPipeline(user,pipeline):
     #if request.method == "POST":
             try:
-                token_call = ["curl", "--location", "--request", "POST", "https://datacloud-auth.euprojects.net/auth/realms/user-authentication/protocol/openid-connect/token", "--header", "Content-Type: application/x-www-form-urlencoded", "--data-urlencode", "username=????", "--data-urlencode", "password=????", "--data-urlencode", "realm=user-authentication", "--data-urlencode", "client_id=def_frontend", "--data-urlencode", "grant_type=password"]
+                token_call = ["curl", "--location", "--request", "POST", "https://datacloud-auth.euprojects.net/auth/realms/user-authentication/protocol/openid-connect/token", "--header", "Content-Type: application/x-www-form-urlencoded", "--data-urlencode", "username=testuser", "--data-urlencode", "password=0AsK31lQaYd", "--data-urlencode", "realm=user-authentication", "--data-urlencode", "client_id=def_frontend", "--data-urlencode", "grant_type=password"]
                 p = subprocess.Popen(token_call, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
                 output, err = p.communicate()
                 dict = json.loads(output.decode())
@@ -180,7 +183,7 @@ def importPipeline(user,pipeline):
 @app.route("/importUser/<string:user>", methods=['POST','GET'])
 def importUser(user):
     try:
-        token_call = ["curl", "--location", "--request", "POST", "https://datacloud-auth.euprojects.net/auth/realms/user-authentication/protocol/openid-connect/token", "--header", "Content-Type: application/x-www-form-urlencoded", "--data-urlencode", "username=?????", "--data-urlencode", "password=?????", "--data-urlencode", "realm=user-authentication", "--data-urlencode", "client_id=def_frontend", "--data-urlencode", "grant_type=password"]
+        token_call = ["curl", "--location", "--request", "POST", "https://datacloud-auth.euprojects.net/auth/realms/user-authentication/protocol/openid-connect/token", "--header", "Content-Type: application/x-www-form-urlencoded", "--data-urlencode", "username=testuser", "--data-urlencode", "password=0AsK31lQaYd", "--data-urlencode", "realm=user-authentication", "--data-urlencode", "client_id=def_frontend", "--data-urlencode", "grant_type=password"]
         p = subprocess.Popen(token_call, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         output, err = p.communicate()
         dict = json.loads(output.decode())
@@ -191,12 +194,12 @@ def importUser(user):
     except FileNotFoundError:
         return
 
-@app.route("/importWorkerPools/<string:workerPools>", methods=['POST'])
-def importWorkerPools(workerPools):
-    #if request.method == "POST":
+@app.route("/importRunTimeInfo/<string:runtime_metrics>", methods=['POST', 'GET'])
+def importRunTimeInfo(runtime_metrics):
             try:
-                return ('Loaded successfully' and redirect("/resources", code=302))
-
+                #collectMetrics.prepared_dataframe
+                #return ('Loaded successfully' and redirect("/resources", code=302))
+                return render_template("simple.html",  tables=[collectMetrics.prepared_dataframe.to_html(classes='data')], titles=collectMetrics.prepared_dataframe.columns.values)
             except FileNotFoundError:
                 return
 @app.route("/requirements", methods=['GET'])
