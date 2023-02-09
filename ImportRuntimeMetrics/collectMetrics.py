@@ -33,5 +33,4 @@ for i in range(len(query_mem)):
 
 prepared_dataframe = pd.DataFrame(prepared_dataset, columns=["instance","metric","value"])
 #print(prepared_dataframe)
-#from flask import jsonify
-#print((prepared_dataframe.values.tolist()))
+
