@@ -7,39 +7,45 @@ sys.path.append('./parser_constants')
 
 def parseDSL(in_file) -> None:
     count = 0
+    with open('D:\\00Research\\matching\\scheduler\\Demo3\\dsl2json\\3ApplicationLogic.json', 'r') as openfile:
+        requirement_settings = json.load(openfile)
     for line in in_file.splitlines():
-        with open('D:\\00Research\\matching\\scheduler\\Demo3\\dsl2json\\3ApplicationLogic.json', 'r') as openfile:
-            requirement_settings = json.load(openfile)
         words = line.split(' ')
+        #print(words)
+        STEPS_NAME =  "temp"
         if len(words) != 1:
             if (PIPELINE_NAME in words[0]):
-                requirement_settings["pipelineName"] = words[1]+"_pipeline"
+                requirement_settings["pipelineName"] = str(words[1])
+                requirement_settings["chunkName"] = words[1]+"UseCase"
+
             elif (words[0] == STEPS_REQ_MINCPU):
-                requirement_settings["stepsList"][0]["requirement"]["vCPUs"] = (
-                    (float(words[1]))/1024.0)
+                requirement_settings["stepsList"][0]["requirement"]["vCPUs"] = ((float(words[1]))/1024.0)
 
             elif (words[0] == STEPS_REQ_MINMEM):
                 requirement_settings["stepsList"][0]["requirement"]["ram"] = words[1]
 
-            elif (words[0] == STEPS_IMPLEMENTATION):
-                requirement_settings["stepsList"][0]["dockerImage"] = words[3].lower(
-                )
+            elif "data-processing step" in line or "data-source step" in line or "data-sink step" in line:
+                requirement_settings["stepsList"][0]["name"] = STEPS_NAME = words[3].lower().strip()
+                requirement_settings["stepsList"][0]["dockerImage"] = "datacloud2.itec.aau.at/"+STEPS_NAME+":latest"
+                requirement_settings["stepsList"][0]["dockerRegistry"] = "datacloud2.itec.aau.at/"
+                requirement_settings["stepsList"][0]["dockerUsername"] = "mogsport"
+                #requirement_settings["stepsList"][0]["dockerPassword"] = ""
 
-            elif (words[0] == STEPS_REQ_MAXINS):
-                requirement_settings = requirement_settings  # ?????
+            #elif (words[0] == STEPS_IMPLEMENTATION):
+            #    requirement_settings["stepsList"][0]["dockerImage"] = words[3].lower()
 
-        if (count == 0):
-            requirement_settings["stepsList"][0]["provider"] = "Tellu"
-            requirement_settings["stepsList"][0]["resource"] = "Tellu Gateway 0"
-        else:
-            requirement_settings["stepsList"][0]["provider"] = "DataCloud-k8s"
-            requirement_settings["stepsList"][0]["resource"] = "DataCloud-k8s-1"
-        if "data-processing step" in line or "data-source step" in line or "data-sink step" in line:
-            count += 1
-            requirement_settings["stepsList"][0]["name"] = STEPS_NAME = words[3].lower(
-            ).strip()
+            #elif (words[0] == STEPS_REQ_MAXINS):
+            #    requirement_settings = "???"
+
+            if (count == 0):
+                requirement_settings["stepsList"][0]["provider"] = "Tellu"
+                requirement_settings["stepsList"][0]["resource"] = "Tellu Gateway 0"
+            else:
+                requirement_settings["stepsList"][0]["provider"] = "DataCloud"
+                requirement_settings["stepsList"][0]["resource"] = "DatacloudWP1"
             with open("D:\\00Research\\matching\\scheduler\\Demo3\\dsl2json\\"+STEPS_NAME+".json", "w") as outfile:
                 json.dump(requirement_settings, outfile)
+                count += 1
 
 
 if __name__ == "__main__":
