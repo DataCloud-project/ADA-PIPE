@@ -166,7 +166,7 @@ def import_pipeline():
 def importPipeline(user,pipeline):
     #if request.method == "POST":
             try:
-                token_call = ["curl", "--location", "--request", "POST", "https://datacloud-auth.euprojects.net/auth/realms/user-authentication/protocol/openid-connect/token", "--header", "Content-Type: application/x-www-form-urlencoded", "--data-urlencode", "username=testuser", "--data-urlencode", "password=0AsK31lQaYd", "--data-urlencode", "realm=user-authentication", "--data-urlencode", "client_id=def_frontend", "--data-urlencode", "grant_type=password"]
+                token_call = ["curl", "--location", "--request", "POST", "https://datacloud-auth.euprojects.net/auth/realms/user-authentication/protocol/openid-connect/token", "--header", "Content-Type: application/x-www-form-urlencoded", "--data-urlencode", "username=????", "--data-urlencode", "password=????", "--data-urlencode", "realm=user-authentication", "--data-urlencode", "client_id=def_frontend", "--data-urlencode", "grant_type=password"]
                 p = subprocess.Popen(token_call, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
                 output, err = p.communicate()
                 dict = json.loads(output.decode())
