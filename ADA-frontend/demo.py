@@ -1,15 +1,17 @@
 from interface_json import PipelineDataContainer
 from flask import Flask, render_template, Response, request, jsonify, make_response, redirect, send_file
+from flask_cors import CORS
 from werkzeug.utils import secure_filename
 import os
 import json
 import yaml
 from waitress import serve
-import keycloak_utils
+#import keycloak_utils
 from flask_swagger_ui import get_swaggerui_blueprint
 import subprocess
 import hashlib
-
+import collectMetrics
+import pandas as pd
 
 DEBUG_MODE: bool = True
 HOST_NUMBER: str = '0.0.0.0'
@@ -17,7 +19,7 @@ PORT_NUMBER: int = 5000
 
 # Create a new Flask application
 app = Flask(__name__)
-
+cors = CORS(app, resources={r"/*": {"origins": "*"}})
 with open('requirements.yaml', 'r') as file_read:
         requirement_list = json.dumps(yaml.load(file_read, Loader=yaml.FullLoader))
 
@@ -25,9 +27,9 @@ with open('resources.json', 'r') as file_read:
         resource_list0 = json.load(file_read)
 resource_list = json.dumps(resource_list0)
 
-with open('3ApplicationLogic.json', 'r') as openfile:
+with open('data_analysis.json', 'r') as openfile:
     json_object = json.load(openfile)
-data = json.dumps(json_object)
+data = json_object #json.dumps(json_object)
 user_token_ = 0
 
 # flask swagger configs
@@ -125,7 +127,7 @@ def downloadFile ():
 
 @app.route('/uploader', methods = ['GET', 'POST'])
 def upload_file():
-    if request.method == 'GET':
+    if request.method == 'GAET':
         downloadFile ()
     elif request.method == 'POST':
       f = request.files['file']
@@ -135,16 +137,25 @@ def upload_file():
 
 @app.route("/importData",  methods=['GET'])
 def importData():
-     data_call = ["curl","http://localhost:19999/api/v1/allmetrics?format=prometheus&help=yes"]
-     p = subprocess.Popen(data_call, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-     output, err = p.communicate()
-     return (output.decode())
-
+     #data_call = ["curl","http://localhost:19999/api/v1/allmetrics?format=prometheus&help=yes"]
+     #p = subprocess.Popen(data_call, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+     #output, err = p.communicate()
+     #return (output.decode())
+     #return render_template("simple.html", tables=[collectMetrics.prepared_dataframe.to_html(classes='data')], titles=collectMetrics.prepared_dataframe.columns.values)
+     return collectMetrics.prepared_dataframe.to_html(header="true", table_id="table")
 @app.route("/adaptExecution/<string:pipeline>/<string:chunk>", methods=['GET'])
 def adaptExecution(pipeline,chunk):
             try:
-                return ('Successfully loaded' and Response(data, mimetype='application/json' ))
-
+                if (os.path.exists(chunk+".json")):
+                      with open(chunk+'.json', 'r') as openfile:
+                             json_object = json.load(openfile)
+                             if(json_object["pipelineName"] == str(pipeline)):
+	                             return ('Successfully loaded' and Response(json.dumps(json_object), mimetype='application/json' ))
+                else:
+                      #data["pipelineName"] = str(pipeline)
+                      #data["stepsList"][0]["name"] = str(chunk)
+                      #return  ('The requested pipeline or chunk is not available' and Response(json.dumps(data), mimetype='application/json' ))
+                      return Response("<p>Please test again with the pipeline name of pipeline and chunk name of what-if_analysis</p>", mimetype='text/html') #('The requested pipeline or chunk is not available' and Response(json.dumps(data), mimetype='application/json' ))
             except FileNotFoundError:
                 return
 @app.route("/predict", methods=['GET'])
@@ -162,7 +173,7 @@ def import_pipeline():
 def importPipeline(user,pipeline):
     #if request.method == "POST":
             try:
-                token_call = ["curl", "--location", "--request", "POST", "https://datacloud-auth.euprojects.net/auth/realms/user-authentication/protocol/openid-connect/token", "--header", "Content-Type: application/x-www-form-urlencoded", "--data-urlencode", "username=????", "--data-urlencode", "password=????", "--data-urlencode", "realm=user-authentication", "--data-urlencode", "client_id=def_frontend", "--data-urlencode", "grant_type=password"]
+                token_call = ["curl", "--location", "--request", "POST", "https://datacloud-auth.euprojects.net/auth/realms/user-authentication/protocol/openid-connect/token", "--header", "Content-Type: application/x-www-form-urlencoded", "--data-urlencode", "username=testuser", "--data-urlencode", "password=0AsK31lQaYd", "--data-urlencode", "realm=user-authentication", "--data-urlencode", "client_id=def_frontend", "--data-urlencode", "grant_type=password"]
                 p = subprocess.Popen(token_call, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
                 output, err = p.communicate()
                 dict = json.loads(output.decode())
@@ -174,13 +185,13 @@ def importPipeline(user,pipeline):
                 return Response(dict["data"], mimetype='application/json' )
 
             except FileNotFoundError:
-                print(":D")
+                #print(":D")
                 return
 
 @app.route("/importUser/<string:user>", methods=['POST','GET'])
 def importUser(user):
     try:
-        token_call = ["curl", "--location", "--request", "POST", "https://datacloud-auth.euprojects.net/auth/realms/user-authentication/protocol/openid-connect/token", "--header", "Content-Type: application/x-www-form-urlencoded", "--data-urlencode", "username=testuser", "--data-urlencode", "password=cT2!3jB0H43sbl", "--data-urlencode", "realm=user-authentication", "--data-urlencode", "client_id=def_frontend", "--data-urlencode", "grant_type=password"]
+        token_call = ["curl", "--location", "--request", "POST", "https://datacloud-auth.euprojects.net/auth/realms/user-authentication/protocol/openid-connect/token", "--header", "Content-Type: application/x-www-form-urlencoded", "--data-urlencode", "username=testuser", "--data-urlencode", "password=0AsK31lQaYd", "--data-urlencode", "realm=user-authentication", "--data-urlencode", "client_id=def_frontend", "--data-urlencode", "grant_type=password"]
         p = subprocess.Popen(token_call, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         output, err = p.communicate()
         dict = json.loads(output.decode())
@@ -191,14 +202,39 @@ def importUser(user):
     except FileNotFoundError:
         return
 
-@app.route("/importWorkerPools/<string:workerPools>", methods=['POST'])
-def importWorkerPools(workerPools):
-    #if request.method == "POST":
+@app.route("/importRuntimeMetrics", methods=['POST', 'GET'])
+def importRuntimeMetrics():
             try:
-                return ('Loaded successfully' and redirect("/resources", code=302))
-
+                #collectMetrics.prepared_dataframe
+                #return ('Loaded successfully' and redirect("/resources", code=302))
+                #return render_template("simple.html",  tables=[collectMetrics.prepared_dataframe.to_html(classes='data')], titles=collectMetrics.prepared_dataframe.columns.values)
+                #if ("cpu" in runtime_metrics):
+                #      return collectMetrics.prepared_dataframe["cpu.cpu3"].to_html(header="true", table_id="table")
+                #elif ("mem" in runtime_metrics):
+                #      return collectMetrics.prepared_dataframe["services.mem_usage"].to_html(header="true", table_id="table")
+                #else:
+                return collectMetrics.prepared_dataframe.to_html(header="true", table_id="table")
             except FileNotFoundError:
                 return
+@app.route("/import_mog_pipeline", methods=['GET'])
+def import_mog_pipeline():
+    try:
+         #return Response (json.load(open('templates/mog.dsl', 'r').decode()), mimetype='application/json')
+         #cat_call = ["cat", "./mog.dsl"]
+         #p = subprocess.Popen(cat_call, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+         #output, err = p.communicate()
+         #dictdict = json.loads(output.decode())
+         #return  Response(dictdict, mimetype='application/json')
+         return render_template("./mog.dsl", mimetype='application/json')
+    except FileNotFoundError:
+         return
+
+@app.route("/matchMOG", methods=['GET'])
+def matchMOG():
+    try:
+        return render_template('./mog.html')
+    except FileNotFoundError:
+        return
 @app.route("/requirements", methods=['GET'])
 def index1():
     if request.method == 'GET':

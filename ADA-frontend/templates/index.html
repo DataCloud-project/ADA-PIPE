@@ -14,7 +14,7 @@
     <nav class="py-3 navbar navbar-expand-lg fixed-top auto-hiding-navbar">
         <div class="container">
         <a class="navbar-brand"" href="https://github.com/DataCloud-project/ADA-PIPE/">
-            <img class="logo" src="fig/ADAPIPE_Logo_TransparentBackground_White.png"> ADA-PIPE
+            <!--<img class="logo" src="fig/ADAPIPE_Logo_TransparentBackground_White.png">--> ADA-PIPE
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -34,40 +34,32 @@
                 <a class="nav-link" href="{{url_for('index3')}}">Schedules</a>
             </li>-->
             <li class="nav-item">
-                <a class="nav-link" href="http://194.182.187.139/swagger/">Swagger UI</a>
+                <a class="nav-link" href="http://194.182.187.139/swagger/">Swagger</a>
             </li>
             </ul>
         </div>
         </div>
     </nav>
-    <!-- End Navbar -->
-    <!-- Hero section -->
         </br>
         </br>
         </br>
     <ul>
     <section id="hero">
-
-                  <!--<div class="row">
-                        <div class="col">
-                                        <button type="button" class="btn btn-dark" ><a href="http://194.182.187.139:5000/swagger/">ADA-PIPE Swagger UI</a></button>
-                        </div>
-              </div>-->
          <div class="container">
           <div class="row cards">
                 <div class="col-md-4 d-flex justify-content-center">
                   <div class="card" style="width: 18rem;">
                         <div class="card-body">
-                          <h5 class="card-title">Import user's token</h5>
+                          <h5 class="card-title">Importing user's token</h5>
                           <p class="card-text"><a href="{{url_for('importUser',user='testuser')}}">User's access token</a></p>
                         </div>
                   </div>
                 </div>
 
         <div class="col-md-4 d-flex justify-content-center">
-          <div class="card" style="width: 18rem;">
+          <div class="card" style="width: 17rem;">
             <div class="card-body">
-              <h5 class="card-title">Import pipeline definition</h5>
+              <h5 class="card-title">Importing pipeline definition</h5>
               <p class="card-text"><a href="{{url_for('import_pipeline')}}">Pipeline definition</a></p>
             </div>
           </div>
@@ -76,7 +68,7 @@
                           <div class="card" style="width: 18rem;">
                                 <div class="card-body">
                                   <h5 class="card-title">Scraping data</h5>
-                                  <p class="card-text"><a href="http://localhost:9090/graph">Prometheus dashboard</a></p>
+                                  <p class="card-text"><a href="http://localhost:9090/graph">Runtime data</a></p>
                                   <p class="card-text"><a href="{{url_for('importData')}}">Continuum's monitoring</a></p>
                                 </div>
                           </div>
@@ -91,34 +83,36 @@
     </br>
     <ul>
     <section id="hero">
-
-                  <!-- <div class="row">
-                        <div class="col">
-                                        <button type="button" class="btn btn-dark" ><a href="http://194.182.187.139:5000/swagger/">ADA-PIPE Swagger UI</a></button>
-                        </div>
-                 </div>-->
-                  <div class="container">
-                  <div class="row cards">
-
+         <div class="container">
+          <div class="row cards">
         <div class="col-md-4 d-flex justify-content-center">
           <div class="card" style="width: 18rem;">
             <div class="card-body">
               <h5 class="card-title">LSTM prediction model</h5>
-              <p class="card-text"><a href="predict">Predict the resource</a></p>
+              <p class="card-text"><a href="predict">Resource prediction</a></p>
+              <p class="card-text"><a href="https://github.com/MyGodItsFull0fStars/alibaba_clusterdata/tree/double-prediction/cluster-trace-gpu-v2020/prediction">Tutorial</a></p>
             </div>
           </div>
         </div>
-
         <div class="col-md-4 d-flex justify-content-center">
           <div class="card" style="width: 18rem;">
             <div class="card-body">
               <h5 class="card-title">Scheduling</h5>
-              <p class="card-text"><a href="{{url_for('adaptExecution',pipeline='pipeline',chunk='chunk1')}}">Schedule to be deployed</a></p>
+              <p class="card-text"><a href="{{url_for('adaptExecution',pipeline='pipeline',chunk='data_analysis')}}">Schedule deployment</a></p>
             </div>
           </div>
         </div>
-      </div>
+        <div class="col-md-4 d-flex justify-content-center">
+          <div class="card" style="width: 18rem;">
+            <div class="card-body">
+              <h5 class="card-title">Integration with MOG</h5>
+              <p class="card-text"><a href="{{url_for('import_mog_pipeline')}}">MOG pipeline</a></p>
+              <p class="card-text"><a href="{{url_for('matchMOG')}}">Match MOG pipeline</a></p>
+            </div>
+          </div>
         </div>
+    </div>
+    </div>
   </section>
   </ul>
   </body>
