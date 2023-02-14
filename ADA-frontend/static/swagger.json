@@ -27,9 +27,6 @@ paths:
             text/plain:
               schema:
                 $ref: '#/components/schemas/DepProvider'
-            text/html:
-              schema:
-                $ref: '#/components/schemas/DepProvider'
             application/json:
               schema:
                 $ref: '#/components/schemas/DepProvider'
@@ -37,11 +34,17 @@ paths:
           description: Unauthorized
       security:
         - Bearer: []
-  /importRuntimeMetrics:
+  /importRunTimeInfo/{runtime_metrics}:
     post:
       tags:
         - Import
       summary: Import runtime metrics
+      parameters:
+        - name: runtime_metrics
+          in: path
+          required: true
+          schema:
+            type: string
       responses:
         '200':
           description: Import the runtime, monitoring and policy information of the continuum
