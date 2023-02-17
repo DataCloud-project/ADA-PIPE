@@ -1,0 +1,18 @@
+encoding:
+- DataCloud-edge-2
+- DataCloud-wp2
+- DataCloud-wp1
+- DataCloud-edge-0
+- DataCloud-edge-1
+splittingstream:
+- DataCloud-edge-2
+- DataCloud-edge-1
+- DataCloud-edge-0
+- DataCloud-wp2
+- DataCloud-wp1
+training:
+- DataCloud-edge-2
+- DataCloud-wp1
+- DataCloud-wp2
+- DataCloud-edge-0
+- DataCloud-edge-1
