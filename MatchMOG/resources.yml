@@ -1,20 +1,20 @@
 DataCloud-wp1:
-- encoding
-- splittingstream
-- training
+- detection_RIGHT
+- detection_LEFT, broker
+- 'training: [fusion, overlay]'
 DataCloud-wp2:
-- encoding
-- splittingstream
-- training
+- detection_RIGHT
+- detection_LEFT, broker
+- 'training: [fusion, overlay]'
 DataCloud-edge-0:
-- encoding
-- splittingstream
-- training
+- detection_RIGHT
+- detection_LEFT, broker
+- 'training: [fusion, overlay]'
 DataCloud-edge-1:
-- encoding
-- splittingstream
-- training
+- detection_RIGHT
+- detection_LEFT, broker
+- 'training: [fusion, overlay]'
 DataCloud-edge-2:
-- encoding
-- splittingstream
-- training
+- detection_RIGHT
+- detection_LEFT, broker
+- 'training: [fusion, overlay]'
