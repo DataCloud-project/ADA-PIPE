@@ -1,0 +1,146 @@
+{
+  "Pipeline MOG": {
+    "communicationMedium": "medium",
+    "steps": {
+      "- data-processing step Fusion": {
+        "implementation": "container-implementation image:'datacloud2.itec.aau.at/fusion:1'",
+        "environmentParameters": {
+          "MIDDLE_POINT": "'960'",
+          "KAFKA_SERVER": "'kafka:9092'"
+        },
+        "resource-provider": "",
+        "executionRequirement": {
+          "hardRequirements": "",
+          "horizontalScale": {
+            "min-instance": 1,
+            "max-instance": 1
+          },
+          "quantitativeRequirement": {
+            "min-cpu": 1024,
+            "max-cpu": 2048,
+            "min-ram-mb": 4096,
+            "max-ram-mb": 0,
+            "min-storage-mb": 0,
+            "max-storage-mb": 0,
+            "cpu-frequency": 0,
+            "cpu-no-core": 0,
+            "gpu-availability": 0
+          }
+        }
+      },
+      "- data-processing step Overlay": {
+        "implementation": "container-implementation image:'datacloud2.itec.aau.at/overlay:1'",
+        "environmentParameters": {
+          "OVERLAY_HOST": "'0.0.0.0'",
+          "OVERLAY_PORT": "'9898'",
+          "VISUALS": "'topview'",
+          "KAFKA_SERVER": "'kafka:9092'"
+        },
+        "resource-provider": "",
+        "executionRequirement": {
+          "hardRequirements": "",
+          "horizontalScale": {
+            "min-instance": 1,
+            "max-instance": 1
+          },
+          "quantitativeRequirement": {
+            "min-cpu": 1024,
+            "max-cpu": 2048,
+            "min-ram-mb": 4096,
+            "max-ram-mb": 0,
+            "min-storage-mb": 0,
+            "max-storage-mb": 0,
+            "cpu-frequency": 0,
+            "cpu-no-core": 0,
+            "gpu-availability": 0
+          }
+        }
+      },
+      "- data-processing step Zookeeper": {
+        "implementation": "container-implementation image:'docker.io/bitnami/zookeeper:3.8'",
+        "environmentParameters": {
+          "ALLOW_ANONYMOUS_LOGIN": "'yes'"
+        },
+        "resource-provider": "",
+        "executionRequirement": {
+          "hardRequirements": ""
+        }
+      },
+      "- data-processing step Kafka": {
+        "implementation": "container-implementation image:'docker.io/bitnami/kafka:3.3'",
+        "environmentParameters": {
+          "KAFKA_CFG_ZOOKEEPER_CONNECT": "'zookeeper:2181'",
+          "ALLOW_PLAINTEXT_LISTENER": "'yes'",
+          "KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP": {
+            "CLIENT": "PLAINTEXT",
+            "EXTERNAL": "PLAINTEXT"
+          },
+          "KAFKA_CFG_LISTENERS": "'CLIENT://:9092,EXTERNAL://:9093'",
+          "KAFKA_CFG_ADVERTISED_LISTENERS": "'CLIENT://kafka:9092,EXTERNAL://:9093'",
+          "KAFKA_CFG_INTER_BROKER_LISTENER_NAME": "'CLIENT'"
+        },
+        "resource-provider": "",
+        "executionRequirement": {
+          "hardRequirements": ""
+        }
+      },
+      "- data-processing step Detection_RIGHT": {
+        "implementation": "container-implementation image:'datacloud2.itec.aau.at/detection:1'",
+        "environmentParameters": {
+          "KAFKA_SERVER": "'kafka:9092'",
+          "IS_SERVER": false,
+          "YOLO_MODEL": "'models/yolov5s.pt'",
+          "TRACK": "'sort'",
+          "SIDE": "'RIGHT'",
+          "RIGHT_SRC": "'images/1min_direita.mp4'",
+          "RIGHT_IMG_POINTS": "48,855 675,444 1462,457 1845,961",
+          "RIGHT_TOPVIEW_POINTS": "961,880 961,201 1486,200 1486,880",
+          "RIGHT_SERVER_HOST": "'0.0.0.0'",
+          "RIGHT_SERVER_PORT": "'5001'"
+        },
+        "resource-provider": "",
+        "executionRequirement": {
+          "hardRequirements": "",
+          "horizontalScale": {
+            "min-instance": 1,
+            "max-instance": 1
+          },
+          "quantitativeRequirement": {
+            "min-cpu": 1024,
+            "max-cpu": 2048,
+            "min-ram-mb": 4096,
+            "max-ram-mb": 0,
+            "min-storage-mb": 0,
+            "max-storage-mb": 0,
+            "cpu-frequency": 0,
+            "cpu-no-core": 0,
+            "gpu-availability": 0
+          }
+        }
+      },
+      "- data-processing step Detection_LEFT": {
+        "implementation": "container-implementation image:'datacloud2.itec.aau.at/detection:1'",
+        "environmentParameters": {
+          "SIDE": "'LEFT'",
+          "LEFT_SRC": "'images/1min_esquerda.mp4'",
+          "KAFKA_SERVER": "'kafka:9092'",
+          "IS_SERVER": false,
+          "LEFT_IMG_POINTS": "20,902 425,373 1258,351 1909,779",
+          "LEFT_TOPVIEW_POINTS": "435,882 435,201 961,200 959,880",
+          "YOLO_MODEL": "'models/yolov5s.pt'",
+          "TRACK": "'sort'",
+          "LEFT_SERVER_HOST": "'0.0.0.0'",
+          "LEFT_SERVER_PORT": "'5000'"
+        },
+        "resource-provider": "",
+        "executionRequirement": {
+          "hardRequirements": "",
+          "horizontalScale": {
+            "min-instance": 1,
+            "max-instance": 1
+          }
+        }
+      }
+    }
+  }
+}
