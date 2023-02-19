@@ -11,7 +11,7 @@ We investigate a novel anomaly-detection based scheduling method to dynamically 
 
 ## Scheduler
 
-The scheduler is under development and [the current version](https://github.com/MyGodItsFull0fStars/alibaba_clusterdata/tree/double-prediction/cluster-trace-gpu-v2020/prediction) provides the prediction based on the resource utilization and corrects the user allocated resource parameters to values closer to the actual values. It uses a **Long-Short Term Memory** machine learning model.
+[The full version of the scheduler](https://github.com/MyGodItsFull0fStars/alibaba_clusterdata/tree/double-prediction/cluster-trace-gpu-v2020/prediction) provides the prediction based on the resource utilization and corrects the user allocated resource parameters to values closer to the actual values. It uses a **Long-Short Term Memory** machine learning model.
 
 ### Installation of the Environment
 
