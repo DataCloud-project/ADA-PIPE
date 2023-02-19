@@ -24,6 +24,7 @@ After the environment's installation, you can activate it with `conda activate l
 
 The Jupyter dependency is also included in this environment, but the Python kernel `lstm_prediction` has to be chosen inside a Jupyter notebook, in order to execute the code inside the notebook.
 
+Then the next step is to run the scheduler: ```python3 updateDeployment.py```
 
 ## Architecture
 
