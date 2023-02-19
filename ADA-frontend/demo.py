@@ -30,6 +30,11 @@ resource_list = json.dumps(resource_list0)
 with open('data_analysis.json', 'r') as openfile:
     json_object = json.load(openfile)
 data = json_object #json.dumps(json_object)
+
+with open('templates/mog.json', 'r') as file_read_mog:
+    mog_list = json.load(file_read_mog)
+mog_list = json.dumps(mog_list)
+
 user_token_ = 0
 
 # flask swagger configs
@@ -225,7 +230,7 @@ def import_mog_pipeline():
          #output, err = p.communicate()
          #dictdict = json.loads(output.decode())
          #return  Response(dictdict, mimetype='application/json')
-         return render_template("./mog.dsl", mimetype='application/json')
+         return Response((mog_list), mimetype='application/json')
     except FileNotFoundError:
          return
 
