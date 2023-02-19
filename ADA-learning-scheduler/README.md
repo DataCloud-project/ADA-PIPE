@@ -11,8 +11,18 @@ We investigate a novel anomaly-detection based scheduling method to dynamically 
 
 ## Scheduler
 
-The scheduler is under development and [the current version](https://github.com/MyGodItsFull0fStars/alibaba_clusterdata/tree/double-prediction/cluster-trace-gpu-v2020/prediction) provides the prediction based on the resource utilization. 
+The scheduler is under development and [the current version](https://github.com/MyGodItsFull0fStars/alibaba_clusterdata/tree/double-prediction/cluster-trace-gpu-v2020/prediction) provides the prediction based on the resource utilization and corrects the user allocated resource parameters to values closer to the actual values. It uses a **Long-Short Term Memory** machine learning model.
 
+### Installation of the Environment
+
+We use the Python dependency framework [anaconda installation](https://docs.anaconda.com/anaconda/install/index.html) to install the environment.
+
+Then execute the command `conda env create --file=environment.yml`. The CLI will ask you to accept installing the environment, please accept it and after doing so, the environment will be installed on your system.
+
+After the environment's installation, you can activate it with `conda activate lstm_prediction`. 
+
+
+The Jupyter dependency is also included in this environment, but the Python kernel `lstm_prediction` has to be chosen inside a Jupyter notebook, in order to execute the code inside the notebook.
 
 ## Architecture
 
