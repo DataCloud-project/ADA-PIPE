@@ -11,3 +11,5 @@
     * Or just through the [swagger](https://github.com/DataCloud-project/ADA-PIPE/blob/main/ImportFrom-DEF-PIPE/importing-from-def-pipe.PNG) -- current version of pipeline definition fetches the code through the API.
 
 2) In the next step, run the ```parseDSL.py``` file for parsing the already-downloaded dsl, which extract the required features from the description.
+
+3) The output of this code will be ``TelluPipeline.json`` consisting of three steps. 
