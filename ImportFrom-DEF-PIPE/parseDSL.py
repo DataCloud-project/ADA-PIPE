@@ -46,7 +46,8 @@ def parseDSL(in_file) -> None:
                   requirement_settings["stepsList"][count]["dockerUsername"] = "telluuser"
                   #requirement_settings["stepsList"][0]["dockerPassword"] = ""
                 count += 1
-
+            with open("TelluPipeline.json", "w") as outfile:
+                json.dump(requirement_settings, outfile)
 
 if __name__ == "__main__":
     token_call = ["curl", "--location", "--request", "POST", "https://datacloud-auth.euprojects.net/auth/realms/user-authentication/protocol/openid-connect/token", "--header", "Content-Type: application/x-www-form-urlencoded",
