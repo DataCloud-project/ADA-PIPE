@@ -1,21 +1,16 @@
 openapi: 3.0.1
 info:
   title: ADA-PIPE
-  description: For the protected end points, you need to genereate an access token (e.g. using postman) and provide it by opening "Authorize"
+  description: For the protected end points, you need to genereate an access token (e.g., using postman) and provide it by opening "Authorize"
   version: v1
 paths:
-  /adaptExecution/{pipeline}/{chunk}:
+  /adaptExecution/{pipeline}:
     get:
       tags:
         - Export
       summary: Compute the adapted schedule based on the pipeline with the ID and the chunk (steps)
       parameters:
         - name: pipeline
-          in: path
-          required: true
-          schema:
-            type: string
-        - name: chunk
           in: path
           required: true
           schema:
@@ -27,6 +22,9 @@ paths:
             text/plain:
               schema:
                 $ref: '#/components/schemas/DepProvider'
+            text/html:
+              schema:
+                $ref: '#/components/schemas/DepProvider'
             application/json:
               schema:
                 $ref: '#/components/schemas/DepProvider'
@@ -34,17 +32,11 @@ paths:
           description: Unauthorized
       security:
         - Bearer: []
-  /importRunTimeInfo/{runtime_metrics}:
+  /importRuntimeMetrics:
     post:
       tags:
         - Import
       summary: Import runtime metrics
-      parameters:
-        - name: runtime_metrics
-          in: path
-          required: true
-          schema:
-            type: string
       responses:
         '200':
           description: Import the runtime, monitoring and policy information of the continuum
@@ -149,8 +141,6 @@ components:
     DepProvider:
       type: object
       properties:
-        chunk:
-          type: string
         pipeline:
           type: string
         errorMessage:
