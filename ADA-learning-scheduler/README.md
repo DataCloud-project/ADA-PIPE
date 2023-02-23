@@ -29,5 +29,5 @@ Then the next step is to run the scheduler: ```python3 updateDeployment.py```
 ## Architecture
 
 The following figure shows that the learning-based adaptation approach is defined as a loop that cyclically updates every component contained in the loop.
-The adaptation loop consists of the Big Data pipeline and the resources monitored by the Monitoring and Analysis component. The Big Data pipeline and the resources send the collected monitoring information as a state at a time step to the Monitoring and Analysis component. The Monitoring and Analysis component then uses these states and calculates an action as an update for the resource allocation to the Big Data pipeline.
+The adaptation loop consists of the *big data pipeline* and the resources monitored by the *monitoring and analysis* component. The *big data pipeline* and the resources send the collected monitoring information as a state at a time step to the *monitoring and analysis* component. The *monitoring and analysis* component then uses these states and calculates an action (policy) as an update for the resource allocation to the *big data pipeline*.
 ![alt text](https://raw.githubusercontent.com/DataCloud-project/ADA-PIPE/main/ADA-learning-scheduler/ada-loop2.JPG)
