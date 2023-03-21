@@ -20,20 +20,25 @@ PORT_NUMBER: int = 5000
 # Create a new Flask application
 app = Flask(__name__)
 cors = CORS(app, resources={r"/*": {"origins": "*"}})
+
+requirement_list: list = list()
 with open('requirements.yaml', 'r') as file_read:
         requirement_list = json.dumps(yaml.load(file_read, Loader=yaml.FullLoader))
 
+resource_list: list = list()
 with open('resources.json', 'r') as file_read:
         resource_list0 = json.load(file_read)
-resource_list = json.dumps(resource_list0)
+        resource_list = json.dumps(resource_list0)
 
+data: any = None
 with open('data_analysis.json', 'r') as openfile:
     json_object = json.load(openfile)
-data = json_object #json.dumps(json_object)
+    data = json_object #json.dumps(json_object)
 
+mog_list: list = list()
 with open('templates/mog.json', 'r') as file_read_mog:
     mog_list = json.load(file_read_mog)
-mog_list = json.dumps(mog_list)
+    mog_list = json.dumps(mog_list)
 
 user_token_ = 0
 
@@ -148,50 +153,54 @@ def importData():
      #return (output.decode())
      #return render_template("simple.html", tables=[collectMetrics.prepared_dataframe.to_html(classes='data')], titles=collectMetrics.prepared_dataframe.columns.values)
      return collectMetrics.prepared_dataframe.to_html(header="true", table_id="table")
+
 @app.route("/adaptExecution/<string:pipeline>/<string:chunk>", methods=['GET'])
 def adaptExecution(pipeline,chunk):
-            try:
-                if (os.path.exists(chunk+".json")):
-                      with open(chunk+'.json', 'r') as openfile:
-                             json_object = json.load(openfile)
-                             if(json_object["pipelineName"] == str(pipeline)):
-	                             return ('Successfully loaded' and Response(json.dumps(json_object), mimetype='application/json' ))
-                else:
-                      #data["pipelineName"] = str(pipeline)
-                      #data["stepsList"][0]["name"] = str(chunk)
-                      #return  ('The requested pipeline or chunk is not available' and Response(json.dumps(data), mimetype='application/json' ))
-                      return Response("<p>Please test again with the pipeline name of pipeline and chunk name of what-if_analysis</p>", mimetype='text/html') #('The requested pipeline or chunk is not available' and Response(json.dumps(data), mimetype='application/json' ))
-            except FileNotFoundError:
-                return
+    try:
+        if (os.path.exists(chunk+".json")):
+                with open(chunk+'.json', 'r') as openfile:
+                        json_object = json.load(openfile)
+                        if(json_object["pipelineName"] == str(pipeline)):
+                            return ('Successfully loaded' and Response(json.dumps(json_object), mimetype='application/json' ))
+        else:
+                #data["pipelineName"] = str(pipeline)
+                #data["stepsList"][0]["name"] = str(chunk)
+                #return  ('The requested pipeline or chunk is not available' and Response(json.dumps(data), mimetype='application/json' ))
+                return Response("<p>Please test again with the pipeline name of pipeline and chunk name of what-if_analysis</p>", mimetype='text/html') #('The requested pipeline or chunk is not available' and Response(json.dumps(data), mimetype='application/json' ))
+    except FileNotFoundError:
+        return
+
 @app.route("/predict", methods=['GET'])
 def predict():
      return "<p>DatacloudWP1</p>" #ml.predict()
 
 @app.route("/import_pipeline", methods=['GET'])
 def import_pipeline():
-    #if request.method == "POST":
-            try:
-                return (redirect("/importPipeline/{}/{}".format("testuser","pipeline"), code=302))
-            except FileNotFoundError:
-                return
+    user: str = 'testuser'
+    pipeline: str = 'pipeline'
+    try:
+        return (redirect(f"/importPipeline/{user}/{pipeline}", code=302))
+    except FileNotFoundError:
+        return
+
 @app.route("/importPipeline/<string:user>/<string:pipeline>", methods=['POST', 'GET'])
 def importPipeline(user,pipeline):
     #if request.method == "POST":
-            try:
-                token_call = ["curl", "--location", "--request", "POST", "https://datacloud-auth.euprojects.net/auth/realms/user-authentication/protocol/openid-connect/token", "--header", "Content-Type: application/x-www-form-urlencoded", "--data-urlencode", "username=?????", "--data-urlencode", "password=?????", "--data-urlencode", "realm=user-authentication", "--data-urlencode", "client_id=def_frontend", "--data-urlencode", "grant_type=password"]
-                p = subprocess.Popen(token_call, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-                output, err = p.communicate()
-                dict = json.loads(output.decode())
-                user_token_ = dict["access_token"]
-                def_call = ["curl", "-X", "GET","https://crowdserv.sys.kth.se/api/repo/export/testuser/pipeline", "-H","accept: application/json","-H","Authorization: Bearer {}".format(user_token_)]
-                p = subprocess.Popen(def_call, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-                output_of_def, err = p.communicate()
-                dict = json.loads(output_of_def.decode())
-                return Response(dict["data"], mimetype='application/json' )
+    try:
+        token_call = ["curl", "--location", "--request", "POST", "https://datacloud-auth.euprojects.net/auth/realms/user-authentication/protocol/openid-connect/token", "--header", "Content-Type: application/x-www-form-urlencoded", "--data-urlencode", "username=?????", "--data-urlencode", "password=?????", "--data-urlencode", "realm=user-authentication", "--data-urlencode", "client_id=def_frontend", "--data-urlencode", "grant_type=password"]
+        p = subprocess.Popen(token_call, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        output, err = p.communicate()
+        dict = json.loads(output.decode())
+        user_token_ = dict["access_token"]
+        def_call = ["curl", "-X", "GET","https://crowdserv.sys.kth.se/api/repo/export/testuser/pipeline", "-H","accept: application/json","-H","Authorization: Bearer {}".format(user_token_)]
+        p = subprocess.Popen(def_call, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        output_of_def, err = p.communicate()
+        dict = json.loads(output_of_def.decode())
+        return Response(dict["data"], mimetype='application/json' )
 
-            except FileNotFoundError:
-                #print(":D")
-                return
+    except FileNotFoundError:
+        #print(":D")
+        return
 
 @app.route("/importUser/<string:user>", methods=['POST','GET'])
 def importUser(user):
@@ -209,18 +218,19 @@ def importUser(user):
 
 @app.route("/importRuntimeMetrics", methods=['POST', 'GET'])
 def importRuntimeMetrics():
-            try:
-                #collectMetrics.prepared_dataframe
-                #return ('Loaded successfully' and redirect("/resources", code=302))
-                #return render_template("simple.html",  tables=[collectMetrics.prepared_dataframe.to_html(classes='data')], titles=collectMetrics.prepared_dataframe.columns.values)
-                #if ("cpu" in runtime_metrics):
-                #      return collectMetrics.prepared_dataframe["cpu.cpu3"].to_html(header="true", table_id="table")
-                #elif ("mem" in runtime_metrics):
-                #      return collectMetrics.prepared_dataframe["services.mem_usage"].to_html(header="true", table_id="table")
-                #else:
-                return collectMetrics.prepared_dataframe.to_html(header="true", table_id="table")
-            except FileNotFoundError:
-                return
+    try:
+        #collectMetrics.prepared_dataframe
+        #return ('Loaded successfully' and redirect("/resources", code=302))
+        #return render_template("simple.html",  tables=[collectMetrics.prepared_dataframe.to_html(classes='data')], titles=collectMetrics.prepared_dataframe.columns.values)
+        #if ("cpu" in runtime_metrics):
+        #      return collectMetrics.prepared_dataframe["cpu.cpu3"].to_html(header="true", table_id="table")
+        #elif ("mem" in runtime_metrics):
+        #      return collectMetrics.prepared_dataframe["services.mem_usage"].to_html(header="true", table_id="table")
+        #else:
+        return collectMetrics.prepared_dataframe.to_html(header="true", table_id="table")
+    except FileNotFoundError:
+        return
+
 @app.route("/import_mog_pipeline", methods=['GET'])
 def import_mog_pipeline():
     try:
@@ -240,6 +250,7 @@ def matchMOG():
         return render_template('./mog.html')
     except FileNotFoundError:
         return
+        
 @app.route("/requirements", methods=['GET'])
 def index1():
     if request.method == 'GET':
