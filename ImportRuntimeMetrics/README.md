@@ -11,4 +11,4 @@ Requirements are as follows:
 ``python3.9, numpy, scipy, pyyaml, pandas, prometheus_api_client``
 
 
-To scrape the NetData metrics, we configured ![Prometheus](https://learn.netdata.cloud/docs/exporting-data/prometheus#configure-prometheus-to-scrape-netdata-metrics)
+To scrape the NetData metrics, we configured [Prometheus](https://learn.netdata.cloud/docs/exporting-data/prometheus#configure-prometheus-to-scrape-netdata-metrics)
