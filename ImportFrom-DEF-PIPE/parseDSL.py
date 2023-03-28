@@ -11,7 +11,6 @@ def parseDSL(in_file) -> None:
         requirement_settings = json.load(openfile)
     for line in in_file.splitlines():
         words = line.split(' ')
-        #print(words)
         STEPS_NAME =  "temp"
         if len(words) != 1:
             if (PIPELINE_NAME in words[0]):
