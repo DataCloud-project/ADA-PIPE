@@ -23,12 +23,12 @@ cors = CORS(app, resources={r"/*": {"origins": "*"}})
 
 requirement_list: list = list()
 with open('requirements.yaml', 'r') as file_read:
-        requirement_list = json.dumps(yaml.load(file_read, Loader=yaml.FullLoader))
+    requirement_list = json.dumps(yaml.load(file_read, Loader=yaml.FullLoader))
 
 resource_list: list = list()
 with open('resources.json', 'r') as file_read:
-        resource_list0 = json.load(file_read)
-        resource_list = json.dumps(resource_list0)
+    resource_list0 = json.load(file_read)
+    resource_list = json.dumps(resource_list0)
 
 data: any = None
 with open('data_analysis.json', 'r') as openfile:
