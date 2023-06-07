@@ -137,7 +137,7 @@ def downloadFile ():
 
 @app.route('/uploader', methods = ['GET', 'POST'])
 def upload_file():
-    if request.method == 'GAET':
+    if request.method == 'GET':
         downloadFile ()
     elif request.method == 'POST':
       f = request.files['file']
