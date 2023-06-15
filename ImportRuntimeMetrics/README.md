@@ -12,3 +12,11 @@ Requirements are as follows:
 
 
 To scrape the NetData metrics, we configured the [Prometheus](https://learn.netdata.cloud/docs/exporting-data/prometheus#configure-prometheus-to-scrape-netdata-metrics).
+
+
+To install the netdata-pandas library for collecting metrics:
+``pip3 install netdata-pandas``
+
+
+TO analyze the data and run the ML model:
+``pip install -U scikit-learn``
