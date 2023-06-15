@@ -19,4 +19,4 @@ To install the netdata-pandas library for collecting metrics:
 
 
 TO analyze the data and run the ML model:
-``pip install -U scikit-learn``
+``pip3 install -U scikit-learn``
