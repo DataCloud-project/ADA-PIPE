@@ -9,7 +9,7 @@ Provides a [capacity-aware matching-based scheduler](https://github.com/SiNa88/C
 
 # Tool info
 
-This tool requires docker engine:
+This tool requires a docker engine:
 
 *  ``docker run --rm sina88/ada-match-time-optimized:latest``
 
@@ -19,3 +19,4 @@ This tool requires docker engine:
 The outputs of the docker containers are as follows:
 
 ![alt text](https://raw.githubusercontent.com/DataCloud-project/ADA-PIPE/main/matching-scheduler/cost-or-time-optimized-match/runs.JPG)
+
