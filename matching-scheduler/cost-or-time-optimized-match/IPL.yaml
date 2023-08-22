@@ -1,0 +1,20 @@
+e2-medium:
+- dataretrieve
+- dataslice
+- dataprocess
+c5a.xlarge:
+- dataretrieve
+- dataslice
+- dataprocess
+c5.xlarge:
+- dataretrieve
+- dataslice
+- dataprocess
+c5a.2xlarge:
+- dataretrieve
+- dataslice
+- dataprocess
+c5.2xlarge:
+- dataretrieve
+- dataslice
+- dataprocess

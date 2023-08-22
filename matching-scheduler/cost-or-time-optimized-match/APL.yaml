@@ -1,0 +1,18 @@
+dataretrieve:
+- e2-medium
+- c5a.2xlarge
+- c5a.xlarge
+- c5.2xlarge
+- c5.xlarge
+dataslice:
+- e2-medium
+- c5a.2xlarge
+- c5a.xlarge
+- c5.2xlarge
+- c5.xlarge
+dataprocess:
+- e2-medium
+- c5a.2xlarge
+- c5a.xlarge
+- c5.2xlarge
+- c5.xlarge
