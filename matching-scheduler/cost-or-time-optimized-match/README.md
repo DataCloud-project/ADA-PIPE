@@ -14,3 +14,8 @@ This tool requires docker engine:
 *  ``docker run --rm sina88/ada-match-time-optimized:latest``
 
 *  ``docker run --rm sina88/ada-match-cost-optimized:latest``
+
+
+The outputs of the docker containers are as follows:
+
+![alt text](https://raw.githubusercontent.com/DataCloud-project/ADA-PIPE/main/matching-scheduler/cost-or-time-optimized-match/runs.JPG)
