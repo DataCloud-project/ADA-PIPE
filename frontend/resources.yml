@@ -1,0 +1,20 @@
+DataCloud-wp1:
+- encoding
+- splittingstream
+- training
+DataCloud-wp2:
+- encoding
+- splittingstream
+- training
+DataCloud-edge-0:
+- encoding
+- splittingstream
+- training
+DataCloud-edge-1:
+- encoding
+- splittingstream
+- training
+DataCloud-edge-2:
+- encoding
+- splittingstream
+- training

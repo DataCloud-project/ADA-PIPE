@@ -1,0 +1,270 @@
+{
+  "chunkName": "telluUseCase",
+  "pipelineName": "tellucare_pipeline",
+  "pipelineType": "streaming",
+  "terminationCheck": {
+    "httpURL": "localhost/api/v1/success"
+  },
+  "stepsList": [
+    {
+      "name": "ApplicationLogic",
+      "architecture": "amd64",
+      "provider": "DataCloud-wp1",
+      "resource": "DataCloud-wp1-1",
+      "elasticityControllerMode": null,
+      "dockerImage": "'registry.sintef.cloud/tellucare-edge:latest'",
+      "dockerRegistry": "registry.ubitech.eu/cs3/rnd/h2020-datacloud/datacloud-scenarios",
+      "dockerCredentialsUsing": true,
+      "dockerCustomRegistry": true,
+      "dockerUsername": "tellucareapi",
+      "dockerPassword": "????",
+      "exposedInterfaces": [
+      {
+		"name": "interfOne",
+		"port": "8080",
+		"interfaceType": "CORE",
+        "transmissionProtocol": "TCP",
+        "interfaceID": null,
+        "vna": null,
+        "dateCreated": null,
+        "lastModified": null
+        }
+        ],
+      "requiredInterfaces": null,
+      "requirement": {
+        "vCPUs": 2,
+        "ram": "2048",
+        "storage": 5,
+        "hypervisorType": "ESXI",
+        "gpuRequired": false,
+        "requirementID": null,
+        "dateCreated": null,
+        "lastModified": null
+      },
+      "healthCheck": {
+        "name": "edgeHealthcheck",
+        "httpURL": "google.com",
+        "args": null,
+        "interval": 10,
+        "healthCheckID": null,
+        "dateCreated": null,
+        "lastModified": null
+      },
+      "environmentalVariables": null,
+      "devices": null,
+      "elasticityController": "none",
+      "volumes": null,
+      "labels": [
+        {
+          "labelID": 1,
+          "name": "pqt",
+          "dateCreated": null,
+          "lastModified": null
+        }
+      ],
+      "plugins": null,
+      "publicComponent": true,
+      "networkModeHost": null,
+      "privilege": null,
+      "hostname": null,
+      "sharedMemorySize": null,
+      "command": null,
+      "capabilityAdds": [
+
+      ],
+      "capabilityDrops": [
+        "SETPCAP"
+      ],
+      "ulimitMemlockSoft": null,
+      "ulimitMemlockHard": null,
+      "dockerExecutionUser": null,
+      "user": null,
+      "organization": null,
+      "dateCreated": null,
+      "lastModified": null
+    },
+	{
+      "name": "ApplicationLogic",
+      "architecture": "amd64",
+      "provider": "DataCloud-wp1",
+      "resource": "DataCloud-wp1-2",
+      "elasticityControllerMode": null,
+      "dockerImage": "'registry.sintef.cloud/tellucare-api:latest'",
+      "dockerRegistry": "registry.ubitech.eu/cs3/rnd/h2020-datacloud/datacloud-scenarios",
+      "dockerCredentialsUsing": true,
+      "dockerCustomRegistry": true,
+      "dockerUsername": "tellucareapi",
+      "dockerPassword": "????",
+            "exposedInterfaces": [
+                {
+                    "name": "interfTwo",
+                    "port": "8082",
+                    "interfaceType": "ACCESS",
+                    "transmissionProtocol": "TCP",
+                    "interfaceID": null,
+                    "vna": null,
+                    "dateCreated": null,
+                    "lastModified": null
+                }
+            ],
+            "requiredInterfaces": [
+                {
+                    "friendlyName": "requiredInterfStep2",
+                    "interfaceObj": {
+                        "name": "interfOne",
+                        "port": "8080",
+                        "vna": null,
+                        "interfaceType": "CORE",
+                        "transmissionProtocol": "TCP"
+                    },
+                    "dateCreated": null,
+                    "lastModified": null
+                }
+            ],
+      "requirement": {
+        "vCPUs": 1,
+        "ram": "8192",
+        "storage": 5,
+        "hypervisorType": "ESXI",
+        "gpuRequired": false,
+        "requirementID": null,
+        "dateCreated": null,
+        "lastModified": null
+      },
+      "healthCheck": {
+        "name": "apiHealthcheck",
+        "httpURL": "google.com",
+        "args": null,
+        "interval": 10,
+        "healthCheckID": null,
+        "dateCreated": null,
+        "lastModified": null
+      },
+      "environmentalVariables": null,
+      "devices": null,
+      "elasticityController": "none",
+      "volumes": null,
+      "labels": [
+        {
+          "labelID": 1,
+          "name": "pqt",
+          "dateCreated": null,
+          "lastModified": null
+        }
+      ],
+      "plugins": null,
+      "publicComponent": true,
+      "networkModeHost": null,
+      "privilege": null,
+      "hostname": null,
+      "sharedMemorySize": null,
+      "command": null,
+      "capabilityAdds": [
+
+      ],
+      "capabilityDrops": [
+        "SETPCAP"
+      ],
+      "ulimitMemlockSoft": null,
+      "ulimitMemlockHard": null,
+      "dockerExecutionUser": null,
+      "user": null,
+      "organization": null,
+      "dateCreated": null,
+      "lastModified": null
+    },
+    {
+      "name": "ApplicationLogic",
+      "architecture": "amd64",
+      "provider": "DataCloud-wp1",
+      "resource": "DataCloud-wp1-3",
+      "elasticityControllerMode": null,
+      "dockerImage": "'registry.sintef.cloud/tellucare-application-logic:latest'",
+      "dockerRegistry": "registry.ubitech.eu/cs3/rnd/h2020-datacloud/datacloud-scenarios",
+      "dockerCredentialsUsing": true,
+      "dockerCustomRegistry": true,
+      "dockerUsername": "tellucareapi",
+      "dockerPassword": "????",
+            "exposedInterfaces": [
+                {
+                    "name": "applicationLogicInterf",
+                    "port": "8089",
+                    "interfaceType": "ACCESS",
+                    "transmissionProtocol": "TCP",
+                    "interfaceID": null,
+                    "vna": null,
+                    "dateCreated": null,
+                    "lastModified": null
+                }
+            ],
+            "requiredInterfaces": [
+                {
+                    "friendlyName": "requiredInterfStep3",
+                    "interfaceObj": {
+                        "interfaceID": null,
+                        "name": "interfTwo",
+                        "port": "8082",
+                        "vna": null,
+                        "interfaceType": "ACCESS",
+                        "transmissionProtocol": "TCP",
+                        "dateCreated": null,
+                        "lastModified": null
+                    },
+                    "dateCreated": null,
+                    "lastModified": null
+                }
+            ],
+      "requirement": {
+        "vCPUs": 2,
+        "ram": "8192",
+        "storage": 5,
+        "hypervisorType": "ESXI",
+        "gpuRequired": false,
+        "requirementID": null,
+        "dateCreated": null,
+        "lastModified": null
+      },
+      "healthCheck": {
+        "name": "applicationLogicHealthcheck",
+        "httpURL": "google.com",
+        "args": null,
+        "interval": 10,
+        "healthCheckID": null,
+        "dateCreated": null,
+        "lastModified": null
+      },
+      "environmentalVariables": null,
+      "devices": null,
+      "elasticityController": "none",
+      "volumes": null,
+      "labels": [
+        {
+          "labelID": 1,
+          "name": "pqt",
+          "dateCreated": null,
+          "lastModified": null
+        }
+      ],
+      "plugins": null,
+      "publicComponent": true,
+      "networkModeHost": null,
+      "privilege": null,
+      "hostname": null,
+      "sharedMemorySize": null,
+      "command": null,
+      "capabilityAdds": [
+
+      ],
+      "capabilityDrops": [
+        "SETPCAP"
+      ],
+      "ulimitMemlockSoft": null,
+      "ulimitMemlockHard": null,
+      "dockerExecutionUser": null,
+      "user": null,
+      "organization": null,
+      "dateCreated": null,
+      "lastModified": null
+    }
+  ]
+}

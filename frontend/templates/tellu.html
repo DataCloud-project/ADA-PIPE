@@ -1,0 +1,53 @@
+
+<html>
+<title>ADS</title>
+<style>
+* {
+  box-sizing: content-box;
+}
+
+/* Create two equal columns that floats next to each other */
+.column {
+  float: left;
+  width: 100%;
+  padding: 10px;
+  height: 500px; /* Should be removed. Only for demonstration */
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+</style>  <head>
+  </head>
+  
+  <body>
+  <h2>TELLU-BC</h2>
+<div class="column" style="background-color:#fee;">
+	</br>
+	</br>
+	<h2>Pipeline's steps</h2>
+	<ul><p>tellucare-edge</p></ul>
+	<ul><p>tellucare-api</p> </ul>
+	<ul><p>tellucare-application-logic</p></ul>
+	</br>
+	</br>
+	<h2>Schedules</h2>
+
+	<ul><p>DataCloud-wp1-test1: [tellucare-application-logic]</p></ul>
+
+	<ul><p>DataCloud-wp1-test2: [tellucare-api]</p></ul>
+
+	<ul><p>DataCloud-edge-0: [tellucare-edge]</p></ul>
+
+	<ul><p>DataCloud-edge-1: []</p></ul>
+
+	<ul><p>DataCloud-edge-2: []</p></ul>
+    	</br>
+	</br>
+	</br>
+  </div>
+  </body>
+</html>

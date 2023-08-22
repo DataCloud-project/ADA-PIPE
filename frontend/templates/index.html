@@ -1,0 +1,131 @@
+<!DOCTYPE>
+<html>
+  <head>
+    <title>ADA-PIPE tool</title>
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <link rel="stylesheet"  type="text/css" href="{{url_for('static', filename='fig/styles.css')}}>
+    <!-- JavaScript and dependencies -->
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js" integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/" crossorigin="anonymous"></script>
+  </head>
+  <body>
+    <!-- Navbar -->
+    <nav class="py-3 navbar navbar-expand-lg fixed-top auto-hiding-navbar">
+        <div class="container">
+        <a class="navbar-brand"" href="https://github.com/DataCloud-project/ADA-PIPE/">
+            <!--<img class="logo" src="fig/ADAPIPE_Logo_TransparentBackground_White.png">--> ADA-PIPE
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="{{url_for('upload_page')}}">Requirements</a>
+            </li>
+            <!--<li class="nav-item">
+                <a class="nav-link" href="{{url_for('upload_page')}}">Requirements</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{url_for('index2')}}">WorkerPools</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{url_for('index3')}}">Schedules</a>
+            </li>-->
+            <li class="nav-item">
+                <a class="nav-link" href="http://194.182.187.139/swagger/">Swagger</a>
+            </li>
+            </ul>
+        </div>
+        </div>
+    </nav>
+        </br>
+        </br>
+        </br>
+    <ul>
+    <section id="hero">
+         <div class="container">
+          <div class="row cards">
+                <div class="col-md-4 d-flex justify-content-center">
+                  <div class="card" style="width: 18rem;">
+                        <div class="card-body">
+                          <h5 class="card-title">1) Importing user's token</h5>
+                          <p class="card-text"><a href="{{url_for('importUser',user='testuser')}}">User's access token</a></p>
+			  <p class="card-text"><a href="https://github.com/DataCloud-project/ADA-PIPE/blob/main/ADA-frontend/keycloak_utils.py#L49">Source code</a></p>
+                        </div>
+                  </div>
+                </div>
+
+        <div class="col-md-4 d-flex justify-content-center">
+          <div class="card" style="width: 17rem;">
+            <div class="card-body">
+              <h5 class="card-title">2) Importing pipeline definition</h5>
+              <!--<p class="card-text"><a href="{{url_for('import_tel_pipeline')}}">Tellu pipeline definition</a></p>
+	      <p class="card-text"><a href="{{url_for('import_mog_pipeline')}}">Mog pipeline definition</a></p>
+	      <p class="card-text"><a href="{{url_for('import_jot_pipeline')}}">Jot pipeline definition</a></p>
+              <p class="card-text"><a href="{{url_for('import_cer_pipeline')}}">Ceramica pipeline definition</a></p>
+              <p class="card-text"><a href="{{url_for('import_bos_pipeline')}}">Bosch pipeline definition</a></p>-->
+	      <p class="card-text"><a href="https://github.com/DataCloud-project/ADA-PIPE/blob/main/ImportFrom-DEF-PIPE/parseDSL.py">Source code</a></p>
+            </div>
+          </div>
+        </div>
+          <div class="col-md-4 d-flex justify-content-center">
+                          <div class="card" style="width: 18rem;">
+                                <div class="card-body">
+                                  <h5 class="card-title">3) Scraping data</h5>
+                                  <p class="card-text"><a href="http://localhost:9090/graph">Runtime data</a></p>
+                                  <p class="card-text"><a href="{{url_for('importData')}}">Continuum's monitoring</a></p>
+                                  <p class="card-text"><a href="https://github.com/DataCloud-project/ADA-PIPE/tree/main/ImportRuntimeMetrics">Source code</a></p>
+                                </div>
+                          </div>
+                  </div>
+           </div>
+        </div>
+  </section>
+  </ul>
+
+    </br>
+    </br>
+    </br>
+    <ul>
+    <section id="hero">
+         <div class="container">
+          <div class="row cards">
+        <div class="col-md-4 d-flex justify-content-center">
+          <div class="card" style="width: 18rem;">
+            <div class="card-body">
+              <h5 class="card-title">4) ADS model</h5>
+              <p class="card-text"><a href="predict">Resource allocation</a></p>
+              <p class="card-text"><a href="https://github.com/DataCloud-project/ADA-PIPE/tree/main/ADA-learning-scheduler">Source code</a></p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 d-flex justify-content-center">
+          <div class="card" style="width: 18rem;">
+            <div class="card-body">
+              <h5 class="card-title">5) Scheduling</h5>
+              <p class="card-text"><a href="{{url_for('adaptExecution',pipelineID='37382275-2196-47c3-8d06-d21a30c91392')}}">Schedule Tellu pipeline</a></p>
+              <p class="card-text"><a href="{{url_for('adaptExecution',pipelineID='f4db3cdb-9cb7-417c-8266-fda2f82f400e')}}">Schedule Mog pipeline</a></p>
+              <p class="card-text"><a href="{{url_for('adaptExecution',pipelineID='468532e8-580e-4370-b246-352433cb76a7')}}">Schedule Jot pipeline</a></p>
+              <p class="card-text"><a href="{{url_for('adaptExecution',pipelineID='a6d3bea4-dc77-4a56-a086-4c6eab2ae4c4')}}">Schedule Cermica pipeline</a></p>
+              <p class="card-text"><a href="{{url_for('adaptExecution',pipelineID='5f642f50-4722-4d02-8e16-ee009fe08cc9')}}">Schedule Bosch pipeline</a></p>
+              <p class="card-text"><a href="https://github.com/DataCloud-project/ADA-PIPE/blob/main/ADA-learning-scheduler/updateDeployment.py">Source code</a></p>
+            </div>
+          </div>
+        </div>
+        <!--<div class="col-md-4 d-flex justify-content-center">
+          <div class="card" style="width: 18rem;">
+            <div class="card-body">
+              <h5 class="card-title">Integration with MOG</h5>
+              <p class="card-text"><a href="{{url_for('import_mog_pipeline_demo')}}">MOG pipeline</a></p>
+              <p class="card-text"><a href="{{url_for('matchMOG')}}">Match MOG pipeline</a></p>
+            </div>
+          </div>
+        </div>-->
+    </div>
+    </div>
+  </section>
+  </ul>
+  </body>
+</html>

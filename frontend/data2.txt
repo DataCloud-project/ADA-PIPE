@@ -1,0 +1,8 @@
+pipeline/tellucare-edge-schedule created
+pipeline/tellucare-api-schedule created
+pipeline/tellucare-application-logic-schedule created
+
+NAME                                                device            UP-TO-DATE   AVAILABLE      AGE
+tellucare-edge-schedule                  DataCloud-tellu-gw-edge          1            1           0s
+tellucare-api-schedule                      DataCloud-wp1-test1           1            1           1s
+tellucare-application-logic-schedule        DataCloud-wp1-test2           1            1           2s

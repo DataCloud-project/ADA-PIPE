@@ -1,0 +1,13 @@
+deployment.apps "tellucare-edge-deployment" deleted
+deployment.apps/tellucare-edge-logic-deployment created
+deployment.apps "tellucare-api-deployment" deleted
+deployment.apps/tellucare-api-deployment created
+deployment.apps "tellucare-application-logic-deployment" deleted
+deployment.apps/tellucare-application-logic-deployment created
+
+NAME                       READY   UP-TO-DATE   AVAILABLE   AGE
+tellucare-edge-deployment   0/2     1            0           2s
+tellucare-api-deployment   0/2     1            0           1s
+tellucare-application-logic-deployment   0/2     1            0           0s
+grafana                    2/2     2            2           470d
+pingtest                   2/2     2            2           655d

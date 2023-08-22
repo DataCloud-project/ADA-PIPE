@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+<!--<script>
+  function importSteps() {
+        document.write(5 + 6)
+        //fetch('/home/ubuntu/demo/ADA-PIPE/ADA-frontend/templates/data.txt')
+        //.then(response => response.text())
+        //.then(text => console.log(text))
+  }
+</script>-->
+<script>
+  function sched() {
+        fetch('/home/ubuntu/demo/ADA-PIPE/ADA-frontend/data2.txt')
+        .then(response => response.text())
+        .then(text => console.log(text))
+  }
+</script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+* {
+  box-sizing: border-box;
+}
+
+/* Create two equal columns that floats next to each other */
+.column {
+  float: left;
+  width: 50%;
+  padding: 10px;
+  height: 300px; /* Should be removed. Only for demonstration */
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+</style>
+</head>
+<body>
+
+<h2>ADS tool</h2>
+
+<div class="row">
+  <div class="column" style="background-color:#bef;">
+    <h2></h2>
+    <br />
+    <br />
+    <div class="bottomleft" id="bottomleft">
+				<form action="/predict/sched" method='POST' enctype = "multipart/form-data">
+					<!--<button id="import_steps" class="menu_button" type="button" onclick="importSteps()">Import steps</button>
+					
+					<br />
+					<br />
+					<button id="import_devices" class="menu_button" type="button" onclick="importDev()">Import devices</button>
+		                        <br />
+					<br />
+					<button id="sched" class="menu_button" type="button" onclick="sched()">Schedule</button>
+					<br />-->
+	        		<input type="submit" value="Import Docker images of steps" name="action1"/>
+                                <br />
+                                <br />
+        			<input type="submit" value="Import device descriptions" name="action2"/>
+                                <br />
+                                <br />
+		                <input type="submit" value="Schedule" name="action3"/>
+                                <br />
+                                <br />
+				</form>
+			</div>
+  </div>
+<!--  <div id="one" class="column" style="background-color:#fee;">
+<script>
+  function importSteps() {
+	document.write(5 + 6)
+	//fetch('/home/ubuntu/demo/ADA-PIPE/ADA-frontend/templates/data.txt')
+  	//.then(response => response.text())
+  	//.then(text => console.log(text))
+  }
+</script>
+<script>
+  function importDev() {
+        fetch('/home/ubuntu/demo/ADA-PIPE/ADA-frontend/data1.txt')
+        .then(response => response.text())
+        .then(text => console.log(text))
+  }
+</script>
+<script>
+  function sched() {
+        fetch('/home/ubuntu/demo/ADA-PIPE/ADA-frontend/data2.txt')
+        .then(response => response.text())
+        .then(text => console.log(text))
+  }
+</script>
+</div>-->
+</div>
+
+</body>
+</html>

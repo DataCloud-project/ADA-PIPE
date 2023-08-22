@@ -1,0 +1,34 @@
+
+<html>
+  <head>
+  </head>
+  
+  <body>
+  <h1>MOG-BC</h1>
+	</br>
+	</br>
+	<h2>Pipeline's steps</h2>
+	<ul><p>detection_RIGHT</p></ul>
+	<ul><p>detection_LEFT</p> </ul>
+	<ul><p>Kafka broker</p></ul>
+	<ul><p>training: [fusion, overlay].</p></ul>
+	</br>
+	</br>
+	<h2>Schedules</h2>
+
+	<ul><p>DataCloud-wp1: [training]</p></ul>
+
+	<ul><p>DataCloud-wp2: [--]</p></ul>
+
+	<ul><p>DataCloud-edge-0: [detection_RIGHT,detection_LEFT, broker]</p></ul>
+
+	<ul><p>DataCloud-edge-1: []</p></ul>
+
+	<ul><p>DataCloud-edge-2: []</p></ul>
+    	</br>
+	</br>
+	</br>
+	<h2>Reponse time</h2>
+	<ul><p>94.4 seconds</p></ul>
+  </body>
+</html>
