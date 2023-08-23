@@ -78,4 +78,21 @@ keywords={},
 doi={10.1109/IPDPS54959.2023.00054}, }
 ```
 
+Zahra Najafabadi Samani, Narges Mehran, Dragi Kimovski, Josef Hammer, & Radu Prodan. (2022). Edge infrastructure traces (Version 1) [Data set]. Zenodo. https://doi.org/10.5281/zenodo.7311294
 
+```
+@dataset{zahra_najafabadi_samani_2022_7311294,
+  author       = {Zahra Najafabadi Samani and
+                  Narges Mehran and
+                  Dragi Kimovski and
+                  Josef Hammer and
+                  Radu Prodan},
+  title        = {Edge infrastructure traces},
+  month        = nov,
+  year         = 2022,
+  publisher    = {Zenodo},
+  version      = 1,
+  doi          = {10.5281/zenodo.7311294},
+  url          = {https://doi.org/10.5281/zenodo.7311294}
+}
+```
