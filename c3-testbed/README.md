@@ -12,6 +12,12 @@ The resources are as follows:
 
 AWS instances are located in Frankfurt and London, Google instances located in Frankfurt, Exoscale Edge-Cloud located in Klagenfurt, Vienna, Frankfurt, Zurich, Geneva, Sofia, local OpenStack instances located in the University of Klagenfurt along with the Edge device such as Nvidia Jetson Nano, RPi4, RPi3 (mounted with Coral accelators).
 
+# Dataset
+
+[Edge infrastructure traces](https://zenodo.org/record/7311294)
+
+Zahra Najafabadi Samani, Narges Mehran, Dragi Kimovski, Josef Hammer, and Radu Prodan. [Dataset] (version 1), Zenodo, November 2022.
+
 
 # Citation
 
