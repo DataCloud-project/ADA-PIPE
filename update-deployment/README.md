@@ -1,0 +1,1 @@
+To run the update deployment: ```python3 updateDeployment.py```

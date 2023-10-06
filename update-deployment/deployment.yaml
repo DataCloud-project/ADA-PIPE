@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tellucare-application-logic-deployment
+spec:
+  selector:
+    matchLabels:
+      app: tellucare-application-logic-deployment
+  template:
+    metadata:
+      labels:
+        app: tellucare-application-logic-deployment
+    spec:
+      containers:
+        - name: tellucare-application-logic-deployment
+          image: dcloud2.itec.aau.at/tellucare-application-logic:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 5000
