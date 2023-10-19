@@ -7,8 +7,8 @@
 
 Adaptive resource provisioning of the Cloud, Fog, and Edge continuum. 
 
-ADA-PIPE, addressing run-time aspects, provides a data-aware algorithm for the adaptable provisioning of resources and services across the Computing Continuum with an infrastructure drift adaptation capability. The tool allows intelligent resource reconfiguration for improved computational performance and interoperability by monitoring and analysis of diverse resources.
+ADA-PIPE, addressing run-time aspects, provides a data-aware algorithm for the adaptable provisioning of resources and services on the Computing Continuum with an infrastructure drift adaptation capability. The tool allows intelligent resource reconfiguration for improved computational performance and interoperability by monitoring and analysis of diverse resources.
 
-We plan to explore novel methods for resources scheduling and adaptation for Big Data Pipeline execution.
+We plan to explore novel methods for resource scheduling and adaptation for Big Data Pipeline execution.
 
 ![alt text](https://raw.githubusercontent.com/DataCloud-project/ADA-PIPE/main/figure/arch-4.png)
