@@ -1,18 +1,18 @@
 {
-   "chunkName":"JotUseCase",
-   "pipelineName":"JotPipeline",
-   "pipelineType":"batch",
+   "chunkName":"BoschUseCase",
+   "pipelineName":"BoschPipeline",
+   "pipelineType":"streaming",
    "terminationCheck":{
       "httpURL":"localhost/api/v1/success"
    },
    "stepsList":[
       {
-         "name":"DataCleaning-Conv",
+         "name":"kg-split",
          "architecture":"amd64",
-         "provider":"DataCloud",
-         "resource":"DataCloud-wp1",
+         "provider":"Bosch",
+         "resource":"Bosch Gateway 0",
          "elasticityControllerMode":null,
-         "dockerImage":"jot/conversions_img:latest",
+         "dockerImage":"bosch/kgtrain-split:1.0",
          "dockerRegistry":"dcloud2.itec.aau.at:5000",
          "dockerCredentialsUsing":true,
          "dockerCustomRegistry":true,
@@ -20,7 +20,7 @@
          "dockerPassword":"????",
          "exposedInterfaces":[
             {
-               "name":"interfconversions",
+               "name":"intonesplit",
                "port":"8080",
                "interfaceType":"CORE",
                "transmissionProtocol":"TCP",
@@ -53,8 +53,36 @@
          "environmentalVariables":[
             {
                "environmentalVariableID":null,
-               "key":"CONV_ROUTE",
-               "value":"/conversions",
+               "key":"DATA_PATH",
+               "value":"data/",
+               "dateCreated":null,
+               "lastModified":null
+            },
+            {
+               "environmentalVariableID":null,
+               "key":"KB_FILE",
+               "value":"KG.n3",
+               "dateCreated":null,
+               "lastModified":null
+            },
+            {
+               "environmentalVariableID":null,
+               "key":"UNSEEN_RATIO",
+               "value":"0.1",
+               "dateCreated":null,
+               "lastModified":null
+            },
+            {
+               "environmentalVariableID":null,
+               "key":"TRAIN_RATIO",
+               "value":"0.7",
+               "dateCreated":null,
+               "lastModified":null
+            },
+            {
+               "environmentalVariableID":null,
+               "key":"TEST_RATIO",
+               "value":"0.2",
                "dateCreated":null,
                "lastModified":null
             }
@@ -92,12 +120,12 @@
          "lastModified":null
       },
       {
-         "name":"DataCleaning-Stats",
+         "name":"kgtrain-train",
          "architecture":"amd64",
          "provider":"DataCloud",
-         "resource":"Datacloud-wp1",
+         "resource":"DataCloud-wp1",
          "elasticityControllerMode":null,
-         "dockerImage":"jot/statistics_img:latest",
+         "dockerImage":"bosch/kgtrain-train:1.0",
          "dockerRegistry":"dcloud2.itec.aau.at:5000",
          "dockerCredentialsUsing":true,
          "dockerCustomRegistry":true,
@@ -105,7 +133,7 @@
          "dockerPassword":"????",
          "exposedInterfaces":[
             {
-               "name":"interfstatistics",
+               "name":"inttwotrain",
                "port":"8082",
                "interfaceType":"ACCESS",
                "transmissionProtocol":"TCP",
@@ -117,9 +145,9 @@
          ],
          "requiredInterfaces":[
             {
-               "friendlyName":"requiredInterfStep2Jot",
+               "friendlyName":"reqintstep2",
                "interfaceObj":{
-                  "name":"interfconversions",
+                  "name":"intonesplit",
                   "port":"8080",
                   "vna":null,
                   "interfaceType":"CORE",
@@ -130,7 +158,7 @@
             }
          ],
          "requirement":{
-            "vCPUs":1,
+            "vCPUs":4,
             "ram":"8192",
             "storage":5,
             "hypervisorType":"ESXI",
@@ -151,8 +179,36 @@
          "environmentalVariables":[
             {
                "environmentalVariableID":null,
-               "key":"STATS_ROUTE",
-               "value":"/statistics",
+               "key":"DATA_PATH",
+               "value":"data/",
+               "dateCreated":null,
+               "lastModified":null
+            },
+            {
+               "environmentalVariableID":null,
+               "key":"MODELS_PATH",
+               "value":"models/",
+               "dateCreated":null,
+               "lastModified":null
+            },
+            {
+               "environmentalVariableID":null,
+               "key":"KB_FILE",
+               "value":"KG.n3",
+               "dateCreated":null,
+               "lastModified":null
+            },
+            {
+               "environmentalVariableID":null,
+               "key":"MODEL",
+               "value":"ComplEx",
+               "dateCreated":null,
+               "lastModified":null
+            },
+            {
+               "environmentalVariableID":null,
+               "key":"EPOCHS",
+               "value":"4",
                "dateCreated":null,
                "lastModified":null
             }
@@ -190,12 +246,12 @@
          "lastModified":null
       },
       {
-         "name":"DataCleaning-Rev",
+         "name":"kgtrain-validate",
          "architecture":"amd64",
          "provider":"DataCloud",
          "resource":"Datacloud-wp1",
          "elasticityControllerMode":null,
-         "dockerImage":"jot/revenue_img:latest",
+         "dockerImage":"bosch/kgtrain-validate:1.0",
          "dockerRegistry":"dcloud2.itec.aau.at:5000",
          "dockerCredentialsUsing":true,
          "dockerCustomRegistry":true,
@@ -203,7 +259,7 @@
          "dockerPassword":"????",
          "exposedInterfaces":[
             {
-               "name":"interfrevenue",
+               "name":"intthreeval",
                "port":"8089",
                "interfaceType":"ACCESS",
                "transmissionProtocol":"TCP",
@@ -215,10 +271,10 @@
          ],
          "requiredInterfaces":[
             {
-               "friendlyName":"requiredInterfStep3Jot",
+               "friendlyName":"reqintstep3",
                "interfaceObj":{
                   "interfaceID":null,
-                  "name":"interfstatistics",
+                  "name":"inttwotrain",
                   "port":"8082",
                   "vna":null,
                   "interfaceType":"ACCESS",
@@ -231,7 +287,7 @@
             }
          ],
          "requirement":{
-            "vCPUs":2,
+            "vCPUs":4,
             "ram":"8192",
             "storage":5,
             "hypervisorType":"ESXI",
@@ -252,8 +308,142 @@
          "environmentalVariables":[
             {
                "environmentalVariableID":null,
-               "key":"REVENUE_ROUTE",
-               "value":"/revenue"
+               "key":"DATA_PATH",
+               "value":"data/",
+               "dateCreated":null,
+               "lastModified":null
+            },
+            {
+               "environmentalVariableID":null,
+               "key":"MODELS_PATH",
+               "value":"models/",
+               "dateCreated":null,
+               "lastModified":null
+            },
+            {
+               "environmentalVariableID":null,
+               "key":"KB_FILE",
+               "value":"KG.n3",
+               "dateCreated":null,
+               "lastModified":null
+            },
+            {
+               "environmentalVariableID":null,
+               "key":"MODEL",
+               "value":"ComplEx",
+               "dateCreated":null,
+               "lastModified":null
+            }
+         ],
+         "devices":null,
+         "elasticityController":"none",
+         "volumes":null,
+         "labels":[
+            {
+               "labelID":1,
+               "name":"pqt",
+               "dateCreated":null,
+               "lastModified":null
+            }
+         ],
+         "plugins":null,
+         "publicComponent":false,
+         "networkModeHost":null,
+         "privilege":null,
+         "hostname":null,
+         "sharedMemorySize":null,
+         "command":null,
+         "capabilityAdds":[
+            
+         ],
+         "capabilityDrops":[
+            "SETPCAP"
+         ],
+         "ulimitMemlockSoft":null,
+         "ulimitMemlockHard":null,
+         "dockerExecutionUser":null,
+         "user":null,
+         "organization":null,
+         "dateCreated":null,
+         "lastModified":null
+      },
+      {
+         "name":"kgtrain-report",
+         "architecture":"amd64",
+         "provider":"Bosch",
+         "resource":"Bosch Gateway 0",
+         "elasticityControllerMode":null,
+         "dockerImage":"bosch/kgtrain-report:1.0",
+         "dockerRegistry":"dcloud2.itec.aau.at:5000",
+         "dockerCredentialsUsing":true,
+         "dockerCustomRegistry":true,
+         "dockerUsername":"ubitech",
+         "dockerPassword":"????",
+         "exposedInterfaces":null,
+         "requiredInterfaces":[
+            {
+               "friendlyName":"reqintstep4",
+               "interfaceObj":{
+                  "interfaceID":null,
+                  "name":"intthreeval",
+                  "port":"8089",
+                  "vna":null,
+                  "interfaceType":"ACCESS",
+                  "transmissionProtocol":"TCP",
+                  "dateCreated":null,
+                  "lastModified":null
+               },
+               "dateCreated":null,
+               "lastModified":null
+            }
+         ],
+         "requirement":{
+            "vCPUs":2,
+            "ram":"2048",
+            "storage":5,
+            "hypervisorType":"ESXI",
+            "gpuRequired":false,
+            "requirementID":null,
+            "dateCreated":null,
+            "lastModified":null
+         },
+         "healthCheck":{
+            "name":"applicationLogicHealthcheck",
+            "httpURL":"google.com",
+            "args":null,
+            "interval":10,
+            "healthCheckID":null,
+            "dateCreated":null,
+            "lastModified":null
+         },
+         "environmentalVariables":[
+            {
+               "environmentalVariableID":null,
+               "key":"DATA_PATH",
+               "value":"data/",
+               "dateCreated":null,
+               "lastModified":null
+            },
+            {
+               "environmentalVariableID":null,
+               "key":"REPORTS_PATH",
+               "value":"reports/",
+               "dateCreated":null,
+               "lastModified":null
+            },
+            {
+               "environmentalVariableID":null,
+               "key":"KB_FILE",
+               "value":"KG.n3",
+               "dateCreated":null,
+               "lastModified":null
+            },
+            {
+               "environmentalVariableID":null,
+               "key":"MODEL",
+               "value":"ComplEx",
+               "dateCreated":null,
+               "lastModified":null
             }
          ],
          "devices":null,

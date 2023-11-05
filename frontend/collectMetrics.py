@@ -1,4 +1,4 @@
-import time
+'''import time
 import numpy
 import pandas as pd
 import copy
@@ -30,6 +30,38 @@ for i in range(len(query_disk)):
 query_mem = prom.custom_query(query="netdata_services_mem_usage_MiB_average")
 for i in range(len(query_mem)):
         prepared_dataset.append([query_mem[i]["metric"]["instance"],query_mem[i]["metric"]["dimension"],numpy.round(float(query_mem[i]['value'][1]),5)])
-
-prepared_dataframe = pd.DataFrame(prepared_dataset, columns=["instance","metric","value"])
+'''
+import subprocess
+import json
+import csv
+import pandas as pd
+#import numpy
+prepared_dataset = []
+prepared_dataframe = []
+count = 1
+while count <= 10:
+        query1 = "avg_over_time(container_cpu_usage_seconds_total["+str(count)+"h])"
+        call1 = ["curl", "https://datacloud-prometheus.euprojects.net/api/v1/query?query="+query1]
+        p1 = subprocess.Popen(call1, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        output1, err = p1.communicate()
+        dict1 = json.loads(output1.decode())
+        for i in range(len(dict1["data"]["result"])):
+                if ("pod" in dict1["data"]["result"][i]["metric"].keys()):
+                        prepared_dataset.append([str("cpu_usage_seconds"),str(count),str(dict1["data"]["result"][i]["metric"]["pod"]),str(dict1["data"]["result"][i]["metric"]["instance"]),str(float(dict1["data"]["result"][i]["value"][1]))])
+        count = count + 1
+prepared_dataframe = pd.DataFrame(prepared_dataset, columns=["metric","hour(s)_ago","pod","instance","value"])
 #print(prepared_dataframe)
+
+count = 1
+while count <= 10:
+        query1 = "avg_over_time(container_memory_usage_bytes["+str(count)+"h])"
+        call1 = ["curl", "https://datacloud-prometheus.euprojects.net/api/v1/query?query="+query1]
+        p1 = subprocess.Popen(call1, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        output1, err = p1.communicate()
+        dict1 = json.loads(output1.decode())
+        for i in range(len(dict1["data"]["result"])):
+                if ("pod" in dict1["data"]["result"][i]["metric"].keys()):
+                        prepared_dataset.append([str("memory_usage_MiB"),str(count),str(dict1["data"]["result"][i]["metric"]["pod"]),str(dict1["data"]["result"][i]["metric"]["instance"]),str(float(dict1["data"]["result"][i]["value"][1])/1024/1024)])
+        count = count + 1
+prepared_dataframe = pd.DataFrame(prepared_dataset, columns=["metric","hour(s)_ago","pod","instance","value"])
+

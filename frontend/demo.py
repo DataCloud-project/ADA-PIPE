@@ -9,7 +9,9 @@ import keycloak_utils
 from flask_swagger_ui import get_swaggerui_blueprint
 import subprocess
 import hashlib
-import collectMetrics
+#import collectMetrics
+#import predict_func
+#import detect_anomaly
 import pandas as pd
 
 DEBUG_MODE: bool = True
@@ -21,14 +23,18 @@ app = Flask(__name__)
 cors = CORS(app, resources={r"/*": {"origins": "*"}})
 with open('requirements.yaml', 'r') as file_read:
         requirement_list = json.dumps(yaml.load(file_read, Loader=yaml.FullLoader))
-
+with open('dry-run.yaml', 'r') as file_read:
+        dry_run_list = json.dumps(yaml.load(file_read, Loader=yaml.FullLoader))
 with open('resources.json', 'r') as file_read:
         resource_list0 = json.load(file_read)
 resource_list = json.dumps(resource_list0)
 
+with open('passwords.json', 'r') as openfile:
+    passes = json.load(openfile)
+
 with open('TelluPipeline.json', 'r') as openfile:
     json_object = json.load(openfile)
-data = json_object
+data = json_object #json.dumps(json_object)
 with open('templates/mog.json', 'r') as file_read_mog:
     mog_list = json.load(file_read_mog)
 mog_list = json.dumps(mog_list)
@@ -91,6 +97,23 @@ def get_homepage():
         return render_template("index.html", form=request.form)
     return render_template("index.html")
 
+'''@app.route("/auth", methods=['GET', 'POST'])
+def authenticate():
+    if request.method == 'GET':
+        # Get Form Fields
+        ##username = input("Please enter username: ")  #request.form['username']
+        #password_candidate = input("Please enter password: ")  #request.form['password']
+        #print(username, " ",password_candidate)
+        #keycloak_open_id = keycloak_utils._get_keycloak_open_id()
+        #keycloak_token = keycloak_utils._get_keycloak_token(username,password_candidate)
+        #access_token = keycloak_token['access_token']
+        #print(access_token)
+        #user_info = keycloak_utils.verify_access_token(access_token)
+        #print("Token is verified :D :D ",user_info)
+        #if(user_info == True):
+        if request.method == 'GET':
+           return render_template("./index.html", form=request.form)
+        return render_template("./index.html")'''
 
 @app.route('/upload')
 def upload_page():
@@ -113,41 +136,121 @@ def upload_file():
 
 @app.route("/importData",  methods=['GET'])
 def importData():
-      return collectMetrics.prepared_dataframe.to_html(header="true", table_id="table")
-@app.route("/adaptExecution/<string:pipelineID>", methods=['GET'])
-def adaptExecution(pipelineID):
+     #return render_template("simple.html", tables=[collectMetrics.prepared_dataframe.to_html(classes='data')], titles=collectMetrics.prepared_dataframe.columns.values)
+     return #collectMetrics.prepared_dataframe.to_html(header="true", table_id="table")
+
+def parseUserPipelines(requirement_settings,pipelineID):
+	for i in range(len(requirement_settings["data"])):
+		if (requirement_settings["data"][i]["id"]==pipelineID):
+			return True
+	return False
+	#print(len(requirement_settings["data"]))
+
+@app.route("/adaptExecution/<string:user>/<string:pipelineID>", methods=['POST', 'GET'])
+def adaptExecution(user,pipelineID):
             try:
-                if (os.path.exists(pipelineID+".json")):
-                      with open(pipelineID+'.json', 'r') as openfile:
-                             json_object = json.load(openfile)
-                             return ('Successfully loaded' and Response(json.dumps(json_object), mimetype='application/json' ))
+                token_call = ["curl", "--location", "--request", "POST", "https://datacloud-auth.euprojects.net/auth/realms/user-authentication/protocol/openid-connect/token", "--header", "Content-Type: application/x-www-form-urlencoded", "--data-urlencode", "username="+user, "--data-urlencode", "password="+passes[user], "--data-urlencode", "realm=user-authentication", "--data-urlencode", "client_id=def_frontend", "--data-urlencode", "grant_type=password"]
+                p = subprocess.Popen(token_call, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+                output, err = p.communicate()
+                dict = json.loads(output.decode())
+                user_token_ = dict["access_token"]
+                def_call = ["curl", "-X", "GET","https://crowdserv.sys.kth.se/api/repo/"+user, "-H","accept: application/json","-H","Authorization: Bearer {}".format(user_token_)]
+                p = subprocess.Popen(def_call, stdout=subprocess.PIPE,
+                                             stderr=subprocess.PIPE)
+                output_of_def, err = p.communicate()
+                dict = json.loads(output_of_def.decode())
+                if (parseUserPipelines(dict,pipelineID)):
+                        if (os.path.exists(pipelineID+".json")):
+                                with open(pipelineID+'.json', 'r') as openfile:
+                                    json_object = json.load(openfile)
+                                    return ('Successfully loaded' and Response(json.dumps(json_object), mimetype='application/json' ))
+                        else:
+                                #os.path.join(pipelineID+".json")
+                                if ("bosch" in user):
+                                    with open('6a77d0fa-ae70-4372-9c44-08bb6fb1d7f6.json', 'r') as openfile:
+                                        json_object = json.load(openfile)
+                                        return ('Successfully loaded' and Response(json.dumps(json_object), mimetype='application/json'))
+                                        #os.popen('cp '+' '+'6a77d0fa-ae70-4372-9c44-08bb6fb1d7f6.json'+' '+pipelineID+".json")
+                                elif("tlu" in user):
+       	                            with open('d0bc11ef-2416-41fa-9357-ff0e2fbbdec4.json', 'r') as openfile:
+                                        json_object = json.load(openfile)
+                                        return ('Successfully loaded' and Response(json.dumps(json_object), mimetype='application/json')) #os.popen('cp '+' '+'d0bc11ef-2416-41fa-9357-ff0e2fbbdec4.json'+' '+pipelineID+".json")
+                                elif("jot" in user):
+                                    with open('468532e8-580e-4370-b246-352433cb76a7.json', 'r') as openfile:
+                                        json_object = json.load(openfile)
+                                        return ('Successfully loaded' and Response(json.dumps(json_object), mimetype='application/json'))
+                                        #os.popen('cp '+' '+'468532e8-580e-4370-b246-352433cb76a7.json'+' '+pipelineID+".json")
+                                elif("mog" in user):
+                                    with open('e1536753-a88e-4489-85e4-84d555500e58.json', 'r') as openfile:
+                                        json_object = json.load(openfile)
+                                        return ('Successfully loaded' and Response(json.dumps(json_object), mimetype='application/json'))
+                                        #os.popen('cp '+' '+'e1536753-a88e-4489-85e4-84d555500e58.json'+' '+pipelineID+".json")
+                                elif("cer" in user):
+                                    with open('a6d3bea4-dc77-4a56-a086-4c6eab2ae4c4.json', 'r') as openfile:
+                                        json_object = json.load(openfile)
+                                        return ('Successfully loaded' and Response(json.dumps(json_object), mimetype='application/json'))
+                                        #os.popen('cp '+' '+'a6d3bea4-dc77-4a56-a086-4c6eab2ae4c4.json'+' '+pipelineID+".json")
                 else:
-                      return Response("<p>Please test again with the PipelineID</p>", mimetype='text/html')
+                        with open('37382275-2196-47c3-8d06-d21a30c91392.json', 'r') as openfile:
+                              json_object = json.load(openfile)
+                        return ('Successfully loaded' and Response(json.dumps(json_object), mimetype='application/json'))
+                	        #os.popen('cp '+' '+'37382275-2196-47c3-8d06-d21a30c91392.json'+' '+pipelineID+".json")
+        	                #with open(pipelineID+".json", 'r') as openfile:
+	                        #     json_object = json.load(openfile)
+	                        #     return ('Successfully loaded' and Response(json.dumps(json_object), mimetype='application/json'))
+	                        #return Response("<p>Please test again with the PipelineID</p>", mimetype='text/html') #('The requested pipeline or chunk is not available' and Response(json.dumps(data), mimetype='application/json' ))
             except FileNotFoundError:
                 return
-@app.route("/predict", methods=['GET'])
-def predict():
-     return render_template("prediction.html") #, len = 35, sched_cont = sched_cont)
-     #return "<p>DataCloud-wp1</p>" #ml.predict()
-@app.route("/predict/sched", methods=['GET', 'POST'])
-def predict2():
+
+@app.route("/alloc", methods=['GET'])
+def alloc():
+     return render_template("prediction.html")
+
+@app.route("/alloc/sched", methods=['GET', 'POST'])
+def alloc2():
         if request.form.get('action1') == 'Import Docker images of steps':
             return render_template("prediction0.html", header= "Loading Docker images of steps from repo",len = 22, cont = cont_step_image)
         elif request.form.get('action2') == 'Import device descriptions':
             return render_template("prediction0.html", header="Getting devices monitoring information", len = 2, cont = cont_device)
         elif  request.form.get('action3') == 'Schedule':
-            return render_template("tellu.html") 
+            return render_template("tellu.html")
+
+@app.route("/predict", methods=['GET'])
+def predict():
+            try:
+                return ###predict_func.prepared_dataframe.to_html(header="true", table_id="table")
+            except FileNotFoundError:
+                return
+
+@app.route("/detectAnomaly", methods=['GET'])
+def detectAnomaly():
+            try:
+                return ###detect_anomaly.prepared_dataframe.to_html(header="true", table_id="table")
+            except FileNotFoundError:
+                return
+
+@app.route("/import_demo_pipeline", methods=['GET'])
+def import_demo_pipeline():
+            try:
+                return (redirect("/importPipeline/{}/{}".format("testuser","8006f770-4315-4d87-a0b9-7dd5f1c8f2d7"), code=302))
+            except FileNotFoundError:
+                return
 
 @app.route("/import_tel_pipeline", methods=['GET'])
 def import_tel_pipeline():
             try:
-                return (redirect("/importPipeline/{}/{}".format("testuser","37382275-2196-47c3-8d06-d21a30c91392"), code=302))
+                #return(redirect("/importPipeline/{}/{}".format("testuser","37382275-2196-47c3-8d06-d21a30c91392"), code=302))
+                #return(redirect("/importPipeline/{}/{}".format("testuser","29b85ff2-fd0c-4499-8764-e411fc066033"), code=302))
+                return(redirect("/importPipeline/{}/{}".format("testuser","d0bc11ef-2416-41fa-9357-ff0e2fbbdec4"), code=302))
+                #return(redirect("/importPipeline/{}/{}".format("testuser","028c9ef7-58cb-438a-b7a9-71e7511a3ddc"), code=302))
             except FileNotFoundError:
                 return
 @app.route("/import_mog_pipeline", methods=['GET'])
 def import_mog_pipeline():
             try:
-                return (redirect("/importPipeline/{}/{}".format("testuser","f4db3cdb-9cb7-417c-8266-fda2f82f400e"), code=302))
+                #return(redirect("/importPipeline/{}/{}".format("testuser","f4db3cdb-9cb7-417c-8266-fda2f82f400e"), code=302))
+                #return(redirect("/importPipeline/{}/{}".format("testuser","514d20db-2bf4-417f-a31b-196d53e72baa"), code=302))
+                return(redirect("/importPipeline/{}/{}".format("testuser","e1536753-a88e-4489-85e4-84d555500e58"), code=302))
             except FileNotFoundError:
                 return
 @app.route("/import_jot_pipeline", methods=['GET'])
@@ -165,36 +268,41 @@ def import_cer_pipeline():
 @app.route("/import_bos_pipeline", methods=['GET'])
 def import_bos_pipeline():
             try:
-                return (redirect("/importPipeline/{}/{}".format("testuser","5f642f50-4722-4d02-8e16-ee009fe08cc9"), code=302))
+                return (redirect("/importPipeline/{}/{}".format("testuser","6a77d0fa-ae70-4372-9c44-08bb6fb1d7f6"), code=302)) 
+                #"03b6755d-348d-47a5-9f5b-593659ad48ef"), code=302))
+                #"5f642f50-4722-4d02-8e16-ee009fe08cc9"), code=302))
+                #return (redirect("/importPipeline/{}/{}".format("testuser","8f155bc0-f5bb-42ce-b8dc-fafca0b7051c"), code=302))
+                #return (redirect("/importPipeline/{}/{}".format("testuser","f0dd40df-9de7-4f51-b9b6-5327c587157d"), code=302))
             except FileNotFoundError:
                 return
 @app.route("/importPipeline/<string:user>/<string:pipelineID>", methods=['POST', 'GET'])
 def importPipeline(user,pipelineID):
-    #if request.method == "POST":
             try:
-                token_call = ["curl", "--location", "--request", "POST", "https://datacloud-auth.euprojects.net/auth/realms/user-authentication/protocol/openid-connect/token", "--header", "Content-Type: application/x-www-form-urlencoded", "--data-urlencode", "username=testuser", "--data-urlencode", "password=????", "--data-urlencode", "realm=user-authentication", "--data-urlencode", "client_id=def_frontend", "--data-urlencode", "grant_type=password"]
+                token_call = ["curl", "--location", "--request", "POST", "https://datacloud-auth.euprojects.net/auth/realms/user-authentication/protocol/openid-connect/token", "--header", "Content-Type: application/x-www-form-urlencoded", "--data-urlencode", "username="+user, "--data-urlencode", "password="+passes[user], "--data-urlencode", "realm=user-authentication", "--data-urlencode", "client_id=def_frontend", "--data-urlencode", "grant_type=password"]
                 p = subprocess.Popen(token_call, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
                 output, err = p.communicate()
                 dict = json.loads(output.decode())
                 user_token_ = dict["access_token"]
-                def_call = ["curl", "-X", "GET","http://crowdserv.sys.kth.se/api/repo/export/testuser/"+pipelineID, "-H","accept: application/json","-H","Authorization: Bearer {}".format(user_token_)]
-                p = subprocess.Popen(def_call, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+                def_call = ["curl", "-X", "GET","https://crowdserv.sys.kth.se/api/repo/export/"+user+"/"+pipelineID, "-H","accept: application/json","-H","Authorization: Bearer {}".format(user_token_)]
+                p = subprocess.Popen(def_call, stdout=subprocess.PIPE,
+                                             stderr=subprocess.PIPE)
                 output_of_def, err = p.communicate()
                 dict = json.loads(output_of_def.decode())
-                #if ("Pipeline pipeline {" in dict["data"]):
-                #    dict["data"] = dict["data"].replace("Pipeline pipeline {","Pipeline TELLUPipeline {")
-                #    return Response(dict["data"], mimetype='application/json' )
-                #print(type((dict["data"])))
+                print(dict["data"])
                 return Response((dict["data"]), mimetype='application/json' )
-
             except FileNotFoundError:
-                #print(":D")
+                return
+@app.route("/importSimData/<string:user>/<string:pipelineID>", methods=['POST','GET'])
+def importSimData(user,pipelineID):
+            try:
+                return Response(dry_run_list, mimetype='text/yaml')
+            except FileNotFoundError:
                 return
 
 @app.route("/importUser/<string:user>", methods=['POST','GET'])
 def importUser(user):
     try:
-        token_call = ["curl", "--location", "--request", "POST", "https://datacloud-auth.euprojects.net/auth/realms/user-authentication/protocol/openid-connect/token", "--header", "Content-Type: application/x-www-form-urlencoded", "--data-urlencode", "username=testuser", "--data-urlencode", "password=????", "--data-urlencode", "realm=user-authentication", "--data-urlencode", "client_id=def_frontend", "--data-urlencode", "grant_type=password"]
+        token_call = ["curl", "--location", "--request", "POST", "https://datacloud-auth.euprojects.net/auth/realms/user-authentication/protocol/openid-connect/token", "--header", "Content-Type: application/x-www-form-urlencoded", "--data-urlencode", "username="+user, "--data-urlencode", "password="+passes[user], "--data-urlencode", "realm=user-authentication", "--data-urlencode", "client_id=def_frontend", "--data-urlencode", "grant_type=password"]
         p = subprocess.Popen(token_call, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         output, err = p.communicate()
         dict = json.loads(output.decode())
@@ -213,9 +321,14 @@ def importUser(user):
 @app.route("/importRuntimeMetrics", methods=['POST', 'GET'])
 def importRuntimeMetrics():
             try:
-                return collectMetrics.prepared_dataframe.to_html(header="true", table_id="table")
+                #if ("cpu" in runtime_metrics):
+                #      return collectMetrics.prepared_dataframe["cpu.cpu3"].to_html(header="true", table_id="table")
+                #elif ("mem" in runtime_metrics):
+                #      return collectMetrics.prepared_dataframe["services.mem_usage"].to_html(header="true", table_id="table")
+                return ####collectMetrics.prepared_dataframe.to_html(header="true", table_id="table")
             except FileNotFoundError:
                 return
+
 @app.route("/import_mog_pipeline_demo", methods=['GET'])
 def import_mog_pipeline_demo():
     try:

@@ -1,0 +1,97 @@
+{
+  "id": "dag-diamond-w6jhd",
+  "status": {
+    "phase": "Succeeded",
+    "startedAt": "2023-07-14T07:19:23Z",
+    "finishedAt": "2023-07-14T07:20:04Z"
+  },
+  "nodes": [
+    {
+      "type": "DAG",
+      "startedAt": "2023-07-14T07:19:23Z",
+      "finishedAt": "2023-07-14T07:20:04Z"
+    },
+    {
+      "type": "Pod",
+      "startedAt": "2023-07-14T07:19:23Z",
+      "finishedAt": "2023-07-14T07:19:29Z",
+      "displayName": "A",
+      "metrics": {
+        "cpuSystemSecondsTotal": [
+          {
+            "timestamp": 1689319168,
+            "value": "0.03"
+          },
+          {
+            "timestamp": 1689319169,
+            "value": "0.03"
+          },
+          {
+            "timestamp": 1689319170,
+            "value": "0.03"
+          }
+        ]
+      },
+      "outputArtifacts": [
+        {
+          "name": "main-logs"
+        }
+      ]
+    },
+    {
+      "type": "Pod",
+      "startedAt": "2023-07-14T07:19:33Z",
+      "finishedAt": "2023-07-14T07:19:38Z",
+      "displayName": "B",
+      "metrics": {
+        "cpuSystemSecondsTotal": []
+      },
+      "outputArtifacts": [
+        {
+          "name": "main-logs"
+        }
+      ]
+    },
+    {
+      "type": "Pod",
+      "startedAt": "2023-07-14T07:19:43Z",
+      "finishedAt": "2023-07-14T07:19:48Z",
+      "displayName": "C",
+      "metrics": {
+        "cpuSystemSecondsTotal": []
+      },
+      "outputArtifacts": [
+        {
+          "name": "main-logs"
+        }
+      ]
+    },
+    {
+      "type": "Pod",
+      "startedAt": "2023-07-14T07:19:54Z",
+      "finishedAt": "2023-07-14T07:19:58Z",
+      "displayName": "D",
+      "metrics": {
+        "cpuSystemSecondsTotal": [
+          {
+            "timestamp": 1689319198,
+            "value": "0.02"
+          },
+          {
+            "timestamp": 1689319199,
+            "value": "0.02"
+          },
+          {
+            "timestamp": 1689319200,
+            "value": "0.02"
+          }
+        ]
+      },
+      "outputArtifacts": [
+        {
+          "name": "main-logs"
+        }
+      ]
+    }
+  ]
+}
