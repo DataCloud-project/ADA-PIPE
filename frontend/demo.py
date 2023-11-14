@@ -185,7 +185,7 @@ def adaptExecution(user,pipelineID):
                                         json_object = json.load(openfile)
                                         return ('Successfully loaded' and Response(json.dumps(json_object), mimetype='application/json'))
                                         #os.popen('cp '+' '+'e1536753-a88e-4489-85e4-84d555500e58.json'+' '+pipelineID+".json")
-                                elif("cer" in user):
+                                elif("cat" in user):
                                     with open('a6d3bea4-dc77-4a56-a086-4c6eab2ae4c4.json', 'r') as openfile:
                                         json_object = json.load(openfile)
                                         return ('Successfully loaded' and Response(json.dumps(json_object), mimetype='application/json'))
