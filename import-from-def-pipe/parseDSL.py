@@ -51,7 +51,7 @@ def parseDSLTellu(in_file) -> None:
 if __name__ == "__main__":
     with open('passwords.json', 'r') as openfile:
         passes = json.load(openfile)
-    user = "testuser" # "moguser"; "tluser"; "jotuser"; "boschuser"; "catuser"
+    user = "user"
     token_call = ["curl", "--location", "--request", "POST", "https://datacloud-auth.euprojects.net/auth/realms/user-authentication/protocol/openid-connect/token", "--header", "Content-Type: application/x-www-form-urlencoded", "--data-urlencode", "username="+user, "--data-urlencode", "password="+passes[user],
                    "--data-urlencode", "realm=user-authentication", "--data-urlencode", "client_id=def_frontend", "--data-urlencode", "grant_type=password"]
     p = subprocess.Popen(token_call, stdout=subprocess.PIPE,
