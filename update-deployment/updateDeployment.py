@@ -1,7 +1,6 @@
 import time
 import random
 import json
-import re
 import subprocess
 from subprocess import call
 import sys
@@ -52,21 +51,21 @@ def scheduler(pod, node, namespace="default"):
         print("------------------------------------------")
     return
 
-def scale():
-    #print(nodes_available())
+def scale() -> None:
     apps_v1 = client.AppsV1Api()
     #autoscaler_status = requests.get(f"http://10.107.50.125:5000/").json()
     #print (autoscaler_status)
     resource_requests = dict()
     # read deployment
-    call(["kubectl", "delete", "deployments.apps", "tellucare-application-logic-deployment"]) 
-    call(["kubectl", "apply", "-f", "/home/edgegateway/Documents/NaMe/project/v0.2.0/deployment.yaml"])
+    call(["minikube", "kubectl", "--", "delete", "deployments.apps", "high-accuracy-training"])
+    call(["minikube", "kubectl", "--", "delete", "pod", "--selector=app=high-accuracy-training"])
+    call(["minikube", "kubectl", "--", "apply", "-f", "/home/ubuntu/hpa/deployment.yaml"])
     ret = apps_v1.list_namespaced_deployment(namespace="default")
     #print (ret.items)
     for i in ret.items:
         deployment = apps_v1.read_namespaced_deployment(name=i.metadata.name, namespace="default")
         #print (deployment.metadata.name)
-        update_deployment(deployment.metadata.name, 500, 64, 2, False)
+        update_deployment(deployment.metadata.name, 3000, 2048, 2, False)
 
 
 def update_deployment(deployment_name: str, cpu_limit: int, memory_limit: int,
@@ -84,7 +83,7 @@ def update_deployment(deployment_name: str, cpu_limit: int, memory_limit: int,
       number_of_replicas: int:
       replace: bool:
     Returns:
-      None
+      kubernetes.client.V1Deployment
     """
     # init API
     config.load_kube_config()
@@ -95,17 +94,27 @@ def update_deployment(deployment_name: str, cpu_limit: int, memory_limit: int,
     resource_requests = get_resource_requests()
     resource_requests = resource_requests[deployment_name]
     # updates cpu and memory limits
-    #print (resource_requests["cpu"]," ",resource_requests["memory"])
+    print (resource_requests["cpu"]," ",resource_requests["memory"])
     new_resources = client.V1ResourceRequirements(
-        #requests={"cpu": resource_requests["cpu"], "memory": resource_requests["memory"]},
-        requests={"cpu": f"{cpu_limit}m", "memory": f"{memory_limit}Mi"},
+        requests={"cpu": resource_requests["cpu"], "memory": resource_requests["memory"]},
+        #requests={"cpu": f"{cpu_limit}m", "memory": f"{memory_limit}Mi"},
         limits={"cpu": f"{cpu_limit}m", "memory": f"{memory_limit}Mi"}
     )
     deployment.spec.template.spec.containers[0].resources = new_resources
     # updates number of replicas
     deployment.spec.replicas = number_of_replicas
-    if not replace:
+    if replace:
         # updates the deployment
+        try:
+            api_response = apps_v1.replace_namespaced_deployment(
+                name=deployment_name,
+                namespace="default",
+                body=deployment)
+            logging.info(f"Deployment updated of {deployment_name}.")
+            logging.debug(f"f Deployment update: {api_response.status}")
+        except Exception as err:
+            logging.info(f"Error while deployment: {err}")
+    else:
         try:
             api_response = apps_v1.patch_namespaced_deployment(
                 name=deployment_name,
@@ -116,19 +125,9 @@ def update_deployment(deployment_name: str, cpu_limit: int, memory_limit: int,
             #print(api_response)
         except Exception as err:
             logging.info(f"Error while deployment: {err}")
-    else:
-        try:
-            api_response = apps_v1.replace_namespaced_deployment(
-                name=deployment_name,
-                namespace="default",
-                body=deployment)
-            logging.info(f"Deployment updated of {deployment_name}.")
-            logging.debug(f"f Deployment update: {api_response.status}")
-        except Exception as err:
-            logging.info(f"Error while deployment: {err}")
     return deployment
 
-def get_resource_requests():
+def get_resource_requests() -> dict:
     apps_v1 = client.AppsV1Api()
     resource_requests = dict()
     # read deployment
@@ -146,12 +145,24 @@ def main():
     print()
     scale()
     print()
-    call(["kubectl", "get", "deployments.apps"])
+    call(["minikube", "kubectl", "--", "get", "-o", "wide", "deployments.apps"])
+
+    w = watch.Watch()
+    for event in w.stream(v1.list_namespaced_pod, "default"):
+        if event['object'].status.phase == "Pending": # and event['object'].spec.scheduler_name == scheduler_name:
+            try:
+                print("------------------------------------------")
+                print("scheduling pod ", event['object'].metadata.name)
+                res = scheduler(event['object'], (nodes_available())[2])
+                break
+            except client.rest.ApiException as e:
+                print (json.loads(e.body)['message'])
+
 
 if __name__ == '__main__':
+    start_time = time.monotonic()
     main()
-
-elapsed_time = numpy.round(time.monotonic() - start_time , 5)
-#print ("=====================================================================")
-#print ("Algorithm execution time: {} second(s)".format(elapsed_time))
-#print ("=====================================================================")
+    elapsed_time = numpy.round(time.monotonic() - start_time , 5)
+    print ("=====================================================================")
+    print ("Algorithm execution time: {} second(s)".format(elapsed_time))
+    print ("=====================================================================")
