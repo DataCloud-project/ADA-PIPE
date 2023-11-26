@@ -1,19 +1,25 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: tellucare-application-logic-deployment
+  name: high-accuracy-training
+  namespace: default
 spec:
+  replicas: 1
   selector:
     matchLabels:
-      app: tellucare-application-logic-deployment
+      app: high-accuracy-training
   template:
     metadata:
       labels:
-        app: tellucare-application-logic-deployment
+        app: high-accuracy-training
     spec:
       containers:
-        - name: tellucare-application-logic-deployment
-          image: dcloud2.itec.aau.at/tellucare-application-logic:latest
-          imagePullPolicy: IfNotPresent
-          ports:
-            - containerPort: 5000
+      - name: hightrain
+        image: sina88/hightrain:hpa
+        imagePullPolicy: IfNotPresent
+        resources:
+          # You must specify requests for CPU to autoscale
+          # based on CPU utilization
+          requests:
+            cpu: "3"
+            memory: "2Gi"
