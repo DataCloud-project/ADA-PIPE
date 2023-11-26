@@ -7,6 +7,6 @@ To run the update deployment: ```python3.10 updateDeployment.py```
 
 The following tool helped to devise and test the updating, replica setting, and replacing/migrating the step's pods in between the devices:
 
-    * Multi-Objective Hybrid Autoscaling: [MOHA](https://github.com/Angi2412/Multi-Objective-Hybrid-Autoscaing-MOHA/blob/main/app/k8s_tools.py)
+   * Multi-Objective Hybrid Autoscaling: ![MOHA](https://github.com/Angi2412/Multi-Objective-Hybrid-Autoscaing-MOHA/blob/main/app/k8s_tools.py)
 
-    * ...
+   * ...
