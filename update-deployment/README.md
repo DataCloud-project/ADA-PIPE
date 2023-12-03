@@ -9,4 +9,4 @@ The following tool helped to devise and test the updating, replica setting, and 
 
    * Multi-Objective Hybrid Autoscaling: [MOHA](https://github.com/Angi2412/Multi-Objective-Hybrid-Autoscaing-MOHA/blob/main/app/k8s_tools.py)
 
-   * ...
+   * [Sysdig_scheduder](https://sysdig.com/blog/kubernetes-scheduler/)
