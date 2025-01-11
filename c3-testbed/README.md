@@ -39,8 +39,6 @@ year = {2021}
 }
 ```
 
-
-
 Mehran, N., Samani, Z.N., Kimovski, D. and Prodan, R., 2022, September. Matching-based Scheduling of Asynchronous Data Processing Workflows on the Computing Continuum. In 2022 IEEE International Conference on Cluster Computing (CLUSTER) (pp. 58-70). IEEE. [https://doi.org/10.1007/978-3-031-12597-3_15](https://ieeexplore.ieee.org/abstract/document/9912724)
 
 BibTex:
@@ -78,6 +76,20 @@ keywords={},
 doi={10.1109/IPDPS54959.2023.00054}, }
 ```
 
+Zahra Najafabadi Samani, et al. "Incremental multilayer resource partitioning for application placement in dynamic fog." IEEE Transactions on Parallel and Distributed Systems 34.6 (2023): 1877-1896.
+```
+@article{samani2023incremental,
+  title={Incremental multilayer resource partitioning for application placement in dynamic fog},
+  author={Samani, Zahra Najafabadi and Mehran, Narges and Kimovski, Dragi and Benedict, Shajulin and Saurabh, Nishant and Prodan, Radu},
+  journal={IEEE Transactions on Parallel and Distributed Systems},
+  volume={34},
+  number={6},
+  pages={1877--1896},
+  year={2023},
+  publisher={IEEE}
+}
+```
+
 Zahra Najafabadi Samani, Narges Mehran, Dragi Kimovski, Josef Hammer, & Radu Prodan. (2022). Edge infrastructure traces (Version 1) [Data set]. Zenodo. https://doi.org/10.5281/zenodo.7311294
 
 ```
@@ -94,5 +106,18 @@ Zahra Najafabadi Samani, Narges Mehran, Dragi Kimovski, Josef Hammer, & Radu Pro
   version      = 1,
   doi          = {10.5281/zenodo.7311294},
   url          = {https://doi.org/10.5281/zenodo.7311294}
+}
+```
+
+Josef Hammer, Narges Mehran, Dragi Kimovski, Radu Prodan, & Hermann Hellwagner. C3-Edge–An Automated Mininet-Compatible SDN Testbed on Raspberry Pis and Nvidia Jetsons. In NOMS 2023-2023 IEEE/IFIP Network Operations and Management Symposium, pp. 1-5. IEEE, 2023. https://edge.itec.aau.at/wp-content/uploads/sites/15/2023/02/C3-Edge-An-Automated-Mininet-Compatible-SDN-Testbed.pdf 
+
+```
+@inproceedings{hammer2023c3,
+  title={C3-Edge--An Automated Mininet-Compatible SDN Testbed on Raspberry Pis and Nvidia Jetsons},
+  author={Hammer, Josef and Kimovski, Dragi and Mehran, Narges and Prodan, Radu and Hellwagner, Hermann},
+  booktitle={NOMS 2023-2023 IEEE/IFIP Network Operations and Management Symposium},
+  pages={1--5},
+  year={2023},
+  organization={IEEE}
 }
 ```
