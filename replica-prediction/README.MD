@@ -5,7 +5,5 @@
 
 The following research work shows the details regarding the ML model:
 
-   * [Replication prediction-based model](https://zenodo.org/records/10252902)
-
-   * [ML implemented models](https://github.com/arman-hk/clusterdata-prediction/tree/master/cluster-trace-microservices-v2021/microservice-prediction)
+   * [Replication prediction-based model](http://194.182.187.139/importMicroserviceData)
 
