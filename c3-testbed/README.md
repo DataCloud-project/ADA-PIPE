@@ -22,7 +22,6 @@ Zahra Najafabadi Samani, Narges Mehran, Dragi Kimovski, Josef Hammer, and Radu P
 # Citation
 
 Kimovski. D., Matha. R., Hammer. J., Mehran. N., Hellwagner. H., and Prodan. R., ["Cloud, Fog, or Edge: Where to Compute?,"](https://ieeexplore.ieee.org/document/9321525/) IEEE Internet Computing, vol. 25, no. 4, pp. 30–36, 2021.
-
 ```
 @article{Kimovski2021WhereToCompute,
 author = {Kimovski, Dragi and Matha, Roland and Hammer, Josef and Mehran, Narges and Hellwagner, Hermann and Prodan, Radu},
@@ -40,16 +39,12 @@ year = {2021}
 ```
 
 Mehran, N., Samani, Z.N., Kimovski, D. and Prodan, R., 2022, September. Matching-based Scheduling of Asynchronous Data Processing Workflows on the Computing Continuum. In 2022 IEEE International Conference on Cluster Computing (CLUSTER) (pp. 58-70). IEEE. [https://doi.org/10.1007/978-3-031-12597-3_15](https://ieeexplore.ieee.org/abstract/document/9912724)
-
-BibTex:
 ```
 @INPROCEEDINGS{9912724,  
 author={Mehran, Narges and Najafabadi Samani, Zahra  and Kimovski, Dragi and Prodan, Radu},  
 booktitle={2022 IEEE International Conference on Cluster Computing (CLUSTER)},   
 title={Matching-based Scheduling of Asynchronous Data Processing Workflows on the Computing Continuum},   
-year={2022},  
-volume={},  
-number={},  
+year={2022},   
 pages={58-70},  
 abstract={Today's distributed computing infrastructures en-compass complex workflows for real-time data gathering, transferring, storage, and processing, quickly overwhelming centralized cloud centers. Recently, the computing continuum that federates the Cloud services with emerging Fog and Edge devices represents a relevant alternative for supporting the next-generation data processing workflows. However, eminent challenges in automating data processing across the computing continuum still exist, such as scheduling heterogeneous devices across the Cloud, Fog, and Edge layers. We propose a new scheduling algorithm called C3 -MATCH, based on matching theory principles, involving two sets of players negotiating different utility functions: 1) workflow microservices that prefer computing devices with lower data processing and queuing times; 2) computing continuum devices that prefer microservices with corresponding resource requirements and less data transmission time. We evaluate $C^{3}$-MATCH using real-world road sign inspection and sentiment analysis workflows on a federated computing continuum across four Cloud, Fog, and Edge providers. Our combined simulation and real execution results reveal that $C^{3}$-MATCH achieves up to 67% lower completion time than three state-of-the-art methods with 10 ms-1000 ms higher transmission time.},  
 keywords={},  
@@ -60,8 +55,6 @@ month={Sep.},}
 
 
 Samani, Z.N., Mehran, N., Kimovski, D. and Prodan, R., 2023, May. Proactive SLA-aware Application Placement in the Computing Continuum. In 37th IEEE International Parallel & Distributed Processing Symposium (IPDPS). [https://doi.org/10.1109/IPDPS54959.2023.00054](https://ieeexplore.ieee.org/abstract/document/10177411)
-
-BibTex:
 ```
 @INPROCEEDINGS{10177411,  
 author={Samani, Zahra Najafabadi and Mehran, Narges and Kimovski, Dragi and Prodan, Radu},  
@@ -91,7 +84,6 @@ Zahra Najafabadi Samani, et al. "Incremental multilayer resource partitioning fo
 ```
 
 Zahra Najafabadi Samani, Narges Mehran, Dragi Kimovski, Josef Hammer, & Radu Prodan. (2022). Edge infrastructure traces (Version 1) [Data set]. Zenodo. https://doi.org/10.5281/zenodo.7311294
-
 ```
 @dataset{zahra_najafabadi_samani_2022_7311294,
   author       = {Zahra Najafabadi Samani and
@@ -110,7 +102,6 @@ Zahra Najafabadi Samani, Narges Mehran, Dragi Kimovski, Josef Hammer, & Radu Pro
 ```
 
 Josef Hammer, Narges Mehran, Dragi Kimovski, Radu Prodan, & Hermann Hellwagner. C3-Edge–An Automated Mininet-Compatible SDN Testbed on Raspberry Pis and Nvidia Jetsons. In NOMS 2023-2023 IEEE/IFIP Network Operations and Management Symposium, pp. 1-5. IEEE, 2023. https://edge.itec.aau.at/wp-content/uploads/sites/15/2023/02/C3-Edge-An-Automated-Mininet-Compatible-SDN-Testbed.pdf 
-
 ```
 @inproceedings{hammer2023c3,
   title={C3-Edge--An Automated Mininet-Compatible SDN Testbed on Raspberry Pis and Nvidia Jetsons},
