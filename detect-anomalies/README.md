@@ -20,3 +20,7 @@ To install the netdata-pandas library for collecting metrics:
 
 To analyze the data and run the ML model:
 ``pip3 install -U scikit-learn``
+
+The recorded data and their related analyses are available as follows:
+  * [DeviceData](https://zenodo.org/records/14961415/files/DeviceData.csv)
+  * ``elbow_kmeans.ipynb``  
